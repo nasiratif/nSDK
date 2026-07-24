@@ -62,21 +62,21 @@
     <LibraryPath>$(ProjectDir)..\..\Lib;$(LibraryPath)</LibraryPath>
     <TargetExt>.mfx</TargetExt>
     <OutDir>$(ProjectDir)Temp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)Int\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(ProjectDir)Temp\Int\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Unicode|Win32'">
     <TargetExt>.mfx</TargetExt>
     <OutDir>$(ProjectDir)Temp\$(Platform)\$(Configuration)\</OutDir>
     <IncludePath>$(ProjectDir)..\..\Inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\Lib;$(LibraryPath)</LibraryPath>
-    <IntDir>$(ProjectDir)Int\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(ProjectDir)Temp\Int\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Runtime Unicode|Win32'">
     <TargetExt>.mfx</TargetExt>
     <OutDir>$(ProjectDir)Temp\$(Platform)\$(Configuration)\</OutDir>
     <IncludePath>$(ProjectDir)..\..\Inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\Lib;$(LibraryPath)</LibraryPath>
-    <IntDir>$(ProjectDir)Int\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(ProjectDir)Temp\Int\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Unicode|Win32'">
     <ClCompile>
