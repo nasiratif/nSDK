@@ -96,10 +96,10 @@ void* FUSION_API GetPropValue(mv* mV, EditData* edPtr, uint32 nPropID)
 	case PropID_Images:
 	{
 		// For image properties you must fill out a buffer of words where the first word contains the number of images, then the image IDs right after
-		auto data = new CPropDataValue((edPtr->nImages + 1) * sizeof(WORD), NULL);
+		auto data = new CPropDataValue((edPtr->nImages + 1) * sizeof(word), NULL);
 		auto wImages = (LPWORD)data->m_pData;
 		*(wImages++) = edPtr->nImages;
-		for (WORD i = 0; i < edPtr->nImages; ++i)
+		for (word i = 0; i < edPtr->nImages; ++i)
 			*(wImages++) = edPtr->wImages[i];
 
 		return data;
@@ -261,11 +261,13 @@ void FUSION_API RemoveObject(mv* mV, fpLevObj loPtr, EditData* edPtr, uint16 cpt
 #pragma EXT_DLLEXPORT
 }
 
+// When object is cloned, not duplicated
 void FUSION_API DuplicateObject(mv* mV, fpObjInfo oiPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 }
 
+// When a new object is placed onto a frame
 void FUSION_API PutObject(mv* mV, fpLevObj loPtr, EditData* edPtr, uint16 cpt)
 {
 #pragma EXT_DLLEXPORT
@@ -314,6 +316,7 @@ bool32 FUSION_API IsTransparent(mv* mV, fpLevObj loPtr, EditData* edPtr, int32 d
 }
 
 
+// Called just before EditData is written into the MFA
 void FUSION_API PrepareToWriteObject(mv* mV, EditData* edPtr, fpObjInfo adoi)
 {
 #pragma EXT_DLLEXPORT
@@ -353,8 +356,8 @@ bool32 FUSION_API UsesFile(mv* mV, tchar* fileName)
 void FUSION_API CreateFromFile(mv* mV, tchar* fileName, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
-	// Example from stock SDK:
 	/*
+ 	// Example from stock SDK:
 	// Initialize your extension data from the given file
 	edPtr->swidth = 32;
 	edPtr->sheight = 32;

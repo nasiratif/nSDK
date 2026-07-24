@@ -31,11 +31,13 @@
 
 // EDITTIME OBJECT DATA:
 // Variables must be initialized in CreateObject
+// Pointers shouldn't be stored here as this entire structure is serialized to disk (in the MFA)
+// Everything must be plain data only!
 // -----
 struct EditData : nSDK::EditDataBase
 {
-	WORD wImages[4];
-	WORD nImages;
+	word wImages[4];
+	word nImages;
 	tchar szText[256];
 	COLORREF dwColor;
 	bool32 nCheck;

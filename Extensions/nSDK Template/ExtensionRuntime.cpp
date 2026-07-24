@@ -1,7 +1,7 @@
 #include "Extension.hpp"
 
 // Fill this out if you're implementing debugger support
-WORD DebugTree[] =
+word DebugTree[] =
 {
 	// Example:
 	// DB_CURRENTSTRING | DB_EDITABLE,
