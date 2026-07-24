@@ -72,7 +72,7 @@ void FUSION_API SetPropValue(mv* mV, EditData* edPtr, uint32 nPropID, void* lPar
 		edPtr->nImages = *(LPWORD)((CPropDataValue*)pValue)->m_pData; // first word contains number of images
 		break;
 	case PropID_Text:
-		StringCbCopy(edPtr->szText, sizeof(edPtr->szText), ((CPropStringValue*)pValue)->GetString()); // note this isn't safe! just an example, you might need to use mvReAllocEditData if you need larger string length
+		StringCbCopy(edPtr->szText, sizeof(edPtr->szText), ((CPropStringValue*)pValue)->GetString()); // you might need to use mvReAllocEditData if you need larger string length
 		break;
 	case PropID_Color:
 		edPtr->dwColor = ((CPropDWordValue*)pValue)->m_dwValue;
