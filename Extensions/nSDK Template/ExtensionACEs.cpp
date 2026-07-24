@@ -8,7 +8,7 @@ namespace nSDK
 	std::vector<ACEMenu> actionMenus =
 	{
 		{ 0, ACE_TEXT("Example action: change background color"), true },
-		{ 1, ACE_TEXT("Example action 2 (disabled)"), true },
+		{ 1, ACE_TEXT("Example action 2 (disabled)"), false },
 	};
 	std::vector<ACEMenu> conditionMenus =
 	{
@@ -40,10 +40,7 @@ namespace nSDK
 			}
 		},
 		{ 
-			1, ACE_TEXT("Example action 2: %0"), NULL, Actions::ExampleAction2,
-			{
-				{ CustomDataType_Example, ACE_TEXT("Custom parameter") }
-			}
+			1, ACE_TEXT("Example action 2"), NULL, Actions::ExampleAction2
 		}
 	};
 	std::vector<ACE> conditionDefinitions =
