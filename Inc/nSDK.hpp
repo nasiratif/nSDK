@@ -288,23 +288,23 @@ namespace nSDK
 		HMENU FUSION_API GetConditionMenu(mv* mV, fpObjInfo oiPtr, EditData* edPtr);
 		HMENU FUSION_API GetExpressionMenu(mv* mV, fpObjInfo oiPtr, EditData* edPtr);
 
-		short FUSION_API GetActionCodeFromMenu(mv* mV, short menuId);
-		short FUSION_API GetConditionCodeFromMenu(mv* mV, short menuId);
-		short FUSION_API GetExpressionCodeFromMenu(mv* mV, short menuId);
+		int16 FUSION_API GetActionCodeFromMenu(mv* mV, int16 menuId);
+		int16 FUSION_API GetConditionCodeFromMenu(mv* mV, int16 menuId);
+		int16 FUSION_API GetExpressionCodeFromMenu(mv* mV, int16 menuId);
 
-		void FUSION_API GetActionTitle(mv* mV, short code, short param, tchar* strBuf, short maxLen);
-		void FUSION_API GetConditionTitle(mv* mV, short code, short param, tchar* strBuf, short maxLen);
+		void FUSION_API GetActionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
+		void FUSION_API GetConditionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
 		// NB: not sure in what scenario this function is ever called? just rerouting to GetExpressionParam to avoid code duplication
-		void FUSION_API GetExpressionTitle(mv* mV, short code, short param, tchar* strBuf, short maxLen);
+		void FUSION_API GetExpressionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
 
-		void FUSION_API GetActionString(mv* mV, short code, tchar* strPtr, short maxLen);
-		void FUSION_API GetConditionString(mv* mV, short code, tchar* strPtr, short maxLen);
-		void FUSION_API GetExpressionString(mv* mV, short code, tchar* strPtr, short maxLen);
-		void FUSION_API GetExpressionParam(mv* mV, short code, short param, tchar* strBuf, short maxLen);
+		void FUSION_API GetActionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen);
+		void FUSION_API GetConditionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen);
+		void FUSION_API GetExpressionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen);
+		void FUSION_API GetExpressionParam(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
 
-		LPINFOEVENTSV2 FUSION_API GetActionInfos(mv* mV, short code);
-		LPINFOEVENTSV2 FUSION_API GetConditionInfos(mv* mV, short code);
-		LPINFOEVENTSV2 FUSION_API GetExpressionInfos(mv* mV, short code);
+		LPINFOEVENTSV2 FUSION_API GetActionInfos(mv* mV, int16 code);
+		LPINFOEVENTSV2 FUSION_API GetConditionInfos(mv* mV, int16 code);
+		LPINFOEVENTSV2 FUSION_API GetExpressionInfos(mv* mV, int16 code);
 #endif
 	}
 }
