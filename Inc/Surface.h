@@ -288,6 +288,15 @@ class SURFACES_API cSurface
 		void	Flush(BOOL bMax);
 		void	SetZBuffer(float z2D);
 
+		// DX11 exclusive:
+		// Requires a newer version of mmfs2.lib
+		// -----
+		void     SetPremultipliedAlpha(BOOL usePMAlpha, BOOL pmedTextures);
+		void     PremultiplyAlpha();
+
+		void     DemultiplyAlpha();
+		// -----
+
 		// ======================
 	    // Device context for graphic operations
 		// ======================
