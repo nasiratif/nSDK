@@ -25,7 +25,7 @@ namespace nSDK
 	std::vector<Properties> properties =
 	{
 		{
-			PropTab_General,
+			PropTab_General, true,
 			{
 				{ PropID_Start, _T("Sample Properties"), _T("Sample properties"), PropType_Group },
 
@@ -45,10 +45,11 @@ namespace nSDK
 		},
 		// Here's an example of adding properties to different tabs!
 		{
-			PropTab_About,
+			PropTab_About, false,
 			{
 				{ PropID_Start, _T("nSDK Info"), _T("nSDK Information"), PropType_Group },
-				{ PropID_Copyright, _T("nSDK Copyright"), _T("nSDK Copyright information"), PropType_StaticString }
+				{ PropID_Copyright, _T("nSDK Copyright"), _T("nSDK Copyright information"), PropType_StaticString },
+				{ PropID_Start, _T("General Info"), _T(""), PropType_Group }
 			}
 		}
 	};

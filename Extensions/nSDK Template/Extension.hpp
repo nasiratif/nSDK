@@ -1,6 +1,11 @@
 #pragma once
 #include <nSDK.hpp>
 
+// General includes can be placed here:
+// -----
+#include "Resource.h"
+// -----
+
 // DEFINES:
 // -----
 // Define extension information here:
@@ -119,5 +124,6 @@ namespace Expressions
 {
 	// long FUSION_API ExampleExpression(RunData* rdPtr, long param);
 
-	long FUSION_API ReturnRandom(RunData* rdPtr, long param);
+	long FUSION_API ReturnRandomN(RunData* rdPtr, long param);
+	long FUSION_API ReturnRandomS(RunData* rdPtr, long param);
 }

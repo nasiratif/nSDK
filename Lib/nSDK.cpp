@@ -55,20 +55,6 @@ HMENU CreateACEMenus(const std::vector<nSDK::ACEMenu>& menus, uint16_t idOffset)
 
 */
 
-long nSDK::CopyString(RunDataBase* rdPtr, const tchar* str)
-{
-	auto len = _tcslen(str);
-	auto dest = (tchar*)callRunTimeFunction(rdPtr, RFUNCTION_GETSTRINGSPACE_EX, NULL, len);
-	if (dest)
-		memcpy(dest, str, len * sizeof(tchar));
-	else
-		return (long)_T("");
-
-	dest[len] = _T('\0');
-	return (long)dest;
-}
-
-
 float nSDK::ParamToFloat(long value)
 {
 	return *((float*)&value);
@@ -85,14 +71,27 @@ paramExt* nSDK::ParamToCustom(long value)
 }
 
 
-long nSDK::ReturnFloat(float value)
+long nSDK::ReturnFloat(RunDataBase* rdPtr, float value)
 {
+	rdPtr->rHo.hoFlags |= HOF_FLOAT; // tell Fusion we are returning a float
 	return *((long*)&value);
 }
 
-long nSDK::ReturnString(const tchar* value)
+long nSDK::ReturnString(RunDataBase* rdPtr, const tchar* str, bool copy)
 {
-	return (long)value;
+	rdPtr->rHo.hoFlags |= HOF_STRING; // tell Fusion we are returning a string
+	if (!copy)
+		return (long)str;
+
+	auto len = _tcslen(str);
+	auto dest = (tchar*)callRunTimeFunction(rdPtr, RFUNCTION_GETSTRINGSPACE_EX, NULL, len);
+	if (dest)
+		memcpy(dest, str, len * sizeof(tchar));
+	else
+		return (long)_T("");
+
+	dest[len] = _T('\0');
+	return (long)dest;
 }
 
 /*
@@ -399,7 +398,7 @@ bool32 FUSION_API nSDK::Exports::GetProperties(mv* mV, EditData* edPtr, bool32 b
 			auto& end = propDatas.emplace_back();
 			memset(&end, NULL, sizeof(end)); // Fusion expects the PropData array to end with all zeros
 
-			mvInsertProps(mV, edPtr, propDatas.data(), props.tab, TRUE);
+			mvInsertProps(mV, edPtr, propDatas.data(), props.tab, props.insertAfter);
 		}
 	}
 	return TRUE;

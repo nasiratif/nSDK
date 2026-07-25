@@ -38,12 +38,12 @@ public:
 
 protected:
 
-	WAVEFORMATEX	m_WaveFormatOut;	// format des données à envoyer au SoundManager
-	WAVEFORMATEX	m_WaveFormatIn;	// format des données après lecture et décodage
+	WAVEFORMATEX	m_WaveFormatOut;	// format of the data to be sent to the SoundManager (Google Translate! Thanks Clickteam!)
+	WAVEFORMATEX	m_WaveFormatIn;	// data format after reading and decoding
 
 	BOOL			m_bDoConvert;
 	float			m_fSizeRatio;		// rapport (Out Size)/(Read Size)
-	LPBYTE			m_lpReadWaveData;	// Données après lecture et décodage
+	LPBYTE			m_lpReadWaveData;	// Data after reading and decoding
 	SAMPLECONVERTPROC m_pConvertProc;
 	DWORD			m_nSrcFreqSample;
 	DWORD			m_nDstWrite;

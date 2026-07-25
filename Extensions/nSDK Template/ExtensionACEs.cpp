@@ -25,6 +25,7 @@ namespace nSDK
 	std::vector<ACEMenu> expressionMenus =
 	{
 		{ 0, ACE_TEXT("Return a random number"), true },
+		{ 1, ACE_TEXT("Return a random string"), true },
 	};
 	// -----
 #endif
@@ -71,10 +72,16 @@ namespace nSDK
 	std::vector<ACE> expressionDefinitions =
 	{
 		{
-			0, ACE_TEXT("ReturnRandom("), DataType_Number, Expressions::ReturnRandom,
+			0, ACE_TEXT("ReturnRandomN("), DataType_Number, Expressions::ReturnRandomN,
 			{
 				{ DataType_String, ACE_TEXT("First string") },
 				{ DataType_Number, ACE_TEXT("First number") }
+			},
+		},
+		{
+			1, ACE_TEXT("ReturnRandomS("), DataType_String, Expressions::ReturnRandomS,
+			{
+				{ DataType_Number, ACE_TEXT("Seed") }
 			},
 		}
 	};

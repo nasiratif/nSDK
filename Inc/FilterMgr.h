@@ -3,8 +3,8 @@
 #define _FilterMgr_h
 
 #include "StdDefs.h"
-#if !defined(STDDLL_IMPORTS)
-	#include "FilterInfo.h"
+#if /* !defined(STDDLL_IMPORTS) */ 0
+	#include "FilterInfo.h" // not included in public SDK?
 #else
 	typedef	LPVOID LPFILTERINFOARRAY;
 #endif

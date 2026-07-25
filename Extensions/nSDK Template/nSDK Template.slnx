@@ -5,7 +5,5 @@
     <BuildType Name="Runtime Unicode" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="nSDK Template.vcxproj" Id="3b8dd4fa-ba56-4dad-9cd6-df2bf45c9f64">
-    <BuildType Solution="Runtime Unicode|*" Project="Debug Unicode" />
-  </Project>
+  <Project Path="nSDK Template.vcxproj" Id="3b8dd4fa-ba56-4dad-9cd6-df2bf45c9f64" />
 </Solution>

@@ -172,6 +172,7 @@
     <ClInclude Include="..\..\Inc\ImgFlt.h" />
     <ClInclude Include="..\..\Inc\ImgFltDefs.h" />
     <ClInclude Include="..\..\Inc\Mvt.h" />
+    <ClInclude Include="..\..\Inc\nSDKCommon.hpp" />
     <ClInclude Include="..\..\Inc\Palet.h" />
     <ClInclude Include="..\..\Inc\PaletCpp.h" />
     <ClInclude Include="..\..\Inc\PictEdDefs.h" />

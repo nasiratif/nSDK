@@ -69,7 +69,7 @@ void FUSION_API SetPropValue(mv* mV, EditData* edPtr, uint32 nPropID, void* lPar
 	switch (nPropID)
 	{
 	case PropID_Images:
-		edPtr->nImages = *(LPWORD)((CPropDataValue*)pValue)->m_pData; // first word contains number of images
+		edPtr->nImages = *(word*)((CPropDataValue*)pValue)->m_pData; // first word contains number of images
 		break;
 	case PropID_Text:
 		StringCbCopy(edPtr->szText, sizeof(edPtr->szText), ((CPropStringValue*)pValue)->GetString()); // you might need to use mvReAllocEditData if you need larger string length
@@ -97,7 +97,7 @@ void* FUSION_API GetPropValue(mv* mV, EditData* edPtr, uint32 nPropID)
 	{
 		// For image properties you must fill out a buffer of words where the first word contains the number of images, then the image IDs right after
 		auto data = new CPropDataValue((edPtr->nImages + 1) * sizeof(word), NULL);
-		auto wImages = (LPWORD)data->m_pData;
+		auto wImages = (word*)data->m_pData;
 		*(wImages++) = edPtr->nImages;
 		for (word i = 0; i < edPtr->nImages; ++i)
 			*(wImages++) = edPtr->wImages[i];
@@ -280,13 +280,32 @@ bool32 FUSION_API EditObject(mv* mV, fpObjInfo oiPtr, fpLevObj loPtr, EditData* 
 	return FALSE;
 }
 
+
 /*
 // Implement this function to do custom drawing in the frame editor
 void FUSION_API EditorDisplay(mv* mV, fpObjInfo oiPtr, fpLevObj loPtr, EditData* edPtr, RECT* rc)
 {
 #pragma EXT_DLLEXPORT
+	// Example (simply draw ext image):
+	cSurface* proto;
+	if (GetSurfacePrototype(&proto, 32, ST_MEMORY, SD_DIB))
+	{
+		auto frameSurf = WinGetSurface((int)mV->mvIdEditWin);
+		if (frameSurf)
+		{
+			auto width = rc->right - rc->left;
+			auto height = rc->bottom - rc->top;
+
+			cSurface iconSurf;
+			iconSurf.Create(width, height, proto);
+			iconSurf.LoadImage(nSDK::hInst, EXO_IMAGE, LI_REMAP);
+
+			iconSurf.Blit(*frameSurf, rc->left, rc->top, BMODE_TRANSP, BOP_COPY);
+		}
+	}
 }
 */
+
 
 /*
 // Required for resizable exts; if exported, Fusion knows the ext is resizable
@@ -299,7 +318,7 @@ bool32 FUSION_API SetEditSize(mv* mV, EditData* edPtr, int32 cx, int32 cy)
 }
 */
 
-// You must return the rectangle of the selected instance of the extension object
+// You must return the rectangle of the extension object
 void FUSION_API GetObjectRect(mv* mV, RECT* rc, fpLevObj loPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
