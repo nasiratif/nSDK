@@ -4,8 +4,8 @@
 // DEFINES:
 // Define filter information here:
 // -----
-#define FLT_NAME _T("nSDK Sound Filter Template")
 #define FLT_IDENTIFIER 'NSDK'
+#define FLT_NAME _T("nSDK Sound Filter Template")
 // File extensions this filter supports
 // Must end with NULL
 #define FLT_EXTS { _T("raw"), NULL }
