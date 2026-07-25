@@ -6,7 +6,6 @@ NB:
 	Sound filters are placed in <Fusion root>\Filters\Sounds
 	Sound filters are always assumed to be non-Unicode by Fusion, so you shouldn't compile this filter as Unicode
 	If debugging at edittime, note Fusion loads all sound filters before it even shows the splash screen. This may be important if you plan on modifying the exported functions below as you may not have enough time to attach a debugger to Fusion before the filter loads
-
 */
 
 /*
@@ -31,12 +30,13 @@ int32 CCustomSoundFilter::Open(CInputFile* pf)
 	// We assume the file is just a 16-bit, 44.1hz, 2-channel raw PCM audio buffer, so we can simply just copy the data into the data provided by ReadData & avoid any sophisticated decoding here
 	size = pf->GetLength();
 	data = (byte*)malloc(size);
-	pf->Read((LPBYTE)data, size);
+	pf->Read(data, size);
 	return 0;
 }
 
 void CCustomSoundFilter::Close()
 {
+	// Example:
 	free(data);
 	data = nullptr;
 	size = 0;

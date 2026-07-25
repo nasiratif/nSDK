@@ -2,6 +2,7 @@
 #include <nSDKSFT.hpp>
 
 // DEFINES:
+// Define filter information here:
 // -----
 #define FLT_NAME _T("nSDK Sound Filter Template")
 #define FLT_IDENTIFIER 'NSDK'
