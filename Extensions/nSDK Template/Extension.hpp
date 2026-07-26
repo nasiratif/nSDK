@@ -17,6 +17,11 @@
 #define EXT_COMMENT _T("nSDK Template extension")
 #define EXT_HTTP _T("https://community.clickteam.com/user/36199-nasirfoxx/")
 #define EXT_HELP_FILENAME _T("nSDK.chm")
+// If your extension depends on specific DLLs then you should define them here and Fusion will embed them automatically into the built app
+// The DLL files must be placed in Data\Runtime\Unicode if your ext is unicode, or Data\Runtime if not
+// Example: { _T("MyFirstDll.dll"), _T("MySecondDll.dll"), NULL }
+// Must end witn NULL
+#define EXT_DEPENDENCIES { NULL }
 // Version of your extension, you should increment this for every version of your extension
 // Important for property migration!
 #define EXT_VERSION 1
@@ -29,6 +34,7 @@
 #define EXT_OEFLAGS 0
 // OEPREFs for this extension (see stock SDK docs)
 #define EXT_OEPREFS 0
+// Window procedure priority; see stock SDK docs
 #define EXT_WINDOWPROC_PRIORITY 100
 // ---
 // -----

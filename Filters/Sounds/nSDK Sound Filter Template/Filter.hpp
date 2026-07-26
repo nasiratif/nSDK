@@ -11,7 +11,7 @@
 #define FLT_EXTS { _T("raw"), NULL }
 // -----
 
-// This is the sound filter class that you implement for Fusion
+// This is the sound filter class that you implement for Fusion. It behaves like a file reader class
 class CCustomSoundFilter : public CSoundFilter
 {
 public:
@@ -25,6 +25,7 @@ public:
 	// Called to close current sound file
 	void Close() override;
 
+	// Called to retrieve the total length of the sound (in bytes)
 	dword GetLength() override;
 	// Called to retrieve the current read position of the buffer, in bytes
 	dword GetPos() override;
@@ -32,7 +33,7 @@ public:
 	// dwPos is in total bytes
 	bool32 SetPos(dword dwPos) override;
 	// Called whenever you need to fill in the sound buffers to Fusion
-	// You should implement a streaming mechanicism for this function; e.g, first time this function is called, you get the first block of audio data, in the next call, you get the next audio data right after, and so on
+	// Every call to this function should proceed to read the next chunk of audio data available
 	// lpDstBuffer is the destination audio buffer
 	// dwBufSize is the whole size of the buffer, in bytes
 	// You write to dwRead the number of bytes that you actually wrote into the buffer. If it's less than dwBufSize, Fusion assumes there's no more data left and either stops the sound after this buffer or loops

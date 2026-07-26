@@ -63,17 +63,12 @@ int16 FUSION_API GetRunObjectInfos(mv* mV, fpKpxRunInfos infoPtr)
 }
 
 
-// If your extension depends on specific DLLs then you should implement this function and Fusion will embed them automatically into the built app
-// Your DLLs must reside in Data\Runtime\Unicode, or Data\Runtime if your extension is not unicode
+// Called to retrieve DLL dependencies for this extension
 const tchar** FUSION_API GetDependencies()
 {
 #pragma EXT_DLLEXPORT
-	/*
-	// Example:
-	const tchar* szDep[] = { _T("MyFirstDll.dll"), _T("MySecondDll.dll"), NULL }; // note it must end with NULL
-	return szDep;
-	*/
-	return NULL;
+	static const tchar* deps[] = EXT_DEPENDENCIES;
+	return deps;
 }
 
 
