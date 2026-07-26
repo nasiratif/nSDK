@@ -26,7 +26,9 @@ typedef int16_t int16;
 // 16 bit, unsigned integer
 typedef uint16_t ushort, word, uint16;
 // 32-bit, signed integer
-typedef int32_t int32, bool32;
+typedef int32_t int32;
+// 32-bit, boolean integer
+typedef BOOL bool32;
 // 32-bit, unsigned integer
 typedef unsigned long ulong, dword;
 // 32-bit, unsigned integer
