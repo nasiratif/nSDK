@@ -28,7 +28,7 @@ typedef struct D3DSURFINFO
 	union
 	{
 		IDirect3DTexture9* m_pD3D9Texture;
-		ID3D11ShaderResourceView** m_pD3D11SRV;
+		ID3D11ShaderResourceView** m_pD3D11SRV; // dereference to retrieve shader resource view, might be NULL though until you do blits
 	};
 	int m_dwPixelShaderVersion;
 	int m_dwVertexShaderVersion; // not used
