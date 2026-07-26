@@ -20,7 +20,7 @@ public:
 	void Delete() override;
 
 	// Called to open a sound file
-	// Return 0 if success, otherwise failure
+	// Return SND_OK if success, otherwise failure
 	int32 Open(CInputFile* pf) override;
 	// Called to close current sound file
 	void Close() override;
@@ -36,7 +36,7 @@ public:
 	// lpDstBuffer is the destination audio buffer
 	// dwBufSize is the whole size of the buffer, in bytes
 	// You write to dwRead the number of bytes that you actually wrote into the buffer. If it's less than dwBufSize, Fusion assumes there's no more data left and either stops the sound after this buffer or loops
-	// Return 0 if success, otherwise failure
+	// Return SND_OK if success, otherwise failure
 	int32 ReadData(byte* lpDstBuffer, dword dwBufSize, dword* dwRead) override;
 
 	// Called to retrieve the format of your sound data, you must write it to the WAVEFORMATEX provided

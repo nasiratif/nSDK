@@ -31,7 +31,7 @@ int32 CCustomSoundFilter::Open(CInputFile* pf)
 	size = pf->GetLength();
 	data = (byte*)malloc(size);
 	pf->Read(data, size);
-	return 0;
+	return SND_OK;
 }
 
 void CCustomSoundFilter::Close()
@@ -85,11 +85,14 @@ int32 CCustomSoundFilter::ReadData(byte* lpDstBuffer, dword dwBufSize, dword* dw
 		// Advance position to next chunk of audio data
 		pos += *dwRead;
 	}
-	if (*dwRead)
-		memcpy(lpDstBuffer, data + readPos, *dwRead);
 
-	OutputDebugString(_T("Read data\n"));
-	return 0;
+	if (*dwRead)
+	{
+		memcpy(lpDstBuffer, data + readPos, *dwRead);
+		return SND_OK;
+	}
+	else
+		return SND_CANNOTREADFILE;
 }
 
 void CCustomSoundFilter::SetOutputFormat(LPWAVEFORMATEX pStreamFormat)
@@ -166,7 +169,7 @@ bool32 FUSION_API CanReadFile(CInputFile* pif)
 {
 #pragma EXT_DLLEXPORT
 	// Example:
-	if (pif->GetLength() % (sizeof(int16) * 2)) // we assume we're always reading a 16-bit, 44.1hz, 2-channel audio buffer
+	if (pif->GetLength() % (sizeof(int16) * 2)) // we assume we're always reading a 16-bit, 44.1hz, 2-channel audio buffer, so we're making sure if the size is a multiple of the bit rate * num channels
 		return FALSE;
 
 	return TRUE;
