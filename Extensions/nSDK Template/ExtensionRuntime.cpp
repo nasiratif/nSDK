@@ -1,6 +1,7 @@
 #include "Extension.hpp"
 
 // Fill this out if you're implementing debugger support
+#ifdef EXT_EDITOR
 word DebugTree[] =
 {
 	// Example:
@@ -12,6 +13,7 @@ word DebugTree[] =
 	// End of table (required)
 	DB_END
 };
+#endif
 
 /*
 
@@ -201,22 +203,23 @@ LRESULT FUSION_API WindowProc(fprh rhPtr, HWND hWnd, uint32 msg, WPARAM wParam, 
 */
 
 
+#ifdef EXT_EDITOR
+/*
+
+---------- FUSION DEBUGGER IMPLEMENTATION ----------
+
+*/
 // Tells Fusion your debug tree
 LPWORD FUSION_API GetDebugTree(RunData* rdPtr)
 {
 #pragma EXT_DLLEXPORT
-#ifdef EXT_EDITOR
 	return DebugTree;
-#else
-	return NULL;
-#endif
 }
 
 // Should return the text of a debugger item
 void FUSION_API GetDebugItem(tchar* pBuffer, RunData* rdPtr, int32 id)
 {
 #pragma EXT_DLLEXPORT
-#ifdef EXT_EDITOR
 	/*
 	// Example from stock SDK:
 	char temp[DB_BUFFERSIZE];
@@ -244,14 +247,12 @@ void FUSION_API GetDebugItem(tchar* pBuffer, RunData* rdPtr, int32 id)
 		break;
 	}
 	*/
-#endif
 }
 
 // When the debug item is to be edited
 void FUSION_API EditDebugItem(RunData* rdPtr, int32 id)
 {
 #pragma EXT_DLLEXPORT
-#ifdef EXT_EDITOR
 	/*
 	// Example from stock SDK:
 	switch (id)
@@ -285,5 +286,5 @@ void FUSION_API EditDebugItem(RunData* rdPtr, int32 id)
 		break;
 	}
 	*/
-#endif
 }
+#endif

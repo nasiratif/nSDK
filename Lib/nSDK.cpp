@@ -14,6 +14,9 @@ namespace nSDK
 	int16 numActions, numConditions, numExpressions;
 
 	HINSTANCE hInst;
+
+	// Annoyingly, Initialize is also called on sub-apps, meaning we might do double initialization accidentally, so...
+	uint32 refCount = 0;
 }
 
 /*
@@ -111,6 +114,16 @@ bool32 WINAPI nSDK::Exports::DllMain(HINSTANCE hinstDLL, dword fdwReason, void* 
 
 int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 {
+	if (refCount)
+	{
+		refCount++;
+		return 0;
+	}
+	else
+	{
+		refCount++;
+	}
+
 #ifdef EXT_EDITOR
 	size_t byteSize;
 	int16* ie;
@@ -352,14 +365,17 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 
 int32 FUSION_API nSDK::Exports::Free(mv* mV)
 {
+	if (--refCount == 0)
+	{
 #ifdef EXT_EDITOR
-	free(actionInfosEvents);
-	free(conditionInfosEvents);
-	free(expressionInfosEvents);
+		free(actionInfosEvents);
+		free(conditionInfosEvents);
+		free(expressionInfosEvents);
 #endif
-	free(actionJumps);
-	free(conditionJumps);
-	free(expressionJumps);
+		free(actionJumps);
+		free(conditionJumps);
+		free(expressionJumps);
+	}
 	return 0;
 }
 

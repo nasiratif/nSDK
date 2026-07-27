@@ -36,9 +36,9 @@ STDDLL_API long WINAPI	File_GetLength ( HFILE hf );
 STDDLL_API void WINAPI	File_Close(HFILE hf);
 STDDLL_API BOOL WINAPI	File_ExistA(LPCSTR pName);
 
-STDDLL_API HFILE WINAPI	File_OpenW(LPCWSTR fname, int mode);
-STDDLL_API HFILE WINAPI	File_CreateW(LPCWSTR fname);
-STDDLL_API BOOL WINAPI	File_ExistW(LPCWSTR pName);
+STDDLL_API HFILE WINAPI	File_OpenW(const unsigned short* fname, int mode);
+STDDLL_API HFILE WINAPI	File_CreateW(const unsigned short* fname);
+STDDLL_API BOOL WINAPI	File_ExistW(const unsigned short* pName);
 
 #ifdef _UNICODE
 #define File_Open File_OpenW
