@@ -1546,7 +1546,7 @@ __inline LPVOID mvReAlloc(LPMV mV, LPVOID ptr, int nNewSize) \
 	{ return (LPVOID)mV->mvCallFunction(NULL, EF_REALLOC, (LPARAM)ptr, (LPARAM)nNewSize, (LPARAM)0); }
 
 __inline void mvFree(LPMV mV, LPVOID ptr) \
- 	{ mV->mvCallFunction(NULL, EF_FREE, (LPARAM)ptr, (LPARAM)0, (LPARAM)0); }
+	{ mV->mvCallFunction(NULL, EF_FREE, (LPARAM)ptr, (LPARAM)0, (LPARAM)0); }
 
 __inline void mvRecalcLayout(LPMV mV) \
 	{ mV->mvCallFunction(NULL, EF_RECALCLAYOUT, (LPARAM)0, (LPARAM)0, (LPARAM)0); }
