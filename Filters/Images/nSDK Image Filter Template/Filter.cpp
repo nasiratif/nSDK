@@ -15,8 +15,6 @@ NB:
 
 bool32 WINAPI DllMain(HINSTANCE hinstDLL, dword fdwReason, void* lpvReserved)
 {
-	if (fdwReason == DLL_PROCESS_ATTACH)
-		MessageBox(NULL, _T("wait I'm loaded!"), _T(""), MB_ICONINFORMATION);
 	return nSDK::Exports::DllMain(hinstDLL, fdwReason, lpvReserved);
 }
 
