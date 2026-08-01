@@ -20,7 +20,7 @@ namespace nSDK
 
 	// Make sure to also define your property IDs in Extension.hpp!
 	// You'll also need to implement Set/GetPropValue/Check for every property
-	// Don't forget UpdateEditStructure as well if you change properties across versions
+	// Don't forget UpdateEditStructure as well if you change properties across versions. And if you're migrating from ANSI -> Unicode, see mvIsUnicodeApp/mvGetAppCodePage in stock SDK docs
 	// Example properties are used here:
 	std::vector<Properties> properties =
 	{

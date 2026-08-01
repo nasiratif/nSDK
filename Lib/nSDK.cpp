@@ -532,36 +532,36 @@ void FUSION_API nSDK::Exports::GetExpressionParam(mv* mV, int16 code, int16 para
 }
 
 
-LPINFOEVENTSV2 FUSION_API nSDK::Exports::GetActionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API nSDK::Exports::GetActionInfos(mv* mV, int16 code)
 {
-	auto ie = (LPINFOEVENTSV2)actionInfosEvents;
+	auto ie = (infosEventsV2*)actionInfosEvents;
 	if (!ie)
 		return nullptr;
 
 	while (ie->code != code)
-		ie = (LPINFOEVENTSV2)(((byte*)ie + sizeof(*ie)) + (ie->nParams * sizeof(int16) * 2));
+		ie = (infosEventsV2*)(((byte*)ie + sizeof(*ie)) + (ie->nParams * sizeof(int16) * 2));
 	return ie;
 }
 
-LPINFOEVENTSV2 FUSION_API nSDK::Exports::GetConditionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API nSDK::Exports::GetConditionInfos(mv* mV, int16 code)
 {
-	auto ie = (LPINFOEVENTSV2)conditionInfosEvents;
+	auto ie = (infosEventsV2*)conditionInfosEvents;
 	if (!ie)
 		return nullptr;
 
 	while (ie->code != code)
-		ie = (LPINFOEVENTSV2)(((byte*)ie + sizeof(*ie)) + (ie->nParams * sizeof(int16) * 2));
+		ie = (infosEventsV2*)(((byte*)ie + sizeof(*ie)) + (ie->nParams * sizeof(int16) * 2));
 	return ie;
 }
 
-LPINFOEVENTSV2 FUSION_API nSDK::Exports::GetExpressionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API nSDK::Exports::GetExpressionInfos(mv* mV, int16 code)
 {
-	auto ie = (LPINFOEVENTSV2)expressionInfosEvents;
+	auto ie = (infosEventsV2*)expressionInfosEvents;
 	if (!ie)
 		return nullptr;
 
 	while (ie->code != code)
-		ie = (LPINFOEVENTSV2)(((byte*)ie + sizeof(*ie)) + (ie->nParams * sizeof(int16) * 2));
+		ie = (infosEventsV2*)(((byte*)ie + sizeof(*ie)) + (ie->nParams * sizeof(int16) * 2));
 	return ie;
 }
 

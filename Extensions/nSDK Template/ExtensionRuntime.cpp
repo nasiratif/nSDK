@@ -73,7 +73,7 @@ uint16 FUSION_API GetRunObjectDataSize(fprh rhPtr, EditData* edPtr)
 
 /*
 // If you don't wish to implement your own display routine, but you use a cSurface, you can simply pass it to this function and Fusion will handle the blitting automatically to the frame surface; taking effects and sprite position into consideration
-LPSURFACE FUSION_API GetRunObjectSurface(RunData* rdPtr)
+cSurface* FUSION_API GetRunObjectSurface(RunData* rdPtr)
 {
 #pragma EXT_DLLEXPORT
 	return NULL;
@@ -82,7 +82,7 @@ LPSURFACE FUSION_API GetRunObjectSurface(RunData* rdPtr)
 
 /*
 // If you're using OEPREFS_FINECOLLISIONS, you need to implement this function to generate the collision mask for your object
-LPSMASK FUSION_API GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam)
+sMask* FUSION_API GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam)
 {
 #pragma EXT_DLLEXPORT
 	// Example:
@@ -138,7 +138,7 @@ int16 FUSION_API DestroyRunObject(RunData* rdPtr, long fast)
 }
 
 // Called every Fusion loop, unless you return REFLAG_ONESHOT
-// You may return REFLAG_DISPLAY to trigger DisplayRunObject, or 0 for nothing special
+// You may return REFLAG_DISPLAY to trigger DisplayRunObject, or 0 to simply trigger this function next frame
 int16 FUSION_API HandleRunObject(RunData* rdPtr)
 {
 #pragma EXT_DLLEXPORT
@@ -209,8 +209,9 @@ LRESULT FUSION_API WindowProc(fprh rhPtr, HWND hWnd, uint32 msg, WPARAM wParam, 
 ---------- FUSION DEBUGGER IMPLEMENTATION ----------
 
 */
+
 // Tells Fusion your debug tree
-LPWORD FUSION_API GetDebugTree(RunData* rdPtr)
+word* FUSION_API GetDebugTree(RunData* rdPtr)
 {
 #pragma EXT_DLLEXPORT
 	return DebugTree;

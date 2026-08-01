@@ -20,10 +20,12 @@ mono_crash.*
 # Build results
 MFX/
 SFT/
+IFT/
 Temp/
 
-# hehe
+# Private/proprietary stuff, hehe
 *.private
+Private/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

@@ -590,21 +590,21 @@ void FUSION_API GetExpressionParam(mv* mV, int16 code, int16 param, tchar* strBu
 
 
 // Returns information about a specific action (e.g, number of parameters, parameter info etc)
-LPINFOEVENTSV2 FUSION_API GetActionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API GetActionInfos(mv* mV, int16 code)
 {
 #pragma EXT_DLLEXPORT
 	return nSDK::Exports::GetActionInfos(mV, code);
 }
 
 // Returns information about a specific condition (e.g, flags, number of parameters, parameter info etc)
-LPINFOEVENTSV2 FUSION_API GetConditionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API GetConditionInfos(mv* mV, int16 code)
 {
 #pragma EXT_DLLEXPORT
 	return nSDK::Exports::GetConditionInfos(mV, code);
 }
 
 // Returns information about a specific expression (e.g, return type, number of parameters, parameter info etc)
-LPINFOEVENTSV2 FUSION_API GetExpressionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API GetExpressionInfos(mv* mV, int16 code)
 {
 #pragma EXT_DLLEXPORT
 	return nSDK::Exports::GetExpressionInfos(mV, code);

@@ -154,17 +154,17 @@ const tchar** FUSION_API GetFilterExts()
 // Implement this function so Fusion can retrieve the priority of your sound filter
 // When Fusion plays a sample, it finds a suitable sound filter in the order based on their priority value. Lower values mean your filter is more likely to be looked into first
 // This function is optional; if not exported, your filter won't have any explicit priority setting
-dword FUSION_API GetPriority()
+int32 FUSION_API GetPriority()
 {
 #pragma EXT_DLLEXPORT
 	// Example:
-	return MAXDWORD; // lowest priority since we almost always return TRUE in CanReadFile
+	return INT32_MAX; // should be lowest priority; we almost always return TRUE in CanReadFile
 }
 
 
 // Called to determine whether your filter is capable of reading the specified file
 // You could, for example, read the first 4 bytes and check if it matches the byte signature "fLaC", if we were writing a FLAC filter
-// If you return FALSE, Fusion ignroes your filter for that file & looks into other filters
+// If you return FALSE, Fusion ignores your filter for that file & looks into other filters
 bool32 FUSION_API CanReadFile(CInputFile* pif)
 {
 #pragma EXT_DLLEXPORT

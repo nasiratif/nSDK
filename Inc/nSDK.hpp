@@ -231,9 +231,9 @@ namespace nSDK
 		void FUSION_API GetExpressionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen);
 		void FUSION_API GetExpressionParam(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
 
-		LPINFOEVENTSV2 FUSION_API GetActionInfos(mv* mV, int16 code);
-		LPINFOEVENTSV2 FUSION_API GetConditionInfos(mv* mV, int16 code);
-		LPINFOEVENTSV2 FUSION_API GetExpressionInfos(mv* mV, int16 code);
+		infosEventsV2* FUSION_API GetActionInfos(mv* mV, int16 code);
+		infosEventsV2* FUSION_API GetConditionInfos(mv* mV, int16 code);
+		infosEventsV2* FUSION_API GetExpressionInfos(mv* mV, int16 code);
 #endif
 	}
 }
