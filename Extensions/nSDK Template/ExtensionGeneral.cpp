@@ -94,7 +94,7 @@ int32 FUSION_API LoadObject(mv* mV, const tchar* fileName, EditData* edPtr, int3
 	return 0;
 }
 
-// Counterpart of UnloadObject
+// Counterpart of LoadObject
 void FUSION_API UnloadObject(mv* mV, EditData* edPtr, int32 reserved)
 {
 #pragma EXT_DLLEXPORT
