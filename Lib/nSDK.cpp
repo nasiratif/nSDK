@@ -124,6 +124,8 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 		refCount++;
 	}
 
+	numActions = numConditions = numExpressions = 0;
+
 #ifdef EXT_EDITOR
 	size_t byteSize;
 	int16* ie;
@@ -131,7 +133,6 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 	// Create action infos events:
 	// -----
 	byteSize = 0;
-	numActions = 0;
 	for (const auto& act : actionDefinitions)
 	{
 		byteSize += sizeof(infosEventsV2);
@@ -181,7 +182,6 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 	// Create condition infos events:
 	// -----
 	byteSize = 0;
-	numConditions = 0;
 	for (const auto& cnd : conditionDefinitions)
 	{
 		byteSize += sizeof(infosEventsV2);
@@ -237,7 +237,6 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 	// Create expression infos events:
 	// -----
 	byteSize = 0;
-	numExpressions = 0;
 	for (const auto& exp : expressionDefinitions)
 	{
 		byteSize += sizeof(infosEventsV2);
@@ -274,7 +273,6 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 
 	// Get number of ACEs:
 	// -----
-	numActions = 0;
 	for (const auto& act : actionDefinitions)
 	{
 		if (act.code > numActions)
@@ -283,7 +281,6 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 	if (!actionDefinitions.empty())
 		numActions++;
 
-	numConditions = 0;
 	for (const auto& cnd : conditionDefinitions)
 	{
 		if (cnd.code > numConditions)
@@ -292,7 +289,6 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 	if (!conditionDefinitions.empty())
 		numConditions++;
 
-	numExpressions = 0;
 	for (const auto& exp : expressionDefinitions)
 	{
 		if (exp.code > numExpressions)
