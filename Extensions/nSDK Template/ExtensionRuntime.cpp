@@ -90,7 +90,7 @@ sMask* FUSION_API GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam)
 		return NULL;
 
 	// Transparent? Create mask
-	auto pMask = rdPtr->mask; // LPSMASK mask;
+	auto pMask = rdPtr->mask; // sMask* mask;
 	if (rdPtr->surf)
 	{
 		auto dwMaskSize = rdPtr->surf->CreateMask(NULL, lParam);
@@ -160,7 +160,7 @@ int16 FUSION_API PauseRunObject(RunData* rdPtr)
 	return 0;
 }
 
-// When fusion runtime is resumed
+// When Fusion runtime is resumed
 int16 FUSION_API ContinueRunObject(RunData* rdPtr)
 {
 #pragma EXT_DLLEXPORT
