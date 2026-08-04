@@ -146,34 +146,9 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 		*(ie++) = act.code; // infosEventsV2::code
 		*(ie++) = 0; // infosEventsV2::flags
 		*(ie++) = (int16)act.params.size(); // infosEventsV2::nParams
+
 		for (const auto& param : act.params)
-		{
-			if (param.type >= PARAM_EXTBASE)
-			{
-				*(ie++) = param.type;
-			}
-			else
-			{
-				switch (param.type)
-				{
-				case DataType_Number:
-					*(ie++) = PARAM_EXPRESSION;
-					break;
-				case DataType_String:
-					*(ie++) = PARAM_EXPSTRING;
-					break;
-				case DataType_Color:
-					*(ie++) = PARAM_COLOUR;
-					break;
-				case DataType_Filename:
-					*(ie++) = PARAM_FILENAME;
-					break;
-				default:
-					*(ie++) = NULL;
-					break;
-				}
-			} // infosEventsV2::param[X]
-		}
+			*(ie++) = param.type; // infosEventsV2::param[X]
 		for (const auto& param : act.params)
 			*(ie++) = NULL;  // infosEventsV2::paramTitle[X] (not using that here!)
 	}
@@ -201,34 +176,9 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 		*(ie++) = cnd.code; // infosEventsV2::code
 		*(ie++) = flags; // infosEventsV2::flags
 		*(ie++) = (int16)cnd.params.size(); // infosEventsV2::nParams
+
 		for (const auto& param : cnd.params)
-		{
-			if (param.type >= PARAM_EXTBASE)
-			{
-				*(ie++) = param.type;
-			}
-			else
-			{
-				switch (param.type)
-				{
-				case DataType_Number:
-					*(ie++) = PARAM_EXPRESSION;
-					break;
-				case DataType_String:
-					*(ie++) = PARAM_EXPSTRING;
-					break;
-				case DataType_Color:
-					*(ie++) = PARAM_COLOUR;
-					break;
-				case DataType_Filename:
-					*(ie++) = PARAM_FILENAME;
-					break;
-				default:
-					*(ie++) = NULL;
-					break;
-				}
-			} // infosEventsV2::param[X]
-		}
+			*(ie++) = param.type; // infosEventsV2::param[X]
 		for (const auto& param : cnd.params)
 			*(ie++) = NULL;  // infosEventsV2::paramTitle[X]
 	}

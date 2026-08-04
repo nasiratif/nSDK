@@ -37,12 +37,52 @@ namespace nSDK
 		ConditionFlags_Negatable = 1 << 1
 	};
 
+	// Data types; expressions only use Number/String, everything else is for action/condition parameters
+	// See stock SDK docs
 	enum DataType : uint32
 	{
-		DataType_Number,
-		DataType_String,
-		DataType_Color,
-		DataType_Filename
+		DataType_Number = PARAM_EXPRESSION,
+		DataType_String = PARAM_EXPSTRING,
+		// Parameter value: has PARAMCLICK_DOUBLE flag set for double clicks
+		DataType_MouseClick = PARAM_CLICK,
+		// Parameter value: COLORREF value
+		DataType_Color = PARAM_COLOUR,
+		// Example parameter title: "#Title#Choose your image...#Filter#Windows Bitmap Files|*.bmp|All files|*.*|"
+		// Parameter value: chosen filename
+		DataType_Filename = PARAM_FILENAME2,
+		// Uses PARAM_FILENAME (which is deprecated as per stock SDK docs)
+		DataType_Filename_Deprecated = PARAM_FILENAME,
+		// Parameter value: a JOYSTICK_XXX define
+		DataType_JoystickDirection = PARAM_JOYDIRECTION,
+		// Parameter value: Windows virtual key code
+		DataType_Key = PARAM_KEY,
+		// Parameter value: one of the mouse-related Windows virtual key codes
+		DataType_MouseKey = PARAM_VMKEY,
+		// Parameter value: bitmask where bit 0 is east, bit 8 is north, bit 16 is west, & bit 24 is south
+		DataType_Direction = PARAM_NEWDIRECTION,
+		// Parameter value: player index, ranging from 0 to 3
+		DataType_Player = PARAM_PLAYER,
+		// Parameter value: LOWORD contains X position, HIWORD contains Y
+		DataType_Position = PARAM_POSITION,
+		// Parameter value: speed value, 0 to 100
+		DataType_Speed = PARAM_SPEED,
+		// Parameter value: integer containing time in 1/1000 of a second
+		DataType_Time = PARAM_TIME,
+		// Parameter value: pointer to an SRECT structure containing the zone
+		DataType_Zone = PARAM_ZONE,
+		// Conditions only
+		// What you return in your action/condition is the integer to compare against
+		DataType_ComparisonNumber = PARAM_COMPARAISON,
+		// Conditions only
+		// What you return in your action/condition is the string to compare against
+		DataType_ComparisonString = PARAM_CMPSTRING,
+		// Conditions only (I would assume)
+		// What you return in your action/condition is an integer, in milliseconds, to compare against
+		DataType_ComparisonTime = PARAM_CMPTIME,
+		// Object picker
+		DataType_Object = PARAM_OBJECT,
+		// PARAM_INKEFFECT comments apparently states that parameter value has LOWORD with effect ID, & HIWORD with effect param
+		DataType_InkEffect = PARAM_INKEFFECT
 	};
 
 	// NB: Some of these types are not officially documented..
