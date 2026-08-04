@@ -5,4 +5,5 @@ nSDK is a Windows-only extension SDK for Clickteam Fusion 2.5. I created this to
 The entire goal of this SDK is to make some error-prone things (like defining A/C/Es) easier & safer while also keeping abstractions at a minimum to provide the most flexibility and performance possible. Some of the extension exports are implemented by the SDK itself but is still available to every extension so they can add their own behaviors on top if desired.
 
 ## Credits
-[Clickteam](https://www.clickteam.com) for the Fusion 2.5 SDK
+[Clickteam](https://www.clickteam.com) for the Fusion 2.5 SDK, headers/lib originates here with modifications
+[DarkEdif SDK](https://github.com/SortaCore/MMF2Exts), where I got the DX11 additions from
