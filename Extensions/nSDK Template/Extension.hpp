@@ -124,6 +124,7 @@ namespace Conditions
 	long FUSION_API SameStrings(RunData* rdPtr, long param1, long param2);
 
 	long FUSION_API CheckStringData(RunData* rdPtr, long param1, long param2);
+	long FUSION_API Comparison(RunData* rdPtr, long param1, long param2);
 }
 
 namespace Expressions

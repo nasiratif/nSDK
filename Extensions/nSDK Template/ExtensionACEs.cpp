@@ -18,7 +18,8 @@ namespace nSDK
 		{
 			NULL, ACE_TEXT("More:"), true,
 			{
-				{ 2, ACE_TEXT("Check string data"), true },
+				{ 2, ACE_TEXT("Check string data (custom parameter example)"), true },
+				{ 3, ACE_TEXT("Perform a comparison against a number"), true },
 			}
 		},
 	};
@@ -34,13 +35,13 @@ namespace nSDK
 	// -----
 	std::vector<ACE> actionDefinitions =
 	{
-		{ 
+		{
 			0, ACE_TEXT("Change frame background color to %0"), NULL, Actions::ChangeBGColor,
 			{
 				{ DataType_Color, ACE_TEXT("Select color") }
 			}
 		},
-		{ 
+		{
 			1, ACE_TEXT("Example action 2"), NULL, Actions::ExampleAction2
 		}
 	};
@@ -48,9 +49,9 @@ namespace nSDK
 	{
 		{
 			0, ACE_TEXT("%o: Are %0 and %1 the same?"), ConditionFlags_Negatable, Conditions::SameNumbers,
-			{ 
+			{
 				{ DataType_Number, ACE_TEXT("First number") },
-				{ DataType_Number, ACE_TEXT("Second number") }
+				{ DataType_Number, ACE_TEXT("Second number") },
 			}
 		},
 		{
@@ -66,7 +67,14 @@ namespace nSDK
 				{ DataType_String, ACE_TEXT("String") },
 				{ CustomDataType_Example, ACE_TEXT("String data type") }
 			}
-		}
+		},
+		{
+			3, ACE_TEXT("%o: %0 %1?"), ConditionFlags_Negatable, Conditions::Comparison,
+			{
+				{ DataType_Number, ACE_TEXT("Number") },
+				{ DataType_ComparisonNumber, ACE_TEXT("Compare against..") },
+			}
+		},
 	};
 	// Note that the only acceptable data types for expressions are Numbers and Strings
 	std::vector<ACE> expressionDefinitions =

@@ -30,3 +30,10 @@ long FUSION_API Conditions::CheckStringData(RunData* rdPtr, long param1, long pa
 		return ret == IS_TEXT_UNICODE_STATISTICS;
 	}
 }
+
+long FUSION_API Conditions::Comparison(RunData* rdPtr, long param1, long param2)
+{
+	// Fusion will automatically do the comparison for us against param1
+	// TODO: how does this work for floats?
+	return param1;
+}
