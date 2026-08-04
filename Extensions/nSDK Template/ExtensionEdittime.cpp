@@ -7,6 +7,7 @@
 
 */
 
+// Returns object information
 void FUSION_API GetObjInfos(mv* mV, EditData* edPtr, tchar* ObjName, tchar* ObjAuthor, tchar* ObjCopyright, tchar* ObjComment, tchar* ObjHttp)
 {
 #pragma EXT_DLLEXPORT
@@ -20,6 +21,7 @@ void FUSION_API GetObjInfos(mv* mV, EditData* edPtr, tchar* ObjName, tchar* ObjA
 	StringCbCopy(ObjHttp, length, EXT_HTTP);
 }
 
+// Returns the help file name of your extension
 const tchar* FUSION_API GetHelpFileName()
 {
 #pragma EXT_DLLEXPORT
