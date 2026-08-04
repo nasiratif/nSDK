@@ -126,7 +126,7 @@ int16 FUSION_API CreateRunObject(RunData* rdPtr, EditData* edPtr, fpcob cobPtr)
 	rdPtr->rHo.hoImgWidth = edPtr->swidth;
 	rdPtr->rHo.hoImgHeight = edPtr->sheight;
 	*/
-	return 0;
+	return 0; // success
 }
 
 // Counterpart of CreateRunObject
@@ -145,10 +145,19 @@ int16 FUSION_API HandleRunObject(RunData* rdPtr)
 	return REFLAG_ONESHOT;
 }
 
-// If you return REFLAG_DISPLAY in HandleRunObject this routine will run
+// If you return REFLAG_DISPLAY in HandleRunObject, this function will run
+// Most common use case is to blit a cSurface onto the frame surface (see example below), although GetRunObjectSurface, defined far above, is meant to do this for you automatically
+// Note that this function will never be triggered if you use OEFLAG_ANIMATIONS!
 int16 FUSION_API DisplayRunObject(RunData* rdPtr)
 {
 #pragma EXT_DLLEXPORT
+	/*
+	// Example:
+	// Retrieve frame surface:
+	auto frameSurf = WinGetSurface((int)rdPtr->rHo.hoAdRunHeader->rh4.rh4Mv->mvIdEditWin);
+	// Blit our surface onto the frame
+	rdPtr->surf->Blit(*frameSurf, rdPtr->rHo.hoX, rdPtr->rHo.hoY);
+	*/
 	return 0;
 }
 
@@ -183,8 +192,18 @@ bool32 FUSION_API LoadRunObject(RunData* rdPtr, HANDLE hFile)
 }
 
 /*
-// Intercept Fusion's window procedure
-// You must export this function if OEFLAG_WINDOWPROC is defined
+
+------ WINDOW PROC FUNCTIONS (OEFLAG_WINDOWPROC) ------
+
+---- Uncomment these functions if you wish to intercept Fusion's window procedure using OEFLAG_WINDOWPROC
+
+*/
+
+
+/*
+// Get the RunData pointer from an HWND (must have been subclassed with RFUNCTION_SUBCLASSWINDOW, see stock SDK docs)
+RunData* GetRdPtr(HWND hWnd, RunHeader* rhPtr) { return (RunData*)GetProp(hWnd, (LPCTSTR)rhPtr->rh4.rh4AtomRd); }
+
 LRESULT FUSION_API WindowProc(fprh rhPtr, HWND hWnd, uint32 msg, WPARAM wParam, LPARAM lParam)
 {
 #pragma EXT_DLLEXPORT
@@ -203,10 +222,62 @@ LRESULT FUSION_API WindowProc(fprh rhPtr, HWND hWnd, uint32 msg, WPARAM wParam, 
 */
 
 
+/*
+
+------ TEXT FUNCTIONS (OEFLAG_TEXT) ------
+
+---- Uncomment these functions if you're using OEFLAG_TEXT
+
+*/
+
+/*
+// Set the extension object's font
+void FUSION_API SetRunObjectFont(RunData* rdPtr, LOGFONT* pLf, RECT* pRc)
+{
+#pragma EXT_DLLEXPORT
+	// Example from stock SDK:
+	HFONT hFont = CreateFontIndirect(pLf);
+	if (hFont != NULL)
+	{
+		if (rdPtr->m_hFont != 0)
+			DeleteObject(rdPtr->m_hFont);
+		rdPtr->m_hFont = hFont;
+		SendMessage(rdPtr->m_hWnd, WM_SETFONT, (WPARAM)rdPtr->m_hFont, FALSE);
+	}
+}
+
+// Return the extension object's font
+void FUSION_API GetRunObjectFont(RunData* rdPtr, LOGFONT* pLf)
+{
+#pragma EXT_DLLEXPORT
+	// Example from stock SDK:
+	GetObject(rdPtr->m_hFont, sizeof(LOGFONT), pLf);
+}
+
+
+// Set the extension object's text color
+void FUSION_API SetRunObjectTextColor(RunData* rdPtr, COLORREF rgb)
+{
+#pragma EXT_DLLEXPORT
+	// Example from stock SDK:
+	rdPtr->m_dwColor = rgb;
+	InvalidateRect(rdPtr->m_hWnd, NULL, TRUE);
+}
+
+// Return the extension object's text color
+COLORREF FUSION_API GetRunObjectTextColor(RunData* rdPtr)
+{
+#pragma EXT_DLLEXPORT
+	// Example from stock SDK:
+	return rdPtr->m_dwColor;
+}
+*/
+
+
 #ifdef EXT_EDITOR
 /*
 
----------- FUSION DEBUGGER IMPLEMENTATION ----------
+------ FUSION DEBUGGER IMPLEMENTATION ------
 
 */
 
