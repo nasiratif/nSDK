@@ -6,4 +6,5 @@ The entire goal of this SDK is to make some error-prone things (like defining A/
 
 ## Credits
 [Clickteam](https://www.clickteam.com) for the Fusion 2.5 SDK, headers/lib originates here with modifications
+
 [DarkEdif SDK](https://github.com/SortaCore/MMF2Exts), where I got the DX11 additions from
