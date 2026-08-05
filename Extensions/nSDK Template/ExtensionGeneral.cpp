@@ -6,12 +6,14 @@
 
 */
 
+// DLL entry point
 bool32 WINAPI DllMain(HINSTANCE hinstDLL, dword fdwReason, void* lpvReserved)
 {
 	return nSDK::Exports::DllMain(hinstDLL, fdwReason, lpvReserved);
 }
 
 
+// Necessary function to retrieve version information about the extension
 dword FUSION_API GetInfos(int32 info)
 {
 #pragma EXT_DLLEXPORT
@@ -40,7 +42,9 @@ dword FUSION_API GetInfos(int32 info)
 	}
 }
 
-int16 FUSION_API GetRunObjectInfos(mv* mV, fpKpxRunInfos infoPtr)
+// Called to retrieve some information about the extension, like the version, identifier, A/C/E funcs, OEFLAGS etc
+// The name is a misnomer; it's called at edittime as well, hence why this function is in General
+int16 FUSION_API GetRunObjectInfos(mv* mV, kpxRunInfos* infoPtr)
 {
 #pragma EXT_DLLEXPORT
 	infoPtr->identifier = EXT_FIX_IDENTIFIER(EXT_IDENTIFIER);

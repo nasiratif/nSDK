@@ -4,6 +4,10 @@ namespace nSDK
 {
 #ifdef EXT_EDITOR
 	// MENUS:
+	// Each vector item contains:
+	// - A/C/E ID (code) (ignored for sub-menus)
+	// - Title string
+	// - Enabled/disabled flag
 	// -----
 	std::vector<ACEMenu> actionMenus =
 	{
@@ -32,6 +36,14 @@ namespace nSDK
 #endif
 
 	// DEFINITIONS:
+	// Each vector item contains:
+	// - A/C/E ID (code) (should match the corresponding menu ID)
+	// - Display string
+	// - Condition flags (not used in actions/expressions)
+	// - Pointer to A/C/E function
+	// - Parameters:
+	//		- Data type
+	//		- Title string
 	// -----
 	std::vector<ACE> actionDefinitions =
 	{

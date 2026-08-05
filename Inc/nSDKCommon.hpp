@@ -63,6 +63,7 @@ typedef char tchar;
 #define EXT_FIX_IDENTIFIER(id) ((id & 0xFF) << 24) | ((id & 0xFF00) << 8) | ((id & 0xFF0000) >> 8) | ((id & 0xFF000000) >> 24)
 
 #define FUSION_API WINAPI
+// Rather than using a .def file, we can export this way instead! Thanks to https://stackoverflow.com/a/2805560/
 #define EXT_DLLEXPORT comment(linker, "/EXPORT:" __FUNCTION__ "=" __FUNCDNAME__)
 // -----
 

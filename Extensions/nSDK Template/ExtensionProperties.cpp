@@ -13,7 +13,7 @@ namespace nSDK
 			_T("First"),
 			_T("Second"),
 			_T("Last"),
-			NULL
+			NULL // Must end with NULL
 		};
 	}
 	using namespace PropCreationData;
@@ -21,7 +21,17 @@ namespace nSDK
 	// Make sure to also define your property IDs in Extension.hpp!
 	// You'll also need to implement Set/GetPropValue/Check for every property
 	// Don't forget UpdateEditStructure as well if you change properties across versions. And if you're migrating from ANSI -> Unicode, see mvIsUnicodeApp/mvGetAppCodePage in stock SDK docs
-	// Example properties are used here:
+	// Example properties are used here.
+	// Each vector item contains:
+	// - Property tab (PropTab_XXX)
+	// - "Append to end of properties" flag, if false, properties are appended at the beginning of the tab rather than the end
+	// - Properties:
+	//		- Property ID (user-defined)
+	//		- Property name
+	//		- Property description
+	//		- Property type (PropType_XXX)
+	//		- Property options (depends on the type, see stock SDK docs)
+	//		- Creation parameter (depends on the type, see stock SDK docs)
 	std::vector<Properties> properties =
 	{
 		{

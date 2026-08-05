@@ -28,7 +28,7 @@ void FUSION_API StartApp(mv* mV, CRunApp* pApp)
 #pragma EXT_DLLEXPORT
 	/*
 	// Example (store global data):
-	int32* data = (int32*)mV->mvGetExtUserData(pApp, nSDK::hInst);
+	auto data = (int32*)mV->mvGetExtUserData(pApp, nSDK::hInst);
 	if (data)
 		delete[] data;
 
@@ -43,7 +43,7 @@ void FUSION_API EndApp(mv* mV, CRunApp* pApp)
 #pragma EXT_DLLEXPORT
 	/*
 	// Example (free global data):
-	int32* data = (int32*)mV->mvGetExtUserData(pApp, nSDK::hInst);
+	auto data = (int32*)mV->mvGetExtUserData(pApp, nSDK::hInst);
 	if (data)
 		delete[] data;
 	*/
@@ -64,7 +64,7 @@ void FUSION_API EndFrame(mv* mV, dword dwReserved, int32 nFrameIndex)
 
 
 // Tells Fusion what your RunData size is
-uint16 FUSION_API GetRunObjectDataSize(fprh rhPtr, EditData* edPtr)
+uint16 FUSION_API GetRunObjectDataSize(RunHeader* rhPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 	return sizeof(RunData);
@@ -99,7 +99,7 @@ sMask* FUSION_API GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam)
 			if (pMask)
 				free(pMask);
 
-			pMask = (LPSMASK)calloc(dwMaskSize, 1); // remember to free this later!
+			pMask = (sMask*)calloc(dwMaskSize, 1); // remember to free this later!
 			if (pMask)
 			{
 				rdPtr->surf->CreateMask(pMask, lParam);
@@ -115,7 +115,8 @@ sMask* FUSION_API GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam)
 
 // Called when the extension object is created
 // Should be used to initialize RunData
-int16 FUSION_API CreateRunObject(RunData* rdPtr, EditData* edPtr, fpcob cobPtr)
+// If you return an error code here (other than 0), DestroyRunObject is invoked
+int16 FUSION_API CreateRunObject(RunData* rdPtr, EditData* edPtr, createObjectInfo* cobPtr)
 {
 #pragma EXT_DLLEXPORT
 	/*
@@ -131,6 +132,7 @@ int16 FUSION_API CreateRunObject(RunData* rdPtr, EditData* edPtr, fpcob cobPtr)
 
 // Counterpart of CreateRunObject
 // Free resources you allocated in RunData
+// For the 'fast' parameter, see stock SDK docs
 int16 FUSION_API DestroyRunObject(RunData* rdPtr, long fast)
 {
 #pragma EXT_DLLEXPORT
@@ -158,7 +160,7 @@ int16 FUSION_API DisplayRunObject(RunData* rdPtr)
 	// Blit our surface onto the frame
 	rdPtr->surf->Blit(*frameSurf, rdPtr->rHo.hoX, rdPtr->rHo.hoY);
 	*/
-	return 0;
+	return 0; // return value is ignored
 }
 
 
@@ -204,7 +206,7 @@ bool32 FUSION_API LoadRunObject(RunData* rdPtr, HANDLE hFile)
 // Get the RunData pointer from an HWND (must have been subclassed with RFUNCTION_SUBCLASSWINDOW, see stock SDK docs)
 RunData* GetRdPtr(HWND hWnd, RunHeader* rhPtr) { return (RunData*)GetProp(hWnd, (LPCTSTR)rhPtr->rh4.rh4AtomRd); }
 
-LRESULT FUSION_API WindowProc(fprh rhPtr, HWND hWnd, uint32 msg, WPARAM wParam, LPARAM lParam)
+LRESULT FUSION_API WindowProc(RunHeader* rhPtr, HWND hWnd, uint32 msg, WPARAM wParam, LPARAM lParam)
 {
 #pragma EXT_DLLEXPORT
 	// Example:

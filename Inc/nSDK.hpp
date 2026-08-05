@@ -88,32 +88,55 @@ namespace nSDK
 	// NB: Some of these types are not officially documented..
 	enum PropType : uint16
 	{
+		// Uses CPropStringValue
 		PropType_StaticString = PROPTYPE_STATIC,
 		PropType_Folder = PROPTYPE_FOLDER,
 		PropType_FolderEnd = PROPTYPE_FOLDER_END,
+		// Calls EditProp upon click, the CPropValue used can be anything
 		PropType_EditButton = PROPTYPE_EDITBUTTON,
+		// Uses CPropStringValue
 		PropType_EditString = PROPTYPE_EDIT_STRING,
+		// Uses CPropDWordValue
 		PropType_EditNumber = PROPTYPE_EDIT_NUMBER,
+		// Uses CPropDWordValue, containing the combo index (or -1 if unselected)
 		PropType_ComboBox = PROPTYPE_COMBOBOX,
+		// Uses CPropSizeValue
 		PropType_Size = PROPTYPE_SIZE,
+		// Uses CPropDWordValue
 		PropType_Color = PROPTYPE_COLOR,
+		// Uses Set/GetPropCheck
 		PropType_Checkbox = PROPTYPE_LEFTCHECKBOX,
+		// Uses CPropDWordValue
 		PropType_SliderEdit = PROPTYPE_SLIDEREDIT,
+		// Uses CPropDWordValue
 		PropType_SpinEdit = PROPTYPE_SPINEDIT,
+		// Uses CPropDataValue, containing a PropDirValue structure
 		PropType_DirectionControl = PROPTYPE_DIRCTRL,
 		PropType_Group = PROPTYPE_GROUP,
+		// Undocumented!
 		PropType_ListButton = PROPTYPE_LISTBTN,
+		// Uses CPropStringValue
 		PropType_FileName = PROPTYPE_FILENAME,
+		// Uses CPropDataValue, containing a LOGFONT structure
 		PropType_Font = PROPTYPE_FONT,
 		PropType_Custom = PROPTYPE_CUSTOM,
+		// Uses CPropStringValue
 		PropType_PictureFilename = PROPTYPE_PICTUREFILENAME,
+		// Uses CPropDWordValue, containing the combo index (or -1 if unselected)
 		PropType_ComboBoxButton = PROPTYPE_COMBOBOXBTN,
+		// Uses CPropFloatValue
 		PropType_EditFloat = PROPTYPE_EDIT_FLOAT,
+		// Uses CPropStringValue, each line of text ending with RC/LF characters (0x0D, 0x0A)
 		PropType_EditMultiline = PROPTYPE_EDIT_MULTILINE,
+		// Uses CPropDataValue, an array of words where the first one is the number of images, then the image IDs
 		PropType_ImageList = PROPTYPE_IMAGELIST,
+		// Uses CPropDWordValue, containing the combo index (or -1 if unselected)
 		PropType_IconComboBox = PROPTYPE_ICONCOMBOBOX,
+		// Undocumented!
 		PropType_UrlButton = PROPTYPE_URLBUTTON,
+		// Undocumented!
 		PropType_DirectoryName = PROPTYPE_DIRECTORYNAME,
+		// Undocumented!
 		PropType_SpinEditFloat = PROPTYPE_SPINEDITFLOAT,
 	};
 
@@ -134,6 +157,7 @@ namespace nSDK
 		// -----
 		PropOptions_EditPassword = PROPOPT_EDIT_PASSWORD,
 		PropOptions_EditLowercase = PROPOPT_EDIT_LOWERCASE,
+		// Force a string to be uppercase
 		PropOptions_EditUppercase = PROPOPT_EDIT_UPPERCASE,
 
 		PropOptions_ComboSort = PROPOPT_COMBO_SORT
@@ -253,9 +277,9 @@ namespace nSDK
 #ifdef EXT_EDITOR
 		bool32 FUSION_API GetProperties(mv* mV, EditData* edPtr, bool32 bMasterItem);
 
-		HMENU FUSION_API GetActionMenu(mv* mV, fpObjInfo oiPtr, EditData* edPtr);
-		HMENU FUSION_API GetConditionMenu(mv* mV, fpObjInfo oiPtr, EditData* edPtr);
-		HMENU FUSION_API GetExpressionMenu(mv* mV, fpObjInfo oiPtr, EditData* edPtr);
+		HMENU FUSION_API GetActionMenu(mv* mV, OI* oiPtr, EditData* edPtr);
+		HMENU FUSION_API GetConditionMenu(mv* mV, OI* oiPtr, EditData* edPtr);
+		HMENU FUSION_API GetExpressionMenu(mv* mV, OI* oiPtr, EditData* edPtr);
 
 		int16 FUSION_API GetActionCodeFromMenu(mv* mV, int16 menuId);
 		int16 FUSION_API GetConditionCodeFromMenu(mv* mV, int16 menuId);

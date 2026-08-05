@@ -7,7 +7,7 @@
 
 */
 
-// Returns object information
+// Returns extension metadata
 void FUSION_API GetObjInfos(mv* mV, EditData* edPtr, tchar* ObjName, tchar* ObjAuthor, tchar* ObjCopyright, tchar* ObjComment, tchar* ObjHttp)
 {
 #pragma EXT_DLLEXPORT
@@ -27,6 +27,21 @@ const tchar* FUSION_API GetHelpFileName()
 #pragma EXT_DLLEXPORT
 	return EXT_HELP_FILENAME;
 }
+
+
+/*
+// Alternative method of loading the extension icon; you can draw into the surface provided by the pIconSf parameter and Fusion will use it as the ext icon instead of what's embedded in resources. The surface is always 32x32
+// You can resize the surface, but not that it's beneficial; Fusion will always resize it back to 32x32
+// If you want to use this, make sure to remove the EXO_ICON & EXO_IMAGE resources so Fusion will trigger this function. You must also again draw the icon yourself for the frame editor in EditorDisplay!
+// Side note: here you can also change the name of the extension by writing into lpName, but Clickteam discourages that nowadays
+int32 FUSION_API MakeIconEx(mv* mV, cSurface* pIconSf, tchar* lpName, OI* oiPtr, EditData* edPtr)
+{
+#pragma EXT_DLLEXPORT
+	// Example: a brown=ish square
+	pIconSf->Fill(RGB(64, 24, 24));
+	return 0; // success
+}
+*/
 
 
 // Called to insert your object properties
@@ -61,26 +76,23 @@ void FUSION_API ReleasePropCreateParam(mv* mV, EditData* edPtr, uint32 nPropID, 
 
 // Called when a property is changed
 // Here you modify your EditData to set the new property
-void FUSION_API SetPropValue(mv* mV, EditData* edPtr, uint32 nPropID, void* lParam)
+void FUSION_API SetPropValue(mv* mV, EditData* edPtr, uint32 nPropID, CPropValue* lParam)
 {
 #pragma EXT_DLLEXPORT
-	// Gets the pointer to the CPropValue structure
-	CPropValue* pValue = (CPropValue*)lParam;
-
 	// Example:
 	switch (nPropID)
 	{
 	case PropID_Images:
-		edPtr->nImages = *(word*)((CPropDataValue*)pValue)->m_pData; // first word contains number of images
+		edPtr->nImages = *(word*)((CPropDataValue*)lParam)->m_pData; // first word contains number of images
 		break;
 	case PropID_Text:
-		StringCbCopy(edPtr->szText, sizeof(edPtr->szText), ((CPropStringValue*)pValue)->GetString()); // you might need to use mvReAllocEditData if you need larger string length
+		StringCbCopy(edPtr->szText, sizeof(edPtr->szText), ((CPropStringValue*)lParam)->GetString()); // you might need to use mvReAllocEditData if you need larger string length
 		break;
 	case PropID_Color:
-		edPtr->dwColor = ((CPropDWordValue*)pValue)->m_dwValue;
+		edPtr->dwColor = ((CPropDWordValue*)lParam)->m_dwValue;
 		break;
 	case PropID_Combo:
-		edPtr->dwComboIndex = ((CPropDWordValue*)pValue)->m_dwValue;
+		edPtr->dwComboIndex = ((CPropDWordValue*)lParam)->m_dwValue;
 		break;
 	}
 	
@@ -245,7 +257,7 @@ void FUSION_API GetParameterString(mv* mV, int16 code, paramExt* pExt, tchar* pD
 
 // When objeet is created in via the "Create new object" dialog
 // Should be used to initialize EditData
-int32 FUSION_API CreateObject(mv* mV, fpLevObj loPtr, EditData* edPtr)
+int32 FUSION_API CreateObject(mv* mV, LO* loPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 	memset(edPtr->wImages, NULL, sizeof(edPtr->wImages));
@@ -258,34 +270,36 @@ int32 FUSION_API CreateObject(mv* mV, fpLevObj loPtr, EditData* edPtr)
 }
 
 // When object is removed
-void FUSION_API RemoveObject(mv* mV, fpLevObj loPtr, EditData* edPtr, uint16 cpt)
+void FUSION_API RemoveObject(mv* mV, LO* loPtr, EditData* edPtr, uint16 cpt)
 {
 #pragma EXT_DLLEXPORT
 }
 
 // When object is cloned, not duplicated
-void FUSION_API DuplicateObject(mv* mV, fpObjInfo oiPtr, EditData* edPtr)
+void FUSION_API DuplicateObject(mv* mV, OI* oiPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 }
 
 // When a new object is placed onto a frame
-void FUSION_API PutObject(mv* mV, fpLevObj loPtr, EditData* edPtr, uint16 cpt)
+void FUSION_API PutObject(mv* mV, LO* loPtr, EditData* edPtr, uint16 cpt)
 {
 #pragma EXT_DLLEXPORT
 }
 
 // When object is double-clicked
-bool32 FUSION_API EditObject(mv* mV, fpObjInfo oiPtr, fpLevObj loPtr, EditData* edPtr)
+bool32 FUSION_API EditObject(mv* mV, OI* oiPtr, LO* loPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 	return FALSE;
 }
 
 
+
 /*
 // Implement this function to do custom drawing in the frame editor
-void FUSION_API EditorDisplay(mv* mV, fpObjInfo oiPtr, fpLevObj loPtr, EditData* edPtr, RECT* rc)
+// rc contains the *absolute* position of the object
+void FUSION_API EditorDisplay(mv* mV, OI* oiPtr, LO* loPtr, EditData* edPtr, RECT* rc)
 {
 #pragma EXT_DLLEXPORT
 	// Example (simply draw ext image):
@@ -321,7 +335,7 @@ bool32 FUSION_API SetEditSize(mv* mV, EditData* edPtr, int32 cx, int32 cy)
 */
 
 // You must return the rectangle of the extension object
-void FUSION_API GetObjectRect(mv* mV, RECT* rc, fpLevObj loPtr, EditData* edPtr)
+void FUSION_API GetObjectRect(mv* mV, RECT* rc, LO* loPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 	rc->right = rc->left + 32; // edPtr->swidth
@@ -330,7 +344,7 @@ void FUSION_API GetObjectRect(mv* mV, RECT* rc, fpLevObj loPtr, EditData* edPtr)
 
 
 // Indicates whether the mouse cursor is over a transparent zone of the object
-bool32 FUSION_API IsTransparent(mv* mV, fpLevObj loPtr, EditData* edPtr, int32 dx, int32 dy)
+bool32 FUSION_API IsTransparent(mv* mV, LO* loPtr, EditData* edPtr, int32 dx, int32 dy)
 {
 #pragma EXT_DLLEXPORT
 	return FALSE;
@@ -338,7 +352,7 @@ bool32 FUSION_API IsTransparent(mv* mV, fpLevObj loPtr, EditData* edPtr, int32 d
 
 
 // Called just before EditData is written into the MFA
-void FUSION_API PrepareToWriteObject(mv* mV, EditData* edPtr, fpObjInfo adoi)
+void FUSION_API PrepareToWriteObject(mv* mV, EditData* edPtr, OI* adoi)
 {
 #pragma EXT_DLLEXPORT
 }
@@ -494,21 +508,21 @@ dword FUSION_API GetTextAlignment(mv* mV, EditData* edPtr)
 
 
 // Returns the menu to be displayed when choosing an action from this object
-HMENU FUSION_API GetActionMenu(mv* mV, fpObjInfo oiPtr, EditData* edPtr)
+HMENU FUSION_API GetActionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 	return nSDK::Exports::GetActionMenu(mV, oiPtr, edPtr);
 }
 
 // Returns the menu to be displayed when choosing an condition from this object
-HMENU FUSION_API GetConditionMenu(mv* mV, fpObjInfo oiPtr, EditData* edPtr)
+HMENU FUSION_API GetConditionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 	return nSDK::Exports::GetConditionMenu(mV, oiPtr, edPtr);
 }
 
 // Returns the menu to be displayed when choosing an expression from this object
-HMENU FUSION_API GetExpressionMenu(mv* mV, fpObjInfo oiPtr, EditData* edPtr)
+HMENU FUSION_API GetExpressionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
 {
 #pragma EXT_DLLEXPORT
 	return nSDK::Exports::GetExpressionMenu(mV, oiPtr, edPtr);
