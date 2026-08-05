@@ -26,6 +26,7 @@
 // Important for property migration!
 #define EXT_VERSION 1
 
+// Minimum build of Fusion your extension is permitted to run in (e.g, 296)
 #define	EXT_MIN_BUILD EXT_DEFAULT_MIN_BUILD
 // Set to 1 if MMF2/CF2.5 developer only
 #define EXT_DEVONLY 0

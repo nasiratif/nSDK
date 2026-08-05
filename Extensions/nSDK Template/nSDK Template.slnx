@@ -1,7 +1,10 @@
 <Solution>
   <Configurations>
+    <BuildType Name="Debug" />
     <BuildType Name="Debug Unicode" />
+    <BuildType Name="Release" />
     <BuildType Name="Release Unicode" />
+    <BuildType Name="Runtime" />
     <BuildType Name="Runtime Unicode" />
     <Platform Name="x86" />
   </Configurations>
