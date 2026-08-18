@@ -407,73 +407,34 @@ namespace Extension
 		// TEXT FUNCTIONS (OEFLAG_TEXT):
 		// These functions can be discarded if you're not using OEFLAG_TEXT:
 		// ---
-		// Called to determine text capabilities of the object under the frame editor
 		dword FUSION_API GetTextCaps(mv* mV, EditData* edPtr);
 
-		// Called to change the font used by the object
-		// (pStyle is obselete)
 		bool32 FUSION_API SetTextFont(mv* mV, EditData* edPtr, LOGFONT* plf, const tchar* pStyle);
-
-		// Returns the font used by the object
-		// (pStyle & cbSize are obselete)
 		bool32 FUSION_API GetTextFont(mv* mV, EditData* edPtr, LOGFONT* plf, tchar* pStyle, uint32 cbSize);
 
-		// Set the text color of the object
 		void FUSION_API SetTextClr(mv* mV, EditData* edPtr, COLORREF color);
-
-		// Get the text color of the object
 		COLORREF FUSION_API GetTextClr(mv* mV, EditData* edPtr);
 
-		// Set the text alignment of the object
 		void FUSION_API SetTextAlignment(mv* mV, EditData* edPtr, dword dwAlignFlags);
-
-		// Get the text alignment of the object
 		dword FUSION_API GetTextAlignment(mv* mV, EditData* edPtr);
 		// ---
 
-
-		// Returns the menu to be displayed when choosing an action from this object
 		HMENU FUSION_API GetActionMenu(mv* mV, OI* oiPtr, EditData* edPtr);
-
-		// Returns the menu to be displayed when choosing an condition from this object
 		HMENU FUSION_API GetConditionMenu(mv* mV, OI* oiPtr, EditData* edPtr);
-
-		// Returns the menu to be displayed when choosing an expression from this object
 		HMENU FUSION_API GetExpressionMenu(mv* mV, OI* oiPtr, EditData* edPtr);
 
-
-		// Returns the action ID from a menu option
-		// This is how Fusion knows which action ID to choose given the menu option selected
 		int16 FUSION_API GetActionCodeFromMenu(mv* mV, int16 menuId);
-
-		// Returns the condition ID from a menu option
-		// This is how Fusion knows which condition ID to choose given the menu option selected
 		int16 FUSION_API GetConditionCodeFromMenu(mv* mV, int16 menuId);
-
-		// Returns the expression ID from a menu option
-		// This is how Fusion knows which expression ID to choose given the menu option selected
 		int16 FUSION_API GetExpressionCodeFromMenu(mv* mV, int16 menuId);
 
-
-		// Outputs the string on the titlebar to be displayed for a specific action parameter
 		void FUSION_API GetActionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
-
-		// Outputs the string on the titlebar to be displayed for a specific condition parameter
 		void FUSION_API GetConditionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
-
-		// The use of this function is not entirely clear..
 		void FUSION_API GetExpressionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
 
-
-		// Outputs the string to be displayed for a specific action (e.g, "Set width to %0")
 		void FUSION_API GetActionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen);
-		// Outputs the string to be displayed for a specific condition (e.g, "%o: Is the object resizable?")
 		void FUSION_API GetConditionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen);
-		// Outputs the name of an expression (e.g, "GetObjectWidth(")
 		void FUSION_API GetExpressionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen);
-		// Outputs the name of an expression parameter
 		void FUSION_API GetExpressionParam(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen);
-
 
 		infosEventsV2* FUSION_API GetActionInfos(mv* mV, int16 code);
 		infosEventsV2* FUSION_API GetConditionInfos(mv* mV, int16 code);
