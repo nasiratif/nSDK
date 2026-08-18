@@ -135,6 +135,9 @@
     <ClInclude Include="..\..\Inc\nSDKCommon.hpp">
       <Filter>SDK</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Inc\nSDKExports.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Extension.rc">

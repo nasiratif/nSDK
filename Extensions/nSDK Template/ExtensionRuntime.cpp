@@ -21,11 +21,9 @@ word DebugTree[] =
 
 */
 
-// Called when the Fusion app starts
-// Note that "Fusion app" could also mean a sub-app, in which case this function is also called there too
-void FUSION_API StartApp(mv* mV, CRunApp* pApp)
+void FUSION_API Extension::API::StartApp(mv* mV, CRunApp* pApp)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_STARTAPP
 	/*
 	// Example (store global data):
 	auto data = (int32*)mV->mvGetExtUserData(pApp, nSDK::hInst);
@@ -37,10 +35,9 @@ void FUSION_API StartApp(mv* mV, CRunApp* pApp)
 	*/
 }
 
-// Counterpart of StartApp
-void FUSION_API EndApp(mv* mV, CRunApp* pApp)
+void FUSION_API Extension::API::EndApp(mv* mV, CRunApp* pApp)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_ENDAPP
 	/*
 	// Example (free global data):
 	auto data = (int32*)mV->mvGetExtUserData(pApp, nSDK::hInst);
@@ -50,41 +47,34 @@ void FUSION_API EndApp(mv* mV, CRunApp* pApp)
 }
 
 
-// Called when the frame starts or restarts
-void FUSION_API StartFrame(mv* mV, dword dwReserved, int32 nFrameIndex)
+void FUSION_API Extension::API::StartFrame(mv* mV, dword dwReserved, int32 nFrameIndex)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_STARTFRAME
 }
 
-// Called when the frame ends
-void FUSION_API EndFrame(mv* mV, dword dwReserved, int32 nFrameIndex)
+void FUSION_API Extension::API::EndFrame(mv* mV, dword dwReserved, int32 nFrameIndex)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_ENDFRAME
 }
 
 
-// Tells Fusion what your RunData size is
-uint16 FUSION_API GetRunObjectDataSize(RunHeader* rhPtr, EditData* edPtr)
+uint16 FUSION_API Extension::API::GetRunObjectDataSize(RunHeader* rhPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETRUNOBJECTDATASIZE
 	return sizeof(RunData);
 }
 
 
-/*
-// If you don't wish to implement your own display routine, but you use a cSurface, you can simply pass it to this function and Fusion will handle the blitting automatically to the frame surface; taking effects and sprite position into consideration
-cSurface* FUSION_API GetRunObjectSurface(RunData* rdPtr)
+cSurface* FUSION_API Extension::API::GetRunObjectSurface(RunData* rdPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETRUNOBJECTSURFACE
 	return NULL;
 }
-*/
 
-/*
-// If you're using OEPREFS_FINECOLLISIONS, you need to implement this function to generate the collision mask for your object
-sMask* FUSION_API GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam)
+sMask* FUSION_API Extension::API::GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETRUNOBJECTCOLLISIONMASK
+	/*
 	// Example:
 	if (!(rdPtr->rs.rsEffect & EFFECTFLAG_TRANSPARENT)) // Uncomment rs structure in RunData
 		return NULL;
@@ -109,16 +99,14 @@ sMask* FUSION_API GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam)
 	}
 
 	return pMask;
+	*/
+	return NULL;
 }
-*/
 
 
-// Called when the extension object is created
-// Should be used to initialize RunData
-// If you return an error code here (other than 0), DestroyRunObject is invoked
-int16 FUSION_API CreateRunObject(RunData* rdPtr, EditData* edPtr, createObjectInfo* cobPtr)
+int16 FUSION_API Extension::API::CreateRunObject(RunData* rdPtr, EditData* edPtr, createObjectInfo* cobPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_CREATERUNOBJECT
 	/*
 	// Example (if you're writing a displaying object):
 	rdPtr->rHo.hoX = cobPtr->cobX;
@@ -130,29 +118,21 @@ int16 FUSION_API CreateRunObject(RunData* rdPtr, EditData* edPtr, createObjectIn
 	return 0; // success
 }
 
-// Counterpart of CreateRunObject
-// Free resources you allocated in RunData
-// For the 'fast' parameter, see stock SDK docs
-int16 FUSION_API DestroyRunObject(RunData* rdPtr, long fast)
+int16 FUSION_API Extension::API::DestroyRunObject(RunData* rdPtr, long fast)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_DESTROYRUNOBJECT
 	return 0;
 }
 
-// Called every Fusion loop, unless you return REFLAG_ONESHOT
-// You may return REFLAG_DISPLAY to trigger DisplayRunObject, or 0 to simply trigger this function next frame
-int16 FUSION_API HandleRunObject(RunData* rdPtr)
+int16 FUSION_API Extension::API::HandleRunObject(RunData* rdPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_HANDLERUNOBJECT
 	return REFLAG_ONESHOT;
 }
 
-// If you return REFLAG_DISPLAY in HandleRunObject, this function will run
-// Most common use case is to blit a cSurface onto the frame surface (see example below), although GetRunObjectSurface, defined far above, is meant to do this for you automatically
-// Note that this function will never be triggered if you use OEFLAG_ANIMATIONS!
-int16 FUSION_API DisplayRunObject(RunData* rdPtr)
+int16 FUSION_API Extension::API::DisplayRunObject(RunData* rdPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_DISPLAYRUNOBJECT
 	/*
 	// Example:
 	// Retrieve frame surface:
@@ -164,32 +144,28 @@ int16 FUSION_API DisplayRunObject(RunData* rdPtr)
 }
 
 
-// When Fusion runtime is paused
-int16 FUSION_API PauseRunObject(RunData* rdPtr)
+int16 FUSION_API Extension::API::PauseRunObject(RunData* rdPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_PAUSERUNOBJECT
 	return 0;
 }
 
-// When Fusion runtime is resumed
-int16 FUSION_API ContinueRunObject(RunData* rdPtr)
+int16 FUSION_API Extension::API::ContinueRunObject(RunData* rdPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_CONTINUERUNOBJECT
 	return 0;
 }
 
 
-// When the extension data needs to be saved to disk (using the frame save action)
-bool32 FUSION_API SaveRunObject(RunData* rdPtr, HANDLE hFile)
+bool32 FUSION_API Extension::API::SaveRunObject(RunData* rdPtr, HANDLE hFile)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_SAVERUNOBJECT
 	return FALSE;
 }
 
-// When the extension data needs to be loaded from disk (using the frame load action)
-bool32 FUSION_API LoadRunObject(RunData* rdPtr, HANDLE hFile)
+bool32 FUSION_API Extension::API::LoadRunObject(RunData* rdPtr, HANDLE hFile)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_LOADRUNOBJECT
 	return FALSE;
 }
 
@@ -201,14 +177,10 @@ bool32 FUSION_API LoadRunObject(RunData* rdPtr, HANDLE hFile)
 
 */
 
-
 /*
-// Get the RunData pointer from an HWND (must have been subclassed with RFUNCTION_SUBCLASSWINDOW, see stock SDK docs)
-RunData* GetRdPtr(HWND hWnd, RunHeader* rhPtr) { return (RunData*)GetProp(hWnd, (LPCTSTR)rhPtr->rh4.rh4AtomRd); }
-
-LRESULT FUSION_API WindowProc(RunHeader* rhPtr, HWND hWnd, uint32 msg, WPARAM wParam, LPARAM lParam)
+LRESULT FUSION_API Extension::API::WindowProc(RunHeader* rhPtr, HWND hWnd, uint32 msg, WPARAM wParam, LPARAM lParam)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_WINDOWPROC
 	// Example:
 	if (rhPtr->rh2.rh2PauseCompteur != 0) // don't handle our messages if app is paused
 		return 0;
@@ -233,10 +205,9 @@ LRESULT FUSION_API WindowProc(RunHeader* rhPtr, HWND hWnd, uint32 msg, WPARAM wP
 */
 
 /*
-// Set the extension object's font
-void FUSION_API SetRunObjectFont(RunData* rdPtr, LOGFONT* pLf, RECT* pRc)
+void FUSION_API Extension::API::SetRunObjectFont(RunData* rdPtr, LOGFONT* pLf, RECT* pRc)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_SETRUNOBJECTFONT
 	// Example from stock SDK:
 	HFONT hFont = CreateFontIndirect(pLf);
 	if (hFont != NULL)
@@ -248,28 +219,25 @@ void FUSION_API SetRunObjectFont(RunData* rdPtr, LOGFONT* pLf, RECT* pRc)
 	}
 }
 
-// Return the extension object's font
-void FUSION_API GetRunObjectFont(RunData* rdPtr, LOGFONT* pLf)
+void FUSION_API Extension::API::GetRunObjectFont(RunData* rdPtr, LOGFONT* pLf)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETRUNOBJECTFONT
 	// Example from stock SDK:
 	GetObject(rdPtr->m_hFont, sizeof(LOGFONT), pLf);
 }
 
 
-// Set the extension object's text color
-void FUSION_API SetRunObjectTextColor(RunData* rdPtr, COLORREF rgb)
+void FUSION_API Extension::API::SetRunObjectTextColor(RunData* rdPtr, COLORREF rgb)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_SETRUNOBJECTTEXTCOLOR
 	// Example from stock SDK:
 	rdPtr->m_dwColor = rgb;
 	InvalidateRect(rdPtr->m_hWnd, NULL, TRUE);
 }
 
-// Return the extension object's text color
-COLORREF FUSION_API GetRunObjectTextColor(RunData* rdPtr)
+COLORREF FUSION_API Extension::API::GetRunObjectTextColor(RunData* rdPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETRUNOBJECTTEXTCOLOR
 	// Example from stock SDK:
 	return rdPtr->m_dwColor;
 }
@@ -283,17 +251,15 @@ COLORREF FUSION_API GetRunObjectTextColor(RunData* rdPtr)
 
 */
 
-// Tells Fusion your debug tree
-word* FUSION_API GetDebugTree(RunData* rdPtr)
+word* FUSION_API Extension::API::GetDebugTree(RunData* rdPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETDEBUGTREE
 	return DebugTree;
 }
 
-// Should return the text of a debugger item
-void FUSION_API GetDebugItem(tchar* pBuffer, RunData* rdPtr, int32 id)
+void FUSION_API Extension::API::GetDebugItem(tchar* pBuffer, RunData* rdPtr, int32 id)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETDEBUGITEM
 	/*
 	// Example from stock SDK:
 	char temp[DB_BUFFERSIZE];
@@ -323,10 +289,9 @@ void FUSION_API GetDebugItem(tchar* pBuffer, RunData* rdPtr, int32 id)
 	*/
 }
 
-// When the debug item is to be edited
-void FUSION_API EditDebugItem(RunData* rdPtr, int32 id)
+void FUSION_API Extension::API::EditDebugItem(RunData* rdPtr, int32 id)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_EDITDEBUGITEM
 	/*
 	// Example from stock SDK:
 	switch (id)

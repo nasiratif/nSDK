@@ -1,6 +1,6 @@
 #include "Extension.hpp"
 
-long FUSION_API Expressions::ReturnRandomN(RunData* rdPtr, long param)
+long FUSION_API Extension::Expressions::ReturnRandomN(RunData* rdPtr, long param)
 {
 	auto p1 = nSDK::ParamToString(CNC_GetFirstExpressionParameter(rdPtr, param, TYPE_STRING));
 	auto p2 = nSDK::ParamToFloat(CNC_GetNextExpressionParameter(rdPtr, param, TYPE_FLOAT));
@@ -8,7 +8,7 @@ long FUSION_API Expressions::ReturnRandomN(RunData* rdPtr, long param)
 	return nSDK::ReturnFloat(rdPtr, rand() / 32768.0f * len);
 }
 
-long FUSION_API Expressions::ReturnRandomS(RunData* rdPtr, long param)
+long FUSION_API Extension::Expressions::ReturnRandomS(RunData* rdPtr, long param)
 {
 	auto seed = nSDK::ParamToFloat(CNC_GetFirstExpressionParameter(rdPtr, param, TYPE_FLOAT));
 

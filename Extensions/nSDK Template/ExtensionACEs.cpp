@@ -1,5 +1,7 @@
 #include "Extension.hpp"
 
+using namespace Extension;
+
 namespace nSDK
 {
 #ifdef EXT_EDITOR

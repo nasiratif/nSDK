@@ -1,13 +1,13 @@
 #include "Extension.hpp"
 
-long FUSION_API Conditions::SameNumbers(RunData* rdPtr, long param1, long param2)
+long FUSION_API Extension::Conditions::SameNumbers(RunData* rdPtr, long param1, long param2)
 {
 	auto p1 = nSDK::ParamToFloat(CNC_GetFloatParameter(rdPtr));
 	auto p2 = nSDK::ParamToFloat(CNC_GetFloatParameter(rdPtr));
 	return p1 == p2;
 }
 
-long FUSION_API Conditions::SameStrings(RunData* rdPtr, long param1, long param2)
+long FUSION_API Extension::Conditions::SameStrings(RunData* rdPtr, long param1, long param2)
 {
 	auto str1 = nSDK::ParamToString(param1);
 	auto str2 = nSDK::ParamToString(param2);
@@ -15,7 +15,7 @@ long FUSION_API Conditions::SameStrings(RunData* rdPtr, long param1, long param2
 }
 
 
-long FUSION_API Conditions::CheckStringData(RunData* rdPtr, long param1, long param2)
+long FUSION_API Extension::Conditions::CheckStringData(RunData* rdPtr, long param1, long param2)
 {
 	auto str = nSDK::ParamToString(param1);
 	auto param = nSDK::ParamToCustom(param2);
@@ -31,7 +31,7 @@ long FUSION_API Conditions::CheckStringData(RunData* rdPtr, long param1, long pa
 	}
 }
 
-long FUSION_API Conditions::Comparison(RunData* rdPtr, long param1, long param2)
+long FUSION_API Extension::Conditions::Comparison(RunData* rdPtr, long param1, long param2)
 {
 	// Fusion will automatically do the comparison for us against param1
 	// TODO: how does this work for floats?

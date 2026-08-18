@@ -71,6 +71,7 @@ namespace nSDK
 {
 	extern HINSTANCE hInst;
 
+	// Default exports for nSDK
 	namespace Exports
 	{
 		bool32 WINAPI DllMain(HINSTANCE hinstDLL, dword fdwReason, void* lpvReserved);

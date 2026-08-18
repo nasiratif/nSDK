@@ -3,14 +3,13 @@
 #ifdef EXT_EDITOR
 /*
 
----------- EDITTIME FUNCTIONS ----------
+---------- EDITTIME-ONLY FUNCTIONS ----------
 
 */
 
-// Returns extension metadata
-void FUSION_API GetObjInfos(mv* mV, EditData* edPtr, tchar* ObjName, tchar* ObjAuthor, tchar* ObjCopyright, tchar* ObjComment, tchar* ObjHttp)
+void FUSION_API Extension::API::GetObjInfos(mv* mV, EditData* edPtr, tchar* ObjName, tchar* ObjAuthor, tchar* ObjCopyright, tchar* ObjComment, tchar* ObjHttp)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETOBJINFOS
 	static const size_t length = 255 * sizeof(tchar);
 	static const size_t lengthComment = 1024 * sizeof(tchar);
 
@@ -21,22 +20,17 @@ void FUSION_API GetObjInfos(mv* mV, EditData* edPtr, tchar* ObjName, tchar* ObjA
 	StringCbCopy(ObjHttp, length, EXT_HTTP);
 }
 
-// Returns the help file name of your extension
-const tchar* FUSION_API GetHelpFileName()
+const tchar* FUSION_API Extension::API::GetHelpFileName()
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETHELPFILENAME
 	return EXT_HELP_FILENAME;
 }
 
 
 /*
-// Alternative method of loading the extension icon; you can draw into the surface provided by the pIconSf parameter and Fusion will use it as the ext icon instead of what's embedded in resources. The surface is always 32x32
-// You can resize the surface, but not that it's beneficial; Fusion will always resize it back to 32x32
-// If you want to use this, make sure to remove the EXO_ICON & EXO_IMAGE resources so Fusion will trigger this function. You must also again draw the icon yourself for the frame editor in EditorDisplay!
-// Side note: here you can also change the name of the extension by writing into lpName, but Clickteam discourages that nowadays
-int32 FUSION_API MakeIconEx(mv* mV, cSurface* pIconSf, tchar* lpName, OI* oiPtr, EditData* edPtr)
+int32 FUSION_API Extension::API::MakeIconEx(mv* mV, cSurface* pIconSf, tchar* lpName, OI* oiPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_MAKEICONEX
 	// Example: a brown=ish square
 	pIconSf->Fill(RGB(64, 24, 24));
 	return 0; // success
@@ -44,41 +38,33 @@ int32 FUSION_API MakeIconEx(mv* mV, cSurface* pIconSf, tchar* lpName, OI* oiPtr,
 */
 
 
-// Called to insert your object properties
-bool32 FUSION_API GetProperties(mv* mV, EditData* edPtr, bool32 bMasterItem)
+bool32 FUSION_API Extension::API::GetProperties(mv* mV, EditData* edPtr, bool32 bMasterItem)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETPROPERTIES
 	return nSDK::Exports::GetProperties(mV, edPtr, bMasterItem);
 }
 
-// Counterpart of GetProperties
-// Called when the properties are removed from the property window
-void FUSION_API ReleaseProperties(mv* mV, EditData* edPtr, bool32 bMasterItem)
+void FUSION_API Extension::API::ReleaseProperties(mv* mV, EditData* edPtr, bool32 bMasterItem)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_RELEASEPROPERTIES
 }
 
-// Called when a property is initialized and its creation parameter is NULL
-// You could, for example, change the content of a combo-box property according to specific settings in the EditData structure
-LPARAM FUSION_API GetPropCreateParam(mv* mV, EditData* edPtr, uint32 nPropID)
+
+LPARAM FUSION_API Extension::API::GetPropCreateParam(mv* mV, EditData* edPtr, uint32 nPropID)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETPROPCREATEPARAM
 	return NULL;
 }
 
-// Called after a property was initialized
-// Useful if you allocated memory in GetPropCreateParam and wish to free it now
-void FUSION_API ReleasePropCreateParam(mv* mV, EditData* edPtr, uint32 nPropID, LPARAM lParam)
+void FUSION_API Extension::API::ReleasePropCreateParam(mv* mV, EditData* edPtr, uint32 nPropID, LPARAM lParam)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_RELEASEPROPCREATEPARAM
 }
 
 
-// Called when a property is changed
-// Here you modify your EditData to set the new property
-void FUSION_API SetPropValue(mv* mV, EditData* edPtr, uint32 nPropID, CPropValue* lParam)
+void FUSION_API Extension::API::SetPropValue(mv* mV, EditData* edPtr, uint32 nPropID, CPropValue* lParam)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_SETPROPVALUE
 	// Example:
 	switch (nPropID)
 	{
@@ -98,12 +84,9 @@ void FUSION_API SetPropValue(mv* mV, EditData* edPtr, uint32 nPropID, CPropValue
 	
 }
 
-// Called when a property needs to be retrieved
-// Here you retrieve a property from EditData and return the corresponding CPropValue for it
-void* FUSION_API GetPropValue(mv* mV, EditData* edPtr, uint32 nPropID)
+CPropValue* FUSION_API Extension::API::GetPropValue(mv* mV, EditData* edPtr, uint32 nPropID)
 {
-#pragma EXT_DLLEXPORT
-	
+#pragma EXT_EXPORT_GETPROPVALUE
 	// Example:
 	switch (nPropID)
 	{
@@ -131,11 +114,9 @@ void* FUSION_API GetPropValue(mv* mV, EditData* edPtr, uint32 nPropID)
 	return NULL;
 }
 
-// Ditto as SetPropValue, but for checkboxes
-void FUSION_API SetPropCheck(mv* mV, EditData* edPtr, uint32 nPropID, bool32 nCheck)
+void FUSION_API Extension::API::SetPropCheck(mv* mV, EditData* edPtr, uint32 nPropID, bool32 nCheck)
 {
-#pragma EXT_DLLEXPORT
-	
+#pragma EXT_EXPORT_SETPROPCHECK
 	// Example:
 	switch (nPropID)
 	{
@@ -146,11 +127,9 @@ void FUSION_API SetPropCheck(mv* mV, EditData* edPtr, uint32 nPropID, bool32 nCh
 	
 }
 
-// Ditto as GetPropValue, but for checkboxes
-bool32 FUSION_API GetPropCheck(mv* mV, EditData* edPtr, uint32 nPropID)
+bool32 FUSION_API Extension::API::GetPropCheck(mv* mV, EditData* edPtr, uint32 nPropID)
 {
-#pragma EXT_DLLEXPORT
-	
+#pragma EXT_EXPORT_GETPROPCHECK
 	// Example:
 	switch (nPropID)
 	{
@@ -161,10 +140,9 @@ bool32 FUSION_API GetPropCheck(mv* mV, EditData* edPtr, uint32 nPropID)
 	return FALSE;
 }
 
-// Called when a Button/EditButton property is clicked
-bool32 FUSION_API EditProp(mv* mV, EditData* edPtr, uint32 nPropID)
+bool32 FUSION_API Extension::API::EditProp(mv* mV, EditData* edPtr, uint32 nPropID)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_EDITPROP
 	// Example:
 	if (nPropID == PropID_Images)
 	{
@@ -195,10 +173,9 @@ bool32 FUSION_API EditProp(mv* mV, EditData* edPtr, uint32 nPropID)
 	return FALSE;
 }
 
-// Called to determine if a property should be enabled
-bool32 FUSION_API IsPropEnabled(mv* mV, EditData* edPtr, uint32 nPropID)
+bool32 FUSION_API Extension::API::IsPropEnabled(mv* mV, EditData* edPtr, uint32 nPropID)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_ISPROPENABLED
 	/*
 	// Example:
 	if (nPropID == PropID_Check)
@@ -209,11 +186,9 @@ bool32 FUSION_API IsPropEnabled(mv* mV, EditData* edPtr, uint32 nPropID)
 }
 
 
-// Used for custom Action/Condition parameters
-// Called when the parameter needs to be initialized
-void FUSION_API InitParameter(mv* mV, int16 code, paramExt* pExt)
+void FUSION_API Extension::API::InitParameter(mv* mV, int16 code, paramExt* pExt)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_INITPARAMETER
 	// Example:
 	if (code == CustomDataType_Example)
 	{
@@ -225,11 +200,10 @@ void FUSION_API InitParameter(mv* mV, int16 code, paramExt* pExt)
 	}
 }
 
-// Called for custom Action/Condition parameters when the parameter needs to be edited
-// This is where you'd display a dialog box for the user to specify the parameter
-void FUSION_API EditParameter(mv* mV, int16 code, paramExt* pExt)
+
+void FUSION_API Extension::API::EditParameter(mv* mV, int16 code, paramExt* pExt)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_EDITPARAMETER
 	// Example:
 	if (code == CustomDataType_Example)
 	{
@@ -243,10 +217,9 @@ void FUSION_API EditParameter(mv* mV, int16 code, paramExt* pExt)
 	}
 }
 
-// Called to get the display string of your custom parameter in the action/condition
-void FUSION_API GetParameterString(mv* mV, int16 code, paramExt* pExt, tchar* pDest, int16 size)
+void FUSION_API Extension::API::GetParameterString(mv* mV, int16 code, paramExt* pExt, tchar* pDest, int16 size)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETPARAMETERSTRING
 	// Example:
 	if (code == CustomDataType_Example)
 	{
@@ -255,11 +228,9 @@ void FUSION_API GetParameterString(mv* mV, int16 code, paramExt* pExt, tchar* pD
 }
 
 
-// When objeet is created in via the "Create new object" dialog
-// Should be used to initialize EditData
-int32 FUSION_API CreateObject(mv* mV, LO* loPtr, EditData* edPtr)
+int32 FUSION_API Extension::API::CreateObject(mv* mV, LO* loPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_CREATEOBJECT
 	memset(edPtr->wImages, NULL, sizeof(edPtr->wImages));
 	edPtr->nImages = 0;
 	StringCbCopy(edPtr->szText, sizeof(edPtr->szText), _T("Editable text"));
@@ -269,44 +240,39 @@ int32 FUSION_API CreateObject(mv* mV, LO* loPtr, EditData* edPtr)
 	return 0;
 }
 
-// When object is removed
-void FUSION_API RemoveObject(mv* mV, LO* loPtr, EditData* edPtr, uint16 cpt)
+void FUSION_API Extension::API::RemoveObject(mv* mV, LO* loPtr, EditData* edPtr, uint16 cpt)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_REMOVEOBJECT
 }
 
-// When object is cloned, not duplicated
-void FUSION_API DuplicateObject(mv* mV, OI* oiPtr, EditData* edPtr)
+
+void FUSION_API Extension::API::DuplicateObject(mv* mV, OI* oiPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_DUPLICATEOBJECT
 }
 
-// When a new object is placed onto a frame
-void FUSION_API PutObject(mv* mV, LO* loPtr, EditData* edPtr, uint16 cpt)
+void FUSION_API Extension::API::PutObject(mv* mV, LO* loPtr, EditData* edPtr, uint16 cpt)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_PUTOBJECT
 }
 
-// When object is double-clicked
-bool32 FUSION_API EditObject(mv* mV, OI* oiPtr, LO* loPtr, EditData* edPtr)
+bool32 FUSION_API Extension::API::EditObject(mv* mV, OI* oiPtr, LO* loPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_EDITOBJECT
 	return FALSE;
 }
 
 
 
 /*
-// Implement this function to do custom drawing in the frame editor
-// rc contains the *absolute* position of the object
-void FUSION_API EditorDisplay(mv* mV, OI* oiPtr, LO* loPtr, EditData* edPtr, RECT* rc)
+void FUSION_API Extension::API::EditorDisplay(mv* mV, OI* oiPtr, LO* loPtr, EditData* edPtr, RECT* rc)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_EDITORDISPLAY
 	// Example (simply draw ext image):
 	cSurface* proto;
 	if (GetSurfacePrototype(&proto, 32, ST_MEMORY, SD_DIB))
 	{
-		auto frameSurf = WinGetSurface((int)mV->mvIdEditWin);
+		auto frameSurf = WinGetSurface((int32)mV->mvIdEditWin);
 		if (frameSurf)
 		{
 			auto width = rc->right - rc->left;
@@ -324,45 +290,39 @@ void FUSION_API EditorDisplay(mv* mV, OI* oiPtr, LO* loPtr, EditData* edPtr, REC
 
 
 /*
-// Required for resizable exts; if exported, Fusion knows the ext is resizable
-bool32 FUSION_API SetEditSize(mv* mV, EditData* edPtr, int32 cx, int32 cy)
+bool32 FUSION_API Extension::API::SetEditSize(mv* mV, EditData* edPtr, int32 cx, int32 cy)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_SETEDITSIZE
 	edPtr->swidth = cx;
 	edPtr->sheight = cy;
 	return TRUE;
 }
 */
 
-// You must return the rectangle of the extension object
-void FUSION_API GetObjectRect(mv* mV, RECT* rc, LO* loPtr, EditData* edPtr)
+void FUSION_API Extension::API::GetObjectRect(mv* mV, RECT* rc, LO* loPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETOBJECTRECT
 	rc->right = rc->left + 32; // edPtr->swidth
 	rc->bottom = rc->top + 32; // edPtr->sheight
 }
 
 
-// Indicates whether the mouse cursor is over a transparent zone of the object
-bool32 FUSION_API IsTransparent(mv* mV, LO* loPtr, EditData* edPtr, int32 dx, int32 dy)
+bool32 FUSION_API Extension::API::IsTransparent(mv* mV, LO* loPtr, EditData* edPtr, int32 dx, int32 dy)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_ISTRANSPARENT
 	return FALSE;
 }
 
 
-// Called just before EditData is written into the MFA
-void FUSION_API PrepareToWriteObject(mv* mV, EditData* edPtr, OI* adoi)
+void FUSION_API Extension::API::PrepareToWriteObject(mv* mV, EditData* edPtr, OI* adoi)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_PREPARETOWRITEOBJECT
 }
 
 
-// Called when a file is dropped onto the frame
-// You should return TRUE if you can create a new object from the given file
-bool32 FUSION_API UsesFile(mv* mV, tchar* fileName)
+bool32 FUSION_API Extension::API::UsesFile(mv* mV, tchar* fileName)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_USESFILE
 	bool32 r = FALSE;
 	/*
 	// Example from stock SDK:
@@ -387,10 +347,9 @@ bool32 FUSION_API UsesFile(mv* mV, tchar* fileName)
 	return r;
 }
 
-// Creates a new object from file
-void FUSION_API CreateFromFile(mv* mV, tchar* fileName, EditData* edPtr)
+void FUSION_API Extension::API::CreateFromFile(mv* mV, tchar* fileName, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_CREATEFROMFILE
 	/*
  	// Example from stock SDK:
 	// Initialize your extension data from the given file
@@ -403,10 +362,9 @@ void FUSION_API CreateFromFile(mv* mV, tchar* fileName, EditData* edPtr)
 }
 
 
-// Implement this if your extension uses image/sound filters
-bool32 FUSION_API GetFilters(mv* mV, EditData* edPtr, dword dwFlags, void* pReserved)
+bool32 FUSION_API Extension::API::GetFilters(mv* mV, EditData* edPtr, dword dwFlags, void* pReserved)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETFILTERS
 	//if (dwFlags & GETFILTERS_IMAGES)
 	//	return TRUE;
 
@@ -416,53 +374,46 @@ bool32 FUSION_API GetFilters(mv* mV, EditData* edPtr, dword dwFlags, void* pRese
 }
 
 
-// Called to determine text capabilities of the object under the frame editor
-dword FUSION_API GetTextCaps(mv* mV, EditData* edPtr)
+dword FUSION_API Extension::API::GetTextCaps(mv* mV, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETTEXTCAPS
 	return 0; // (TEXT_ALIGN_LEFT | TEXT_ALIGN_HCENTER | TEXT_ALIGN_RIGHT | TEXT_ALIGN_TOP | TEXT_ALIGN_VCENTER | TEXT_ALIGN_BOTTOM | TEXT_FONT | TEXT_COLOR);
 }
 
-// Called to change the font used by the object
-// (pStyle is obselete)
-bool32 FUSION_API SetTextFont(mv* mV, EditData* edPtr, LPLOGFONT plf, const tchar* pStyle)
+bool32 FUSION_API Extension::API::SetTextFont(mv* mV, EditData* edPtr, LOGFONT* plf, const tchar* pStyle)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_SETTEXTFONT
 	// Example: copy LOGFONT structure to EDITDATA
 	// memcpy(&edPtr->m_lf, plf, sizeof(LOGFONT));
 	return TRUE;
 }
 
-// Returns the font used by the object
-// (pStyle & cbSize are obselete)
-bool32 FUSION_API GetTextFont(mv* mV, EditData* edPtr, LPLOGFONT plf, tchar* pStyle, uint32 cbSize)
+bool32 FUSION_API Extension::API::GetTextFont(mv* mV, EditData* edPtr, LOGFONT* plf, tchar* pStyle, uint32 cbSize)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETTEXTFONT
 	// Example: copy LOGFONT structure from EDITDATA
 	// memcpy(plf, &edPtr->m_lf, sizeof(LOGFONT));
 	return TRUE;
 }
 
-// Set the text color of the object
-void FUSION_API SetTextClr(mv* mV, EditData* edPtr, COLORREF color)
+void FUSION_API Extension::API::SetTextClr(mv* mV, EditData* edPtr, COLORREF color)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_SETTEXTCLR
 	// Example:
 	// edPtr->fontColor = color;
 }
 
-// Get the text color of the object
-COLORREF FUSION_API GetTextClr(mv* mV, EditData* edPtr)
+COLORREF FUSION_API Extension::API::GetTextClr(mv* mV, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETTEXTCLR
 	// Example:
 	// return edPtr->fontColor;
 	return 0;
 }
 
-void FUSION_API SetTextAlignment(mv* mV, EditData* edPtr, dword dwAlignFlags)
+void FUSION_API Extension::API::SetTextAlignment(mv* mV, EditData* edPtr, dword dwAlignFlags)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_SETTEXTALIGNMENT
 	/*
 	// Example from stock SDK:
 	dword dw = edPtr->eData.dwFlags;
@@ -485,9 +436,9 @@ void FUSION_API SetTextAlignment(mv* mV, EditData* edPtr, dword dwAlignFlags)
 	*/
 }
 
-dword FUSION_API GetTextAlignment(mv* mV, EditData* edPtr)
+dword FUSION_API Extension::API::GetTextAlignment(mv* mV, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETTEXTALIGNMENT
 	/*
 	// Example from stock SDK:
 	if ( (edPtr->eData.dwFlags & ALIGN_LEFT) != 0 )
@@ -507,122 +458,103 @@ dword FUSION_API GetTextAlignment(mv* mV, EditData* edPtr)
 }
 
 
-// Returns the menu to be displayed when choosing an action from this object
-HMENU FUSION_API GetActionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
+HMENU FUSION_API Extension::API::GetActionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETACTIONMENU
 	return nSDK::Exports::GetActionMenu(mV, oiPtr, edPtr);
 }
 
-// Returns the menu to be displayed when choosing an condition from this object
-HMENU FUSION_API GetConditionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
+HMENU FUSION_API Extension::API::GetConditionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETCONDITIONMENU
 	return nSDK::Exports::GetConditionMenu(mV, oiPtr, edPtr);
 }
 
-// Returns the menu to be displayed when choosing an expression from this object
-HMENU FUSION_API GetExpressionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
+HMENU FUSION_API Extension::API::GetExpressionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETEXPRESSIONMENU
 	return nSDK::Exports::GetExpressionMenu(mV, oiPtr, edPtr);
 }
 
 
-// Returns the action ID from a menu option
-// This is how Fusion knows which action ID to choose given the menu option selected
-int16 FUSION_API GetActionCodeFromMenu(mv* mV, int16 menuId)
+int16 FUSION_API Extension::API::GetActionCodeFromMenu(mv* mV, int16 menuId)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETACTIONCODEFROMMENU
 	return nSDK::Exports::GetActionCodeFromMenu(mV, menuId);
 }
 
-// Returns the condition ID from a menu option
-// This is how Fusion knows which condition ID to choose given the menu option selected
-int16 FUSION_API GetConditionCodeFromMenu(mv* mV, int16 menuId)
+int16 FUSION_API Extension::API::GetConditionCodeFromMenu(mv* mV, int16 menuId)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETCONDITIONCODEFROMMENU
 	return nSDK::Exports::GetConditionCodeFromMenu(mV, menuId);
 }
 
-// Returns the expression ID from a menu option
-// This is how Fusion knows which expression ID to choose given the menu option selected
-int16 FUSION_API GetExpressionCodeFromMenu(mv* mV, int16 menuId)
+int16 FUSION_API Extension::API::GetExpressionCodeFromMenu(mv* mV, int16 menuId)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETEXPRESSIONCODEFROMMENU
 	return nSDK::Exports::GetExpressionCodeFromMenu(mV, menuId);
 }
 
 
-// Outputs the string on the titlebar to be displayed for a specific action parameter
-void FUSION_API GetActionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen)
+void FUSION_API Extension::API::GetActionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETACTIONTITLE
 	return nSDK::Exports::GetActionTitle(mV, code, param, strBuf, maxLen);
 }
 
-// Outputs the string on the titlebar to be displayed for a specific condition parameter
-void FUSION_API GetConditionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen)
+void FUSION_API Extension::API::GetConditionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETCONDITIONTITLE
 	return nSDK::Exports::GetConditionTitle(mV, code, param, strBuf, maxLen);
 }
 
-// The use of this function is not entirely clear..
-void FUSION_API GetExpressionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen)
+void FUSION_API Extension::API::GetExpressionTitle(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETEXPRESSIONTITLE
 	return nSDK::Exports::GetExpressionTitle(mV, code, param, strBuf, maxLen);
 }
 
 
-// Outputs the string to be displayed for a specific action (e.g, "Set width to %0")
-void FUSION_API GetActionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen)
+void FUSION_API Extension::API::GetActionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETACTIONSTRING
 	return nSDK::Exports::GetActionString(mV, code, strPtr, maxLen);
 }
 
-// Outputs the string to be displayed for a specific condition (e.g, "%o: Is the object resizable?")
-void FUSION_API GetConditionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen)
+void FUSION_API Extension::API::GetConditionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETCONDITIONSTRING
 	return nSDK::Exports::GetConditionString(mV, code, strPtr, maxLen);
 }
 
-// Outputs the name of an expression (e.g, "GetObjectWidth(")
-void FUSION_API GetExpressionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen)
+void FUSION_API Extension::API::GetExpressionString(mv* mV, int16 code, tchar* strPtr, int16 maxLen)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETEXPRESSIONSTRING
 	return nSDK::Exports::GetExpressionString(mV, code, strPtr, maxLen);
 }
 
-// Outputs the name of an expression parameter
-void FUSION_API GetExpressionParam(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen)
+void FUSION_API Extension::API::GetExpressionParam(mv* mV, int16 code, int16 param, tchar* strBuf, int16 maxLen)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETEXPRESSIONPARAM
 	return nSDK::Exports::GetExpressionParam(mV, code, param, strBuf, maxLen);
 }
 
 
-// Returns information about a specific action (e.g, number of parameters, parameter info etc)
-infosEventsV2* FUSION_API GetActionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API Extension::API::GetActionInfos(mv* mV, int16 code)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETACTIONINFOS
 	return nSDK::Exports::GetActionInfos(mV, code);
 }
 
-// Returns information about a specific condition (e.g, flags, number of parameters, parameter info etc)
-infosEventsV2* FUSION_API GetConditionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API Extension::API::GetConditionInfos(mv* mV, int16 code)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETCONDITIONINFOS
 	return nSDK::Exports::GetConditionInfos(mV, code);
 }
 
-// Returns information about a specific expression (e.g, return type, number of parameters, parameter info etc)
-infosEventsV2* FUSION_API GetExpressionInfos(mv* mV, int16 code)
+infosEventsV2* FUSION_API Extension::API::GetExpressionInfos(mv* mV, int16 code)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETEXPRESSIONINFOS
 	return nSDK::Exports::GetExpressionInfos(mV, code);
 }
 #endif

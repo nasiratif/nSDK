@@ -1,22 +1,21 @@
 #include "Extension.hpp"
 
-/*
-
----------- GENERAL FUNCTIONS ----------
-
-*/
-
 // DLL entry point
 bool32 WINAPI DllMain(HINSTANCE hinstDLL, dword fdwReason, void* lpvReserved)
 {
 	return nSDK::Exports::DllMain(hinstDLL, fdwReason, lpvReserved);
 }
 
+/*
 
-// Necessary function to retrieve version information about the extension
-dword FUSION_API GetInfos(int32 info)
+---------- GENERAL FUNCTIONS (EDITTIME & RUNTIME) ----------
+
+*/
+
+
+dword FUSION_API Extension::API::GetInfos(int32 info)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETINFOS
 	switch (info)
 	{
 	case KGI_VERSION:
@@ -42,11 +41,9 @@ dword FUSION_API GetInfos(int32 info)
 	}
 }
 
-// Called to retrieve some information about the extension, like the version, identifier, A/C/E funcs, OEFLAGS etc
-// The name is a misnomer; it's called at edittime as well, hence why this function is in General
-int16 FUSION_API GetRunObjectInfos(mv* mV, kpxRunInfos* infoPtr)
+int16 FUSION_API Extension::API::GetRunObjectInfos(mv* mV, kpxRunInfos* infoPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETRUNOBJECTINFOS
 	infoPtr->identifier = EXT_FIX_IDENTIFIER(EXT_IDENTIFIER);
 	infoPtr->version = EXT_VERSION;
 
@@ -67,49 +64,42 @@ int16 FUSION_API GetRunObjectInfos(mv* mV, kpxRunInfos* infoPtr)
 }
 
 
-// Called to retrieve DLL dependencies for this extension
-const tchar** FUSION_API GetDependencies()
+const tchar** FUSION_API Extension::API::GetDependencies()
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_GETDEPENDENCIES
 	static const tchar* deps[] = EXT_DEPENDENCIES;
 	return deps;
 }
 
 
-// Called when the extension is loaded into memory
-int32 FUSION_API Initialize(mv* mV, int32 quiet)
+int32 FUSION_API Extension::API::Initialize(mv* mV, int32 quiet)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_INITIALIZE
 	return nSDK::Exports::Initialize(mV, quiet);
 }
 
-// Counterpart of Initialize
-int32 FUSION_API Free(mv* mV)
+int32 FUSION_API Extension::API::Free(mv* mV)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_FREE
 	return nSDK::Exports::Free(mV);
 }
 
 
-// Called when each object of this extension is loaded into memory
-int32 FUSION_API LoadObject(mv* mV, const tchar* fileName, EditData* edPtr, int32 reserved)
+int32 FUSION_API Extension::API::LoadObject(mv* mV, const tchar* fileName, EditData* edPtr, int32 reserved)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_LOADOBJECT
 	return 0;
 }
 
-// Counterpart of LoadObject
-void FUSION_API UnloadObject(mv* mV, EditData* edPtr, int32 reserved)
+void FUSION_API Extension::API::UnloadObject(mv* mV, EditData* edPtr, int32 reserved)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_UNLOADOBJECT
 }
 
 
-// If you change ext properties across versions you must implement this function to migrate the old EditData into the latest EditData you have
-// Fusion calls this if the ext version in the MFA is older than this one
-HGLOBAL FUSION_API UpdateEditStructure(mv* mV, nSDK::EditDataBase* oldEdPtr)
+HGLOBAL FUSION_API Extension::API::UpdateEditStructure(mv* mV, nSDK::EditDataBase* oldEdPtr)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_UPDATEEDITSTRUCTURE
 	/*
 	// Example:
 	switch (oldEdPtr->eHeader.extVersion)
@@ -142,10 +132,9 @@ HGLOBAL FUSION_API UpdateEditStructure(mv* mV, nSDK::EditDataBase* oldEdPtr)
 }
 
 
-// Called to relocate filenames in EditData; useful if the MFA file path changes
-void FUSION_API UpdateFileNames(mv* mV, tchar* appName, EditData* edPtr, void (WINAPI* lpfnUpdate)(tchar* appName, tchar* pathname))
+void FUSION_API Extension::API::UpdateFileNames(mv* mV, tchar* appName, EditData* edPtr, void (WINAPI* lpfnUpdate)(tchar* appName, tchar* pathname))
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_UPDATEFILENAMES
 	/*
 	// Example from stock SDK: update file name
 	if (edPtr->eaviName[0] != 0)
@@ -154,12 +143,9 @@ void FUSION_API UpdateFileNames(mv* mV, tchar* appName, EditData* edPtr, void (W
 }
 
 
-// If you aren't dealing with images, you can safely comment out this function
-// This is called when Fusion needs to enumerate images/fonts being stored in your object
-// See stock SDK docs
-int32 FUSION_API EnumElts(mv* mV, EditData* edPtr, ENUMELTPROC enumProc, ENUMELTPROC undoProc, LPARAM lp1, LPARAM lp2)
+int32 FUSION_API Extension::API::EnumElts(mv* mV, EditData* edPtr, ENUMELTPROC enumProc, ENUMELTPROC undoProc, LPARAM lp1, LPARAM lp2)
 {
-#pragma EXT_DLLEXPORT
+#pragma EXT_EXPORT_ENUMELTS
 	// Example (for images):
 	int32 ret = 0;
 	for (int32 i = 0; i < edPtr->nImages; ++i)

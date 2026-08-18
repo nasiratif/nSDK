@@ -1,0 +1,112 @@
+// Fusion API exports header file. Avoids the need for a .def file
+// Example:
+/*
+int32 FUSION_API Extension::API::Initialize(mv* mV, int32 quiet)
+{
+#pragma EXT_EXPORT_INITIALIZE // add to the beginning of a function
+	return nSDK::Exports::Initialize(mV, quiet);
+}
+*/
+
+#pragma once
+
+#define EXT_EXPORT_GETINFOS comment(linker, "/EXPORT:GetInfos=" __FUNCDNAME__ ",@2")
+#define EXT_EXPORT_LOADOBJECT comment(linker, "/EXPORT:LoadObject=" __FUNCDNAME__ ",@6")
+#define EXT_EXPORT_UNLOADOBJECT comment(linker, "/EXPORT:UnloadObject=" __FUNCDNAME__ ",@7")
+#define EXT_EXPORT_PUTOBJECT comment(linker, "/EXPORT:PutObject=" __FUNCDNAME__ ",@8")
+#define EXT_EXPORT_REMOVEOBJECT comment(linker, "/EXPORT:RemoveObject=" __FUNCDNAME__ ",@9")
+#define EXT_EXPORT_MAKEICONEX comment(linker, "/EXPORT:MakeIconEx=" __FUNCDNAME__ ",@11")
+
+#define EXT_EXPORT_CREATEOBJECT comment(linker, "/EXPORT:CreateObject=" __FUNCDNAME__ ",@14")
+#define EXT_EXPORT_GETHELPFILENAME comment(linker, "/EXPORT:GetHelpFileName=" __FUNCDNAME__ ",@16")
+#define EXT_EXPORT_EDITOBJECT comment(linker, "/EXPORT:EditObject=" __FUNCDNAME__ ",@18")
+#define EXT_EXPORT_GETOBJECTRECT comment(linker, "/EXPORT:GetObjectRect=" __FUNCDNAME__ ",@19")
+#define EXT_EXPORT_EDITORDISPLAY comment(linker, "/EXPORT:EditorDisplay=" __FUNCDNAME__ ",@20")
+
+#define EXT_EXPORT_ISTRANSPARENT comment(linker, "/EXPORT:IsTransparent=" __FUNCDNAME__ ",@21")
+#define EXT_EXPORT_PREPARETOWRITEOBJECT comment(linker, "/EXPORT:PrepareToWriteObject=" __FUNCDNAME__ ",@22")
+#define EXT_EXPORT_UPDATEFILENAMES comment(linker, "/EXPORT:UpdateFileNames=" __FUNCDNAME__ ",@23")
+#define EXT_EXPORT_ENUMELTS comment(linker, "/EXPORT:EnumElts=" __FUNCDNAME__ ",@24")
+#define EXT_EXPORT_INITIALIZE comment(linker, "/EXPORT:Initialize=" __FUNCDNAME__ ",@25")
+#define EXT_EXPORT_FREE comment(linker, "/EXPORT:Free=" __FUNCDNAME__ ",@26")
+#define EXT_EXPORT_USESFILE comment(linker, "/EXPORT:UsesFile=" __FUNCDNAME__ ",@30")
+#define EXT_EXPORT_CREATEFROMFILE comment(linker, "/EXPORT:CreateFromFile=" __FUNCDNAME__ ",@31")
+#define EXT_EXPORT_DUPLICATEOBJECT comment(linker, "/EXPORT:DuplicateObject=" __FUNCDNAME__ ",@32")
+#define EXT_EXPORT_GETOBJINFOS comment(linker, "/EXPORT:GetObjInfos=" __FUNCDNAME__ ",@36")
+
+#define EXT_EXPORT_GETTEXTCAPS comment(linker, "/EXPORT:GetTextCaps=" __FUNCDNAME__ ",@37")
+#define EXT_EXPORT_GETTEXTALIGNMENT comment(linker, "/EXPORT:GetTextAlignment=" __FUNCDNAME__ ",@38")
+#define EXT_EXPORT_SETTEXTALIGNMENT comment(linker, "/EXPORT:SetTextAlignment=" __FUNCDNAME__ ",@39")
+#define EXT_EXPORT_GETTEXTFONT comment(linker, "/EXPORT:GetTextFont=" __FUNCDNAME__ ",@40")
+#define EXT_EXPORT_SETTEXTFONT comment(linker, "/EXPORT:SetTextFont=" __FUNCDNAME__ ",@41")
+#define EXT_EXPORT_GETTEXTCLR comment(linker, "/EXPORT:GetTextClr=" __FUNCDNAME__ ",@42")
+#define EXT_EXPORT_SETTEXTCLR comment(linker, "/EXPORT:SetTextClr=" __FUNCDNAME__ ",@43")
+
+#define EXT_EXPORT_GETDEPENDENCIES comment(linker, "/EXPORT:GetDependencies=" __FUNCDNAME__ ",@44")
+#define EXT_EXPORT_GETFILTERS comment(linker, "/EXPORT:GetFilters=" __FUNCDNAME__ ",@45")
+
+#define EXT_EXPORT_CREATERUNOBJECT comment(linker, "/EXPORT:CreateRunObject=" __FUNCDNAME__ ",@50")
+#define EXT_EXPORT_DESTROYRUNOBJECT comment(linker, "/EXPORT:DestroyRunObject=" __FUNCDNAME__ ",@51")
+#define EXT_EXPORT_HANDLERUNOBJECT comment(linker, "/EXPORT:HandleRunObject=" __FUNCDNAME__ ",@52")
+#define EXT_EXPORT_DISPLAYRUNOBJECT comment(linker, "/EXPORT:DisplayRunObject=" __FUNCDNAME__ ",@53")
+#define EXT_EXPORT_PAUSERUNOBJECT comment(linker, "/EXPORT:PauseRunObject=" __FUNCDNAME__ ",@57")
+#define EXT_EXPORT_CONTINUERUNOBJECT comment(linker, "/EXPORT:ContinueRunObject=" __FUNCDNAME__ ",@58")
+#define EXT_EXPORT_GETRUNOBJECTINFOS comment(linker, "/EXPORT:GetRunObjectInfos=" __FUNCDNAME__ ",@59")
+
+#define EXT_EXPORT_GETCONDITIONMENU comment(linker, "/EXPORT:GetConditionMenu=" __FUNCDNAME__ ",@60")
+#define EXT_EXPORT_GETACTIONMENU comment(linker, "/EXPORT:GetActionMenu=" __FUNCDNAME__ ",@61")
+#define EXT_EXPORT_GETEXPRESSIONMENU comment(linker, "/EXPORT:GetExpressionMenu=" __FUNCDNAME__ ",@62")
+#define EXT_EXPORT_GETCONDITIONCODEFROMMENU comment(linker, "/EXPORT:GetConditionCodeFromMenu=" __FUNCDNAME__ ",@63")
+#define EXT_EXPORT_GETACTIONCODEFROMMENU comment(linker, "/EXPORT:GetActionCodeFromMenu=" __FUNCDNAME__ ",@64")
+#define EXT_EXPORT_GETEXPRESSIONCODEFROMMENU comment(linker, "/EXPORT:GetExpressionCodeFromMenu=" __FUNCDNAME__ ",@65")
+#define EXT_EXPORT_GETCONDITIONSTRING comment(linker, "/EXPORT:GetConditionString=" __FUNCDNAME__ ",@66")
+#define EXT_EXPORT_GETACTIONSTRING comment(linker, "/EXPORT:GetActionString=" __FUNCDNAME__ ",@67")
+#define EXT_EXPORT_GETEXPRESSIONSTRING comment(linker, "/EXPORT:GetExpressionString=" __FUNCDNAME__ ",@68")
+#define EXT_EXPORT_INITPARAMETER comment(linker, "/EXPORT:InitParameter=" __FUNCDNAME__ ",@69")
+#define EXT_EXPORT_EDITPARAMETER comment(linker, "/EXPORT:EditParameter=" __FUNCDNAME__ ",@70")
+#define EXT_EXPORT_GETPARAMETERSTRING comment(linker, "/EXPORT:GetParameterString=" __FUNCDNAME__ ",@71")
+#define EXT_EXPORT_GETCONDITIONTITLE comment(linker, "/EXPORT:GetConditionTitle=" __FUNCDNAME__ ",@72")
+#define EXT_EXPORT_GETACTIONTITLE comment(linker, "/EXPORT:GetActionTitle=" __FUNCDNAME__ ",@73")
+#define EXT_EXPORT_GETEXPRESSIONTITLE comment(linker, "/EXPORT:GetExpressionTitle=" __FUNCDNAME__ ",@74")
+#define EXT_EXPORT_GETCONDITIONINFOS comment(linker, "/EXPORT:GetConditionInfos=" __FUNCDNAME__ ",@75")
+#define EXT_EXPORT_GETACTIONINFOS comment(linker, "/EXPORT:GetActionInfos=" __FUNCDNAME__ ",@76")
+#define EXT_EXPORT_GETEXPRESSIONINFOS comment(linker, "/EXPORT:GetExpressionInfos=" __FUNCDNAME__ ",@77")
+#define EXT_EXPORT_UPDATEEDITSTRUCTURE comment(linker, "/EXPORT:UpdateEditStructure=" __FUNCDNAME__ ",@78")
+#define EXT_EXPORT_GETRUNOBJECTDATASIZE comment(linker, "/EXPORT:GetRunObjectDataSize=" __FUNCDNAME__ ",@80")
+#define EXT_EXPORT_SAVEBACKGROUND comment(linker, "/EXPORT:SaveBackground=" __FUNCDNAME__ ",@81")
+#define EXT_EXPORT_RESTOREBACKGROUND comment(linker, "/EXPORT:RestoreBackground=" __FUNCDNAME__ ",@82")
+#define EXT_EXPORT_KILLBACKGROUND comment(linker, "/EXPORT:KillBackground=" __FUNCDNAME__ ",@83")
+#define EXT_EXPORT_WINDOWPROC comment(linker, "/EXPORT:WindowProc=" __FUNCDNAME__ ",@84")
+#define EXT_EXPORT_STARTAPP comment(linker, "/EXPORT:StartApp=" __FUNCDNAME__ ",@85")
+#define EXT_EXPORT_ENDAPP comment(linker, "/EXPORT:EndApp=" __FUNCDNAME__ ",@86")
+#define EXT_EXPORT_STARTFRAME comment(linker, "/EXPORT:StartFrame=" __FUNCDNAME__ ",@87")
+#define EXT_EXPORT_ENDFRAME comment(linker, "/EXPORT:EndFrame=" __FUNCDNAME__ ",@88")
+#define EXT_EXPORT_GETEXPRESSIONPARAM comment(linker, "/EXPORT:GetExpressionParam=" __FUNCDNAME__ ",@89")
+
+#define EXT_EXPORT_GETRUNOBJECTSURFACE comment(linker, "/EXPORT:GetRunObjectSurface=" __FUNCDNAME__ ",@90")
+#define EXT_EXPORT_GETRUNOBJECTCOLLISIONMASK comment(linker, "/EXPORT:GetRunObjectCollisionMask=" __FUNCDNAME__ ",@91")
+
+#define EXT_EXPORT_GETRUNOBJECTFONT comment(linker, "/EXPORT:GetRunObjectFont=" __FUNCDNAME__ ",@92")
+#define EXT_EXPORT_SETRUNOBJECTFONT comment(linker, "/EXPORT:GetRunObjectFont=" __FUNCDNAME__ ",@93")
+#define EXT_EXPORT_GETRUNOBJECTTEXTCOLOR comment(linker, "/EXPORT:GetRunObjectTextColor=" __FUNCDNAME__ ",@94")
+#define EXT_EXPORT_SETRUNOBJECTTEXTCOLOR comment(linker, "/EXPORT:SetRunObjectTextColor=" __FUNCDNAME__ ",@95")
+
+#define EXT_EXPORT_SETEDITSIZE comment(linker, "/EXPORT:SetEditSize=" __FUNCDNAME__ ",@99")
+#define EXT_EXPORT_GETPROPERTIES comment(linker, "/EXPORT:GetProperties=" __FUNCDNAME__ ",@100")
+#define EXT_EXPORT_RELEASEPROPERTIES comment(linker, "/EXPORT:ReleaseProperties=" __FUNCDNAME__ ",@101")
+#define EXT_EXPORT_GETPROPVALUE comment(linker, "/EXPORT:GetPropValue=" __FUNCDNAME__ ",@102")
+#define EXT_EXPORT_SETPROPVALUE comment(linker, "/EXPORT:SetPropValue=" __FUNCDNAME__ ",@103")
+#define EXT_EXPORT_ISPROPENABLED comment(linker, "/EXPORT:IsPropEnabled=" __FUNCDNAME__ ",@104")
+#define EXT_EXPORT_GETPROPCHECK comment(linker, "/EXPORT:GetPropCheck=" __FUNCDNAME__ ",@105")
+#define EXT_EXPORT_SETPROPCHECK comment(linker, "/EXPORT:SetPropCheck=" __FUNCDNAME__ ",@106")
+#define EXT_EXPORT_GETPROPCREATEPARAM comment(linker, "/EXPORT:GetPropCreateParam=" __FUNCDNAME__ ",@107")
+#define EXT_EXPORT_RELEASEPROPCREATEPARAM comment(linker, "/EXPORT:ReleasePropCreateParam=" __FUNCDNAME__ ",@108")
+#define EXT_EXPORT_EDITPROP comment(linker, "/EXPORT:EditProp=" __FUNCDNAME__ ",@109")
+#define EXT_EXPORT_GETDEBUGTREE comment(linker, "/EXPORT:GetDebugTree=" __FUNCDNAME__ ",@110")
+#define EXT_EXPORT_GETDEBUGITEM comment(linker, "/EXPORT:GetDebugItem=" __FUNCDNAME__ ",@111")
+#define EXT_EXPORT_EDITDEBUGITEM comment(linker, "/EXPORT:EditDebugItem=" __FUNCDNAME__ ",@112")
+
+#define EXT_EXPORT_SAVERUNOBJECT comment(linker, "/EXPORT:SaveRunObject=" __FUNCDNAME__ ",@113")
+#define EXT_EXPORT_LOADRUNOBJECT comment(linker, "/EXPORT:LoadRunObject=" __FUNCDNAME__ ",@114")
+#define EXT_EXPORT_GETRUNOBJECTMEMORYUSAGE comment(linker, "/EXPORT:GetRunObjectMemoryUsage=" __FUNCDNAME__ ",@115")
+#define EXT_EXPORT_CHANGESCALE comment(linker, "/EXPORT:ChangeScale=" __FUNCDNAME__ ",@116")

@@ -333,7 +333,7 @@ int32 FUSION_API nSDK::Exports::Free(mv* mV)
 
 */
 
-bool32 FUSION_API nSDK::Exports::GetProperties(mv* mV, EditData* edPtr, bool32 bMasterItem)
+bool32 FUSION_API nSDK::Exports::GetProperties(mv* mV, Extension::EditData* edPtr, bool32 bMasterItem)
 {
 	if (properties.empty())
 		return FALSE;
@@ -367,17 +367,17 @@ bool32 FUSION_API nSDK::Exports::GetProperties(mv* mV, EditData* edPtr, bool32 b
 }
 
 
-HMENU FUSION_API nSDK::Exports::GetActionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
+HMENU FUSION_API nSDK::Exports::GetActionMenu(mv* mV, OI* oiPtr, Extension::EditData* edPtr)
 {
 	return CreateACEMenus(actionMenus, 25000);
 }
 
-HMENU FUSION_API nSDK::Exports::GetConditionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
+HMENU FUSION_API nSDK::Exports::GetConditionMenu(mv* mV, OI* oiPtr, Extension::EditData* edPtr)
 {
 	return CreateACEMenus(conditionMenus, 26000);
 }
 
-HMENU FUSION_API nSDK::Exports::GetExpressionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
+HMENU FUSION_API nSDK::Exports::GetExpressionMenu(mv* mV, OI* oiPtr, Extension::EditData* edPtr)
 {
 	return CreateACEMenus(expressionMenus, 27000);
 }
