@@ -249,3 +249,28 @@ Called to retrieve internal information about a specific condition (e.g, flags, 
 ### GetExpressionInfos
 `infosEventsV2* FUSION_API Extension::API::GetExpressionInfos(mv* mV, int16 code);`
 Called to retrieve internal information about a specific expression (e.g, return type, number of parameters, parameter info etc).
+
+## Exporter-Specific Functions
+
+### PrepareAndroidBuild
+*This function was found from [DarkEdif](https://github.com/SortaCore/MMF2Exts)*
+`void FUSION_API Extension::API::PrepareAndroidBuild(mv* mV, EditData* edPtr, const wchar* androidBuildPath);`
+If exported, this is called during Android project building, even if your extension doesn't have an Android runtime version.
+You get the build directory of the Android project in `androidBuildPath`, so your extension could modify the build files accordingly.
+
+Also note that `androidBuildPath` is always Unicode even if the extension isn't.
+
+
+### PrepareHtml5Build
+*WARNING: this is an undocumented function!*
+`bool32 FUSION_API Extension::API::PrepareHtml5Build(EditData* edPtr, mv* mV, int32 count, int32 buildType, dword flags, const wchar* indexHTMLPath, const wchar* sourceFolderPath, const wchar* mediaFolderPath, const wchar* runtimeHTML5Path, const wchar* sourceFolderName, const wchar* mediaFolderName, const wchar* html5ProjectName, const wchar* jsCompileScriptPath, const wchar* tempSrcFolderPath, int32 appWidth, int32 appHeight);`
+If exported, this is called during HTML5 Development/Final Project building, even if your extension doesn't have an HTML5 runtime version.
+You're able to retrieve some metadata about the HTML5 build, like various directories of the HTML5 build, and some temp files/folders, so your extension could modify the build files accordingly.
+From testing, `buildType` is always set to `28`, which seemingly corresponds to `BUILDTYPE_HTML5FINAL` defined in `Cncy.h`, even if the build type is Development.
+Note `indexHTMLPath` is an empty string if the *Generate HTML file* property is unchecked.
+`jsCompileScriptPath` & `tempSrcFolderPath` is only valid on HTML5 Final Project, otherwise they're `NULL`.
+This function is not officially documented, however I was able to retrieve it's signature thanks to a Clickteam staff member.
+
+Also note that the strings are always Unicode even if the extension isn't.
+
+Return `TRUE` if success, `FALSE` otherwise.

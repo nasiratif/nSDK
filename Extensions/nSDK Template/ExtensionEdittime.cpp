@@ -373,6 +373,13 @@ bool32 FUSION_API Extension::API::GetFilters(mv* mV, EditData* edPtr, dword dwFl
 	return FALSE;
 }
 
+/*
+
+------ TEXT FUNCTIONS (OEFLAG_TEXT) ------
+
+---- These functions are only used with	OEFLAG_TEXT
+
+*/
 
 dword FUSION_API Extension::API::GetTextCaps(mv* mV, EditData* edPtr)
 {
@@ -456,6 +463,12 @@ dword FUSION_API Extension::API::GetTextAlignment(mv* mV, EditData* edPtr)
 	*/
 	return 0;
 }
+
+/*
+
+------ A/C/E INFORMATION FUNCTIONS ------
+
+*/
 
 
 HMENU FUSION_API Extension::API::GetActionMenu(mv* mV, OI* oiPtr, EditData* edPtr)
@@ -557,4 +570,25 @@ infosEventsV2* FUSION_API Extension::API::GetExpressionInfos(mv* mV, int16 code)
 #pragma EXT_EXPORT_GETEXPRESSIONINFOS
 	return nSDK::Exports::GetExpressionInfos(mV, code);
 }
+
+/*
+
+------ EXPORTER-SPECIFIC FUNCTIONS ------
+
+*/
+
+/*
+void FUSION_API Extension::API::PrepareAndroidBuild(mv* mV, EditData* edPtr, const wchar* androidBuildPath)
+{
+#pragma EXT_EXPORT_PREPAREANDROIDBUILD
+}
+*/
+
+/*
+bool32 FUSION_API Extension::API::PrepareHtml5Build(EditData* edPtr, mv* mV, int32 count, int32 buildType, dword flags, const wchar* indexHTMLPath, const wchar* sourceFolderPath, const wchar* mediaFolderPath, const wchar* runtimeHTML5Path, const wchar* sourceFolderName, const wchar* mediaFolderName, const wchar* html5ProjectName, const wchar* jsCompileScriptPath, const wchar* tempSrcFolderPath, int32 appWidth, int32 appHeight)
+{
+#pragma EXT_EXPORT_PREPAREHTML5BUILD
+	return FALSE;
+}
+*/
 #endif

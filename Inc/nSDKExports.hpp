@@ -110,3 +110,6 @@ int32 FUSION_API Extension::API::Initialize(mv* mV, int32 quiet)
 #define EXT_EXPORT_LOADRUNOBJECT comment(linker, "/EXPORT:LoadRunObject=" __FUNCDNAME__ ",@114")
 #define EXT_EXPORT_GETRUNOBJECTMEMORYUSAGE comment(linker, "/EXPORT:GetRunObjectMemoryUsage=" __FUNCDNAME__ ",@115")
 #define EXT_EXPORT_CHANGESCALE comment(linker, "/EXPORT:ChangeScale=" __FUNCDNAME__ ",@116")
+
+#define EXT_EXPORT_PREPAREANDROIDBUILD comment(linker, "/EXPORT:PrepareAndroidBuild=" __FUNCDNAME__ ",@200")
+#define EXT_EXPORT_PREPAREHTML5BUILD comment(linker, "/EXPORT:PrepareHtml5Build=" __FUNCDNAME__ ",@201")
