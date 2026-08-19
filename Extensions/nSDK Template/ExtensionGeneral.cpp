@@ -132,7 +132,7 @@ HGLOBAL FUSION_API Extension::API::UpdateEditStructure(mv* mV, nSDK::EditDataBas
 }
 
 
-void FUSION_API Extension::API::UpdateFileNames(mv* mV, tchar* appName, EditData* edPtr, void (WINAPI* lpfnUpdate)(tchar* appName, tchar* pathname))
+void FUSION_API Extension::API::UpdateFileNames(mv* mV, tchar* appName, EditData* edPtr, void (FUSION_API *lpfnUpdate)(tchar* appName, tchar* pathname))
 {
 #pragma EXT_EXPORT_UPDATEFILENAMES
 	/*
