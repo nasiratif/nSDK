@@ -117,7 +117,7 @@ namespace nSDK
 		// Uses CPropDataValue, containing a PropDirValue structure
 		PropType_DirectionControl = PROPTYPE_DIRCTRL,
 		PropType_Group = PROPTYPE_GROUP,
-		// Undocumented!
+		// Undocumented, shows an "Edit" button, upon clicking it, a new row at the top of the properties appear
 		PropType_ListButton = PROPTYPE_LISTBTN,
 		// Uses CPropStringValue
 		PropType_FileName = PROPTYPE_FILENAME,
@@ -136,11 +136,11 @@ namespace nSDK
 		PropType_ImageList = PROPTYPE_IMAGELIST,
 		// Uses CPropDWordValue, containing the combo index (or -1 if unselected)
 		PropType_IconComboBox = PROPTYPE_ICONCOMBOBOX,
-		// Undocumented!
+		// Undocumented, shows a blank button
 		PropType_UrlButton = PROPTYPE_URLBUTTON,
-		// Undocumented!
+		// Undocumented, has a button with 3 dots which upon clicking displays a directory file selector
 		PropType_DirectoryName = PROPTYPE_DIRECTORYNAME,
-		// Undocumented!
+		// Undocumented, the float editbox used for shaders
 		PropType_SpinEditFloat = PROPTYPE_SPINEDITFLOAT,
 	};
 
@@ -439,6 +439,13 @@ namespace Extension
 		infosEventsV2* FUSION_API GetActionInfos(mv* mV, int16 code);
 		infosEventsV2* FUSION_API GetConditionInfos(mv* mV, int16 code);
 		infosEventsV2* FUSION_API GetExpressionInfos(mv* mV, int16 code);
+
+		// EXPORTER-SPECIFIC FUNCTIONS:
+		// ---
+		void FUSION_API PrepareAndroidBuild(mv* mV, EditData* edPtr, const wchar* androidBuildPath);
+		// (not officially documented)
+		bool32 FUSION_API PrepareHtml5Build(EditData* edPtr, mv* mV, int32 count, int32 buildType, dword flags, const wchar* indexHTMLPath, const wchar* sourceFolderPath, const wchar* mediaFolderPath, const wchar* runtimeHTML5Path, const wchar* sourceFolderName, const wchar* mediaFolderName, const wchar* html5ProjectName, const wchar* jsCompileScriptPath, const wchar* tempSrcFolderPath, int32 appWidth, int32 appHeight);
+		// ---
 		// -----
 #endif
 
