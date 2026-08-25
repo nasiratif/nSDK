@@ -21,6 +21,7 @@ mono_crash.*
 MFX/
 SFT/
 IFT/
+DLL/
 Temp/
 
 # Private/proprietary stuff, hehe

@@ -1,7 +1,9 @@
 #pragma once
-#include <cstdlib>
-#include <cstdint>
-#include <cstring>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <assert.h>
+#include <math.h>
 #include <vector>
 #include <algorithm>
 

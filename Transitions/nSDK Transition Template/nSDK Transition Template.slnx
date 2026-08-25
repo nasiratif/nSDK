@@ -1,0 +1,12 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Debug Unicode" />
+    <BuildType Name="Release" />
+    <BuildType Name="Release Unicode" />
+    <BuildType Name="Runtime" />
+    <BuildType Name="Runtime Unicode" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="nSDK Transition Template.vcxproj" Id="6c3cfb78-e510-49c8-9d0d-caa9e7b5897e" />
+</Solution>
