@@ -52,7 +52,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Transition.rc">
+    <ResourceCompile Include="TransitionModule.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
