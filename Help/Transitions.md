@@ -8,7 +8,7 @@ Like normal extensions, transitions have distinct editor & runtime versions. Edi
 
 ### Adding a transition
 Create a .hpp & .cpp file that implements a transition class that derives from `CTransitionImpl`. There is an example transition, `Sample.hpp` and `Sample.cpp`, in the template to demonstrate this.
-Afterwards, in `TransitionAPI.cpp`, declare prototype class objects of your transitions and also store them into the `transitionProtos` array, making them accessible to Fusion.
+Afterwards, in `TransitionAPI.cpp`, `#include` the transition's header file, & declare prototype class objects of your transitions and also store them into the `transitionProtos` array, making them accessible to Fusion.
 
 ## Transition Functions
 

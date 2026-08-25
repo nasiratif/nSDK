@@ -4,7 +4,7 @@
 
 // General includes can be placed here:
 // -----
-#include "Sample.hpp"
+
 // -----
 
 // Define information about your transition module here:

@@ -1,5 +1,10 @@
 #include "TransitionModule.hpp"
 
+// Include your transitions here:
+// -----
+#include "Sample.hpp"
+// -----
+
 namespace Transition
 {
 	// Transition prototypes:
