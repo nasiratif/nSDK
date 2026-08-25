@@ -64,13 +64,15 @@ bool32 FUSION_API CSample::ParamsProc(HWND hDlg, uint32 msg, WPARAM wParam, LPAR
 
 bool32 CSample::StepDraw(cSurface* dest, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc)
 {
+	// This is a demo transition which just does a rotation & scaling effect:
+
 	auto delta = GetDeltaTime();
 
 	POINT center;
 	center.x = dest->GetWidth() / 2;
 	center.y = dest->GetHeight() / 2;
 
-	float32 time = (float32)delta / (float32)m_duration;
+	float32 time = (float32)delta / (float32)m_duration; // m_duration is in milliseconds
 	time = ElasticOut(time);
 	originalImage->Blit(*dest);
 	finalImage->BlitEx(
