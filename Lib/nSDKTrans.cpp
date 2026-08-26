@@ -159,7 +159,7 @@ void FUSION_API CTransition::Delete()
 
 /*
 
------ INFOS -----
+----- INFORMATION -----
 
 */
 
@@ -239,7 +239,7 @@ bool32 FUSION_API CTransition::Unknown1()
 
 bool32 FUSION_API CTransition::Unknown2(int32 unknown1, int32 unknown2)
 {
-	return TRUE;
+	return FALSE;
 }
 
 void FUSION_API CTransition::Unknown3(cSurface* dest, int32 reserved, int32 reserved2, cSurface* backgroundSurface, void** ppClassObject, dword dwFlags, void* unknown, int32 reserved3, int32 reserved4, int32 reserved5, int32 reserved6)
