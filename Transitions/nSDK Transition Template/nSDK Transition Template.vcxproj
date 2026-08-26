@@ -233,7 +233,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(ProjectDir)DLL\Data\Runtime\Unicode\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(ProjectDir)DLL\Data\Runtime\$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalDependencies>winmm.lib;mmfs2.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
