@@ -81,6 +81,7 @@ public:
 
 	// Information:
 	// -----
+	// If mode isn't 0 then Unknown2 is called..
 	virtual dword FUSION_API GetMode();
 	virtual int32 FUSION_API GetName(tchar* buffer, int32 bufferSize);
 	virtual dword FUSION_API GetID();
@@ -102,10 +103,21 @@ public:
 	virtual bool32 FUSION_API IsCompleted();
 	// -----
 
-public:
-	CTransition(CTransitionImpl* pImpl);
 protected:
 	virtual ~CTransition();
+public:
+	CTransition(CTransitionImpl* pImpl);
+
+	// Unknown functions (that Fusion might call):
+	// -----
+	// I've never had this called..
+	virtual bool32 FUSION_API Unknown1();
+	// If TRUE is returned here then Unknown3 is called
+	virtual bool32 FUSION_API Unknown2(int32 unknown1, int32 unknown2);
+	// dwFlags is used the same as StepDraw, ppClassObject seems to be a pointer to a pointer holding a class object.. it seemingly contains app width & height fields and the vtable functions seem to come from renderer DLLs..
+	// The reserved parameters are hardcoded to 0?
+	virtual void FUSION_API Unknown3(cSurface* dest, int32 reserved, int32 reserved2, cSurface* backgroundSurface, void** ppClassObject, dword dwFlags, void* unknown, int32 reserved3, int32 reserved4, int32 reserved5, int32 reserved6);
+	// -----
 private:
 	CTransitionImpl* m_pImpl;
 };
