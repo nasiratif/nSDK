@@ -106,6 +106,7 @@
     <ClInclude Include="..\..\..\Inc\FilterMgr.h" />
     <ClInclude Include="..\..\..\Inc\nSDKCommon.hpp" />
     <ClInclude Include="..\..\..\Inc\nSDKSFT.hpp" />
+    <ClInclude Include="..\..\..\Inc\nSDKFLTExports.hpp" />
     <ClInclude Include="..\..\..\Inc\SndDefs.h" />
     <ClInclude Include="..\..\..\Inc\SoundConverter.h" />
     <ClInclude Include="..\..\..\Inc\SoundError.h" />
@@ -118,6 +119,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Lib\nSDKSFT.cpp" />
     <ClCompile Include="Filter.cpp" />
+    <ClCompile Include="FilterAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Filter.rc" />
