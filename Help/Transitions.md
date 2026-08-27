@@ -14,6 +14,7 @@ Afterwards, in `TransitionAPI.cpp`, `#include` the transition's header file, & d
 
 ### StepDraw
 `virtual bool32 CTransitionImpl::StepDraw(cSurface* dest, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc);`
+
 Called every frame during the transition. This is where you actually draw the transition.
 Parameters are as follows:
 - `dest` - the on-screen surface where you draw the transition
@@ -34,37 +35,46 @@ The original documentation states the following regarding `ppRc`:
 
 ### GetModuleType
 `dword FUSION_API Transition::API::GetModuleType();`
+
 Return a `DWORD` string indicating the module ID of your transition module. This should be `DWORDSTR('C','C','T','R')`, indicating a transition module.
 
 ### GetModuleName
 `int32 FUSION_API Transition::API::GetModuleName(tchar* buffer, int32 bufferSize);`
+
 Write the name of your transition module in the `tchar` buffers provided. You must return the string length.
 
 ### GetModuleID
 `dword FUSION_API Transition::API::GetModuleID();`
+
 Return a `DWORD` string indicating the identifier of your transition module.
 
 ### CreateTransition
 `CTransition* FUSION_API Transition::API::Create(tchar* reserved, dword transID, byte* params, dword paramsSize);`
+
 Called by Fusion when your transition is to begin. You must create a new `CTransition` object using the respective transition's `CTransitionImpl` class implementation.
 If `params` is non-NULL, you must call `Initialize` from your transition implementation to utilize the parameters given in the editor.
 
 ### GetTransCount
 `int32 FUSION_API Transition::API::GetTransCount();`
+
 Return the number of transitions your module has.
 
 ### GetTransName
 `int32 FUSION_API Transition::API::GetTransName(int32 index, tchar* buffer, int32 bufferSize);`
+
 Return the name of a specific transition in the `tchar` buffers provided. `index` is the index of your transition.
 
 ### GetTransID
 `dword FUSION_API Transition::API::GetTransID(int32 index);`
+
 Return the identifier, a `DWORD` string, of a specific transition. `index` is the index of your transition.
 
 ### GetTransMode
 `dword FUSION_API Transition::API::GetTransMode(int32 index);`
+
 Return the transition mode of a specific transition. This correponds to the `TRMODE_XXX` defines.
 
 ### IsUnicode
 `bool32 FUSION_API Transition::API::IsUnicode();`
+
 Called by Fusion to determine whether your transition module is Unicode. If so, return `TRUE`, from which you must provide Unicode string buffers. Otherwise, return `FALSE` and provide ANSI strings.
