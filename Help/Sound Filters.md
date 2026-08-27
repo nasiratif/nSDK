@@ -3,7 +3,7 @@
 This file documents MMF2/CF2.5 sound filters. For additional information, see the README in the Filters/Sounds folder.
 
 ## Usage
-Sound filters are placed in *(Fusion root)\Filters\Sounds*. They cannot be Unicode, and also don't have a Runtime variant.
+Sound filters are placed in *(Fusion root)\Filters\Sounds*. They cannot be Unicode, and also don't have a distinct Runtime variant.
 
 Fusion loads all sound filters before it even shows the splash screen. This may be important to note as you may not have enough time to attach a debugger to Fusion before the filter loads.
 
