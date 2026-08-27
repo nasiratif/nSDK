@@ -40,7 +40,7 @@ The parameters are as follows:
 
 - `lpDstBuffer` - destination audio buffer
 - `dwBufSize` - whole size of the buffer, in bytes
-- `dwRead` - number of bytes that you actually wrote into the buffer. If it's less than dwBufSize, Fusion assumes there's no more data left and either stops the sound after this buffer finishes playing, or loops
+- `dwRead` - number of bytes that you actually wrote into the buffer. If it's less than `dwBufSize`, Fusion assumes there's no more data left and either stops the sound after this buffer finishes playing, or loops
 
 Return `SND_OK` if success, otherwise failure.
 
