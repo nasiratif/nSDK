@@ -70,7 +70,7 @@ Return a new instance of your sound filter that inherits from `CSoundFilter`.
 ### GetFilterName
 `const tchar* FUSION_API Filter::API::GetFilterName();`
 
-Called at Fusion startup to retrieve the name of your sound filter (what is shown in the Sound Filters tab).
+Called at Fusion startup to retrieve the name of your sound filter (what is shown in the *Sound Filters* tab).
 
 ### GetFilterID
 `dword FUSION_API Filter::API::GetFilterID();`
