@@ -4,4 +4,4 @@ Officially Clickteam has not provided any public sound filter SDKs (to my knowle
 
 This is not fleshed out, as I haven't completely deciphered how the sound filter APIs work, but I was able to get something playing properly in the template provided here.
 
-See Filter.hpp/cpp comments in the template for more information.
+See the `Sound Filters.md` file in the Help folder for more information.
