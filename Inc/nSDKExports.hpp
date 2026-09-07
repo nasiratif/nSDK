@@ -112,4 +112,12 @@ int32 FUSION_API Extension::API::Initialize(mv* mV, int32 quiet)
 #define EXT_EXPORT_CHANGESCALE comment(linker, "/EXPORT:ChangeScale=" __FUNCDNAME__ ",@116")
 
 #define EXT_EXPORT_PREPAREANDROIDBUILD comment(linker, "/EXPORT:PrepareAndroidBuild=" __FUNCDNAME__ ",@200")
-#define EXT_EXPORT_PREPAREHTML5BUILD comment(linker, "/EXPORT:PrepareHtml5Build=" __FUNCDNAME__ ",@201")
+#define EXT_EXPORT_PREPAREUWPBUILD comment(linker, "/EXPORT:PrepareUWPBuild=" __FUNCDNAME__ ",@201")
+// NB (Nassic): I've found that the ordinal indices for these aren't consistent across exts:
+// -----
+#define EXT_EXPORT_PREPAREFLEXBUILD comment(linker, "/EXPORT:PrepareFlexBuild=" __FUNCDNAME__ ",@117")
+#define EXT_EXPORT_PREPAREHTML5BUILD comment(linker, "/EXPORT:PrepareHtml5Build=" __FUNCDNAME__ ",@118")
+
+#define EXT_EXPORT_PUSHBUILD comment(linker, "/EXPORT:PushBuild=" __FUNCDNAME__ ",@119")
+#define EXT_EXPORT_POPBUILD comment(linker, "/EXPORT:PopBuild=" __FUNCDNAME__ ",@120")
+// -----

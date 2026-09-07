@@ -440,10 +440,18 @@ namespace Extension
 		infosEventsV2* FUSION_API GetConditionInfos(mv* mV, int16 code);
 		infosEventsV2* FUSION_API GetExpressionInfos(mv* mV, int16 code);
 
+
+		bool32 FUSION_API PushBuild(EditData* edPtr, mv* mV, int32 count, dword buildType, dword flags);
+		bool32 FUSION_API PopBuild(EditData* edPtr, mv* mV, int32 count, dword buildType, dword flags);
+
 		// EXPORTER-SPECIFIC FUNCTIONS:
 		// ---
 		void FUSION_API PrepareAndroidBuild(mv* mV, EditData* edPtr, const wchar* androidBuildPath);
-		// (not officially documented)
+		// (not officially documented):
+		// ---
+		bool32 FUSION_API PrepareUWPBuild(mv* mV, EditData* edPtr, int32 buildType, const wchar* uwpBuildPath, const wchar* uwpProjectName);
+		bool32 FUSION_API PrepareFlexBuild(mv* mV, EditData* edPtr, const wchar* flexBuildPath);
+		
 		bool32 FUSION_API PrepareHtml5Build(EditData* edPtr, mv* mV, int32 count, int32 buildType, dword flags, const wchar* indexHTMLPath, const wchar* sourceFolderPath, const wchar* mediaFolderPath, const wchar* runtimeHTML5Path, const wchar* sourceFolderName, const wchar* mediaFolderName, const wchar* html5ProjectName, const wchar* jsCompileScriptPath, const wchar* tempSrcFolderPath, int32 appWidth, int32 appHeight);
 		// ---
 		// -----
@@ -454,59 +462,45 @@ namespace Extension
 		// Called when the Fusion app starts
 		// Note that "Fusion app" could also mean a sub-app, in which case this function is also called there too
 		void FUSION_API StartApp(mv* mV, CRunApp* pApp);
-
 		// Counterpart of StartApp
 		void FUSION_API EndApp(mv* mV, CRunApp* pApp);
 
-
 		// Called when the frame starts or restarts
 		void FUSION_API StartFrame(mv* mV, dword dwReserved, int32 nFrameIndex);
-
 		// Called when the frame ends
 		void FUSION_API EndFrame(mv* mV, dword dwReserved, int32 nFrameIndex);
-
 
 		// Tells Fusion what your RunData size is
 		uint16 FUSION_API GetRunObjectDataSize(RunHeader* rhPtr, EditData* edPtr);
 
-
 		// If you don't wish to implement your own display routine, but you use a cSurface, you can simply pass it to this function and Fusion will handle the blitting automatically to the frame surface; taking effects and sprite position into consideration
 		cSurface* FUSION_API GetRunObjectSurface(RunData* rdPtr);
-
 		// If you're using OEPREFS_FINECOLLISIONS, you need to implement this function to generate the collision mask for your object
 		sMask* FUSION_API GetRunObjectCollisionMask(RunData* rdPtr, LPARAM lParam);
-
 
 		// Called when the extension object is created
 		// Should be used to initialize RunData
 		// If you return an error code here (other than 0), DestroyRunObject is invoked
 		int16 FUSION_API CreateRunObject(RunData* rdPtr, EditData* edPtr, createObjectInfo* cobPtr);
-
 		// Counterpart of CreateRunObject
 		// Free resources you allocated in RunData
 		// For the 'fast' parameter, see stock SDK docs
 		int16 FUSION_API DestroyRunObject(RunData* rdPtr, long fast);
-
 		// *REQUIRED*; called every Fusion loop, unless you return REFLAG_ONESHOT
 		// You may return REFLAG_DISPLAY to trigger DisplayRunObject, or 0 to simply trigger this function next frame
 		int16 FUSION_API HandleRunObject(RunData* rdPtr);
-
 		// If you return REFLAG_DISPLAY in HandleRunObject, this function will run
 		// Most common use case is to blit a cSurface onto the frame surface (see example below), although GetRunObjectSurface, defined far above, is meant to do this for you automatically
 		// Note that this function will never be triggered if you use OEFLAG_ANIMATIONS!
 		int16 FUSION_API DisplayRunObject(RunData* rdPtr);
 
-
 		// When Fusion runtime is paused
 		int16 FUSION_API PauseRunObject(RunData* rdPtr);
-
 		// When Fusion runtime is resumed
 		int16 FUSION_API ContinueRunObject(RunData* rdPtr);
 
-
 		// When the extension data needs to be saved to disk (using the frame save action)
 		bool32 FUSION_API SaveRunObject(RunData* rdPtr, HANDLE hFile);
-
 		// When the extension data needs to be loaded from disk (using the frame load action)
 		bool32 FUSION_API LoadRunObject(RunData* rdPtr, HANDLE hFile);
 
@@ -524,14 +518,12 @@ namespace Extension
 		// ---
 		// Set the extension object's font
 		void FUSION_API SetRunObjectFont(RunData* rdPtr, LOGFONT* pLf, RECT* pRc);
-
 		// Return the extension object's font
 		void FUSION_API GetRunObjectFont(RunData* rdPtr, LOGFONT* pLf);
 
 
 		// Set the extension object's text color
 		void FUSION_API SetRunObjectTextColor(RunData* rdPtr, COLORREF rgb);
-
 		// Return the extension object's text color
 		COLORREF FUSION_API GetRunObjectTextColor(RunData* rdPtr);
 		// ---

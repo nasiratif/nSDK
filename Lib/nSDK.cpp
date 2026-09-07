@@ -336,7 +336,7 @@ int32 FUSION_API nSDK::Exports::Free(mv* mV)
 bool32 FUSION_API nSDK::Exports::GetProperties(mv* mV, Extension::EditData* edPtr, bool32 bMasterItem)
 {
 	if (properties.empty())
-		return FALSE;
+		return TRUE;
 
 	for (const auto& props : properties)
 	{

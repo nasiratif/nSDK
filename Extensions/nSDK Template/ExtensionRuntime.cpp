@@ -1,7 +1,7 @@
 #include "Extension.hpp"
 
-// Fill this out if you're implementing debugger support
 #ifdef EXT_EDITOR
+// Fill this out if you're implementing debugger support
 word DebugTree[] =
 {
 	// Example:
@@ -168,6 +168,7 @@ bool32 FUSION_API Extension::API::LoadRunObject(RunData* rdPtr, HANDLE hFile)
 #pragma EXT_EXPORT_LOADRUNOBJECT
 	return FALSE;
 }
+
 
 /*
 

@@ -571,6 +571,39 @@ infosEventsV2* FUSION_API Extension::API::GetExpressionInfos(mv* mV, int16 code)
 	return nSDK::Exports::GetExpressionInfos(mV, code);
 }
 
+
+/*
+
+------ PUSH/POP BUILD ------
+
+*/
+
+/*
+bool32 FUSION_API Extension::API::PushBuild(EditData* edPtr, mv* mV, int32 count, dword buildType, dword flags)
+{
+#pragma EXT_EXPORT_PUSHBUILD
+	// Example:
+	// if (count > 0)
+	//	 return FALSE; // only run this routine for the first object in the app
+	//
+	// make some temporary build modifications..
+	return FALSE;
+}
+*/
+
+/*
+bool32 FUSION_API Extension::API::PopBuild(EditData* edPtr, mv* mV, int32 count, dword buildType, dword flags)
+{
+#pragma EXT_EXPORT_POPBUILD
+	// Example:
+	// if (count > 0)
+	//	 return FALSE; // only run this routine for the first object in the app
+	//
+	// undo temporary build modifications..
+	return FALSE;
+}
+*/
+
 /*
 
 ------ EXPORTER-SPECIFIC FUNCTIONS ------
@@ -581,6 +614,22 @@ infosEventsV2* FUSION_API Extension::API::GetExpressionInfos(mv* mV, int16 code)
 void FUSION_API Extension::API::PrepareAndroidBuild(mv* mV, EditData* edPtr, const wchar* androidBuildPath)
 {
 #pragma EXT_EXPORT_PREPAREANDROIDBUILD
+}
+*/
+
+/*
+bool32 FUSION_API Extension::API::PrepareUWPBuild(mv* mV, EditData* edPtr, int32 buildType, const wchar* uwpBuildPath, const wchar* uwpProjectName)
+{
+#pragma EXT_EXPORT_PREPAREUWPBUILD
+	return FALSE;
+}
+*/
+
+/*
+bool32 FUSION_API Extension::API::PrepareFlexBuild(mv* mV, EditData* edPtr, const wchar* flexBuildPath)
+{
+#pragma EXT_EXPORT_PREPAREFLEXBUILD
+	return FALSE;
 }
 */
 

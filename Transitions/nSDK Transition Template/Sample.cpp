@@ -86,7 +86,8 @@ bool32 CSample::StepDraw(cSurface* dest, cSurface* originalImage, cSurface* fina
 		dest->GetWidth(),
 		dest->GetHeight(),
 		&center,
-		time * 360.0f
+		time * 360.0f,
+		BMODE_TRANSP
 	);
 	return FALSE;
 }

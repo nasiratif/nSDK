@@ -102,6 +102,13 @@ class FAR STDDLL_API CInputFile
 				#define GetFileName GetFileNameA
 			#endif
 		#endif
+
+		// (nSDK) New functions, added 292.27:
+
+		virtual long long GetPositionEx() = 0;
+		virtual long long GetLengthEx() = 0;
+
+		virtual long long SeekEx(long long pos, int method) = 0;
 };
 typedef CInputFile FAR * LPINPUTFILE;
 

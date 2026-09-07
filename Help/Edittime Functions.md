@@ -303,6 +303,25 @@ Called to retrieve internal information about a specific condition (e.g, flags, 
 
 Called to retrieve internal information about a specific expression (e.g, return type, number of parameters, parameter info etc).
 
+
+### PushBuild
+`bool32 FUSION_API Extension::API::PushBuild(EditData* edPtr, mv* mV, int32 count, dword buildType, dword flags);`
+
+Called, for each object, during the beginning of application building using any exporter. This function is ideal if you need to make modifications to the extension/app for exported builds only.
+`count` is the current index of the extension object (it's called for every *cloned* instance of the extension object across the app).
+`buildType` corresponds to the `BUILDTYPE_XXX` enum values.
+
+Note that this function, along with `PopBuild`, is called even if the build is cancelled (e.g, you cancel the save select dialog when building a Windows app).
+
+It is currently unknown what the `flags` parameter is used for.
+
+### PopBuild
+`bool32 FUSION_API Extension::API::PopBuild(EditData* edPtr, mv* mV, int32 count, dword buildType, dword flags);`
+
+The counterpart of `PushBuild`, but called after the build is finished.
+
+It is currently unknown what the `flags` parameter is used for.
+
 ## Exporter-Specific Functions
 
 ### PrepareAndroidBuild
@@ -315,6 +334,27 @@ You get the build directory of the Android project in `androidBuildPath`, so you
 
 Also note that `androidBuildPath` is always Unicode even if the extension isn't.
 
+
+### PrepareUWPBuild
+*WARNING: this is an undocumented function!*
+
+`bool32 FUSION_API Extension::API::PrepareUWPBuild(mv* mV, EditData* edPtr, int32 buildType, const wchar* uwpBuildPath, const wchar* uwpProjectName);`
+
+If exported, this is called during UWP project building. You can modify the project accordingly by modifying files in the supplied build path, if your extension requires changes to the project.
+This function is not officially documented.
+
+Return `TRUE` if success, `FALSE` otherwise.
+
+
+### PrepareFlexBuild
+*WARNING: this is an undocumented function!*
+
+`bool32 FUSION_API Extension::API::PrepareFlexBuild(mv* mV, EditData* edPtr, const wchar* flexBuildPath);`
+
+If exported, this is called during Flash building. You can modify the project accordingly by modifying files in the supplied build path, if your extension requires changes to the project.
+This function is not officially documented.
+
+Return `TRUE` if success, `FALSE` otherwise.
 
 ### PrepareHtml5Build
 *WARNING: this is an undocumented function!*

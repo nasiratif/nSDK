@@ -179,7 +179,9 @@ typedef struct AppHeader {
 	DWORD		gaNbFrames;							// Number of frames
 	DWORD		gaFrameRate;						// Number of frames per second
 	BYTE		gaMDIWindowMenu;					// Index of Window menu for MDI applications
-	BYTE		gaFree[3];
+	// nSDK addition; gaFree[0] is repurposed for back buffers
+	BYTE		gaBackBuffers;
+	BYTE		gaFree[2];
 
 } AppHeader;
 
@@ -246,6 +248,9 @@ typedef struct AppHeader {
 #define		GAOF_JAVAAPPLET				0x2000
 #define		GAOF_D3D9					0x4000
 #define		GAOF_D3D8					0x8000
+// nSDK addition
+// NB (Nassic): D3D11 flag seems to be combined with D3D8?
+#define		GAOF_D3D11					0xC000
 
 // Optional header
 typedef struct AppHeader2 {
