@@ -27,7 +27,7 @@ namespace nSDK
 				{ 2, ACE_TEXT("Check string data (custom parameter example)"), true },
 				{ 3, ACE_TEXT("Perform a comparison against a number"), true },
 			}
-		},
+		}
 	};
 	std::vector<ACEMenu> expressionMenus =
 	{
@@ -88,7 +88,7 @@ namespace nSDK
 				{ DataType_Number, ACE_TEXT("Number") },
 				{ DataType_ComparisonNumber, ACE_TEXT("Compare against..") },
 			}
-		},
+		}
 	};
 	// Note that the only acceptable data types for expressions are Numbers and Strings
 	std::vector<ACE> expressionDefinitions =

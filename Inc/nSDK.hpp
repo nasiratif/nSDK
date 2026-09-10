@@ -322,29 +322,23 @@ namespace Extension
 		// Called to retrieve DLL dependencies for this extension
 		const tchar** FUSION_API GetDependencies();
 
-
 		// Called when the extension is loaded into memory
 		int32 FUSION_API Initialize(mv* mV, int32 quiet);
-
 		// Counterpart of Initialize
 		int32 FUSION_API Free(mv* mV);
 
 
 		// Called when each object of this extension is loaded into memory
 		int32 FUSION_API LoadObject(mv* mV, const tchar* fileName, EditData* edPtr, int32 reserved);
-
 		// Counterpart of LoadObject
 		void FUSION_API UnloadObject(mv* mV, EditData* edPtr, int32 reserved);
-
 
 		// If you change ext properties across versions you must implement this function to migrate the old EditData into the latest EditData you have
 		// Fusion calls this if the ext version in the MFA is older than this one
 		HGLOBAL FUSION_API UpdateEditStructure(mv* mV, nSDK::EditDataBase* oldEdPtr);
 
-
 		// Called to relocate filenames in EditData; useful if the MFA file path changes
 		void FUSION_API UpdateFileNames(mv* mV, tchar* appName, EditData* edPtr, void (WINAPI* lpfnUpdate)(tchar* appName, tchar* pathname));
-
 
 		// If you aren't dealing with images, you can safely comment out this function
 		// This is called when Fusion needs to enumerate images/fonts being stored in your object
@@ -377,11 +371,9 @@ namespace Extension
 
 		bool32 FUSION_API IsPropEnabled(mv* mV, EditData* edPtr, uint32 nPropID);
 
-
 		void FUSION_API InitParameter(mv* mV, int16 code, paramExt* pExt);
 		void FUSION_API EditParameter(mv* mV, int16 code, paramExt* pExt);
 		void FUSION_API GetParameterString(mv* mV, int16 code, paramExt* pExt, tchar* pDest, int16 size);
-
 
 		int32 FUSION_API CreateObject(mv* mV, LO* loPtr, EditData* edPtr);
 		void FUSION_API RemoveObject(mv* mV, LO* loPtr, EditData* edPtr, uint16 cpt);
@@ -521,7 +513,6 @@ namespace Extension
 		// Return the extension object's font
 		void FUSION_API GetRunObjectFont(RunData* rdPtr, LOGFONT* pLf);
 
-
 		// Set the extension object's text color
 		void FUSION_API SetRunObjectTextColor(RunData* rdPtr, COLORREF rgb);
 		// Return the extension object's text color
@@ -533,10 +524,8 @@ namespace Extension
 		// ---
 		// Tells Fusion your debug tree
 		word* FUSION_API GetDebugTree(RunData* rdPtr);
-
 		// Should return the text of a debugger item
 		void FUSION_API GetDebugItem(tchar* pBuffer, RunData* rdPtr, int32 id);
-
 		// When the debug item is to be edited
 		void FUSION_API EditDebugItem(RunData* rdPtr, int32 id);
 		// ---
@@ -544,3 +533,9 @@ namespace Extension
 		// -----
 	}
 }
+
+// Compatibility (namely for TigsExt):
+// -----
+typedef Extension::EditData* LPEDATA;
+typedef Extension::RunData* LPRDATA;
+// -----
