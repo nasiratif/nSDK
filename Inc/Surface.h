@@ -105,11 +105,12 @@ enum
 	ST_MEMORY,					// Buffer only
 	ST_MEMORYWITHDC,			// Buffer + DC (i.e. DIBSection, DDRAW surface, etc...
 	ST_MEMORYWITHPERMANENTDC,	// Buffer + permanent DC (i.e. DIBDC)
-	ST_DDRAW_SYSTEMMEMORY,		// Surface Direct Draw en mémoire systeme
+	ST_DDRAW_SYSTEMMEMORY,		// Surface Direct Draw en mÃ©moire systeme
 	ST_HWA_SCREEN,				// Screen surface in HWA mode
 	ST_HWA_RTTEXTURE,			// Render target texture in HWA mode
 	ST_HWA_ROUTEXTURE,			// HWA texture created in video memory, unmanaged (lost when device is lost)
 	ST_HWA_ROMTEXTURE,			// HWA texture created in video memory, managed (automatically reloaded when the device is lost)
+	ST_HWA_MOSAIC // (nSDK addition) HWA mosaic
 	ST_MAX
 };
 
@@ -670,7 +671,7 @@ class SURFACES_API cSurface
 		static COLORREF		m_sysColorTab[COLOR_GRADIENTINACTIVECAPTION+1];
 
 	protected:
-		int		m_error;		// Est-ce qu'on doit toujours garder ça?
+		int		m_error;		// Est-ce qu'on doit toujours garder Ã§a?
 };
 
 // maximum opacity
