@@ -110,7 +110,7 @@ enum
 	ST_HWA_RTTEXTURE,			// Render target texture in HWA mode
 	ST_HWA_ROUTEXTURE,			// HWA texture created in video memory, unmanaged (lost when device is lost)
 	ST_HWA_ROMTEXTURE,			// HWA texture created in video memory, managed (automatically reloaded when the device is lost)
-	ST_HWA_MOSAIC // (nSDK addition) HWA mosaic
+	ST_HWA_MOSAIC 				// (nSDK addition) HWA mosaic
 	ST_MAX
 };
 
