@@ -249,7 +249,6 @@ typedef struct AppHeader {
 #define		GAOF_D3D9					0x4000
 #define		GAOF_D3D8					0x8000
 // nSDK addition
-// NB (Nassic): D3D11 flag seems to be combined with D3D8?
 #define		GAOF_D3D11					0xC000
 
 // Optional header
