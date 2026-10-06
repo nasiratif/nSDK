@@ -14,7 +14,7 @@ namespace nSDK
 	std::vector<ACEMenu> actionMenus =
 	{
 		{ 0, ACE_TEXT("Example action: change background color"), true },
-		{ 1, ACE_TEXT("Example action 2 (disabled)"), false },
+		{ 1, ACE_TEXT("Example action 2 (disabled)"), false }
 	};
 	std::vector<ACEMenu> conditionMenus =
 	{
@@ -25,14 +25,14 @@ namespace nSDK
 			NULL, ACE_TEXT("More:"), true,
 			{
 				{ 2, ACE_TEXT("Check string data (custom parameter example)"), true },
-				{ 3, ACE_TEXT("Perform a comparison against a number"), true },
+				{ 3, ACE_TEXT("Perform a comparison against a number"), true }
 			}
 		}
 	};
 	std::vector<ACEMenu> expressionMenus =
 	{
 		{ 0, ACE_TEXT("Return a random number"), true },
-		{ 1, ACE_TEXT("Return a random string"), true },
+		{ 1, ACE_TEXT("Return a random string"), true }
 	};
 	// -----
 #endif
@@ -65,7 +65,7 @@ namespace nSDK
 			0, ACE_TEXT("%o: Are %0 and %1 the same?"), ConditionFlags_Negatable, Conditions::SameNumbers,
 			{
 				{ DataType_Number, ACE_TEXT("First number") },
-				{ DataType_Number, ACE_TEXT("Second number") },
+				{ DataType_Number, ACE_TEXT("Second number") }
 			}
 		},
 		{
@@ -86,7 +86,7 @@ namespace nSDK
 			3, ACE_TEXT("%o: %0 %1?"), ConditionFlags_Negatable, Conditions::Comparison,
 			{
 				{ DataType_Number, ACE_TEXT("Number") },
-				{ DataType_ComparisonNumber, ACE_TEXT("Compare against..") },
+				{ DataType_ComparisonNumber, ACE_TEXT("Compare against..") }
 			}
 		}
 	};
@@ -98,13 +98,13 @@ namespace nSDK
 			{
 				{ DataType_String, ACE_TEXT("First string") },
 				{ DataType_Number, ACE_TEXT("First number") }
-			},
+			}
 		},
 		{
 			1, ACE_TEXT("ReturnRandomS("), DataType_String, Expressions::ReturnRandomS,
 			{
 				{ DataType_Number, ACE_TEXT("Seed") }
-			},
+			}
 		}
 	};
 	// -----

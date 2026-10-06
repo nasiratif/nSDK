@@ -1315,7 +1315,9 @@ typedef	struct	mv {
 	int					mvModalSubAppCount;
 	UINT				mvLanguageID;
 	LPCWSTR				mvModuleTextsPathname;
-	LPVOID				mvFree[3];
+	int					mvVSync;
+	UINT				mvReturnCode;
+	LPVOID				mvFree[1];
 
 	// Functions
 	////////////
