@@ -1315,8 +1315,11 @@ typedef	struct	mv {
 	int					mvModalSubAppCount;
 	UINT				mvLanguageID;
 	LPCWSTR				mvModuleTextsPathname;
+	// nSDK additions (2 entries of mvFree were reused in newer Fusion builds):
+	// -----
 	int					mvVSync;
 	UINT				mvReturnCode;
+	// -----
 	LPVOID				mvFree[1];
 
 	// Functions
