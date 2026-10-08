@@ -1,15 +1,17 @@
 #include "Filter.hpp"
 
+using namespace Filter;
+
 /*
 
----------- SOUND FILTER API ----------
+---------- IMAGE FILTER EXPORTS ----------
 
 */
 
-CSoundFilter* FUSION_API Filter::API::Create(dword dwFlags)
+CFilterImpl* FUSION_API Filter::API::Create(dword dwFlags)
 {
 #pragma FLT_EXPORT_CREATEFILTER
-	return new CCustomSoundFilter(dwFlags);
+	return new CCustomImageFilter(dwFlags);
 }
 
 
@@ -19,11 +21,13 @@ const tchar* FUSION_API Filter::API::GetFilterName()
 	return FLT_NAME;
 }
 
+
 dword FUSION_API Filter::API::GetFilterID()
 {
 #pragma FLT_EXPORT_GETFILTERID
 	return EXT_FIX_IDENTIFIER(FLT_IDENTIFIER);
 }
+
 
 const tchar** FUSION_API Filter::API::GetFilterExts()
 {
@@ -32,11 +36,12 @@ const tchar** FUSION_API Filter::API::GetFilterExts()
 	return exts;
 }
 
+
 dword FUSION_API Filter::API::GetPriority()
 {
 #pragma FLT_EXPORT_GETPRIORITY
 	// Example:
-	return FLT_PRIORITY;
+	return NORMAL;
 }
 
 const tchar** FUSION_API Filter::API::GetDependencies()
@@ -50,11 +55,7 @@ const tchar** FUSION_API Filter::API::GetDependencies()
 bool32 FUSION_API Filter::API::CanReadFile(CInputFile* pif)
 {
 #pragma FLT_EXPORT_CANREADFILE
-	// Example:
-	if (pif->GetLength() % (sizeof(int16) * 2)) // we assume we're always reading a 16-bit, 44.1hz, 2-channel audio buffer, so we're making sure if the size is a multiple of the bit rate * num channels
-		return FALSE;
-
-	return TRUE;
+	return FALSE;
 }
 
 /*

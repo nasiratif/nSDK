@@ -1,10 +1,8 @@
 #pragma once
-#include <nSDKCommon.hpp>
-#include <nSDKFLTExports.hpp>
+#include <nSDKFLT.hpp>
 
 #include <SoundFilter.h>
 #include <SoundError.h>
-#include <CfcFile.h>
 
 namespace Filter
 {
@@ -12,12 +10,17 @@ namespace Filter
 	namespace API
 	{
 		// Exported as CreateFilter
-		CSoundFilter* FUSION_API Create(CInputFile* pf);
+		CSoundFilter* FUSION_API Create(dword dwFlags);
 
+		// May be exported as GetFilterNameW if Unicode
 		const tchar* FUSION_API GetFilterName();
 		dword FUSION_API GetFilterID();
+		// May be exported as GetFilterExtsW if Unicode
 		const tchar** FUSION_API GetFilterExts();
-		int32 FUSION_API GetPriority();
+		dword FUSION_API GetPriority();
+		// May be exported as GetDependenciesW if Unicode
+		const tchar** FUSION_API GetDependencies();
+
 		bool32 FUSION_API CanReadFile(CInputFile* pif);
 	}
 }

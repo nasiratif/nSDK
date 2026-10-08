@@ -8,6 +8,11 @@ using namespace Filter;
 
 */
 
+CCustomSoundFilter::CCustomSoundFilter(dword dwFlags)
+{
+
+}
+
 CCustomSoundFilter::~CCustomSoundFilter() {}
 
 
@@ -20,11 +25,22 @@ void CCustomSoundFilter::Delete()
 
 int32 CCustomSoundFilter::Open(CInputFile* pf)
 {
+	Close();
+
 	// Example:
-	// We assume the file is just a 16-bit, 44.1hz, 2-channel raw PCM audio buffer, so we can simply just copy the data into the data provided by ReadData & avoid any sophisticated decoding here
+	// For this particular filter, we assume the file is just a 16-bit, 44.1hz, 2-channel raw PCM audio buffer, so we can simply just copy the data into the data provided by ReadData & avoid any sophisticated decoding here
 	size = pf->GetLength();
 	data = (byte*)malloc(size);
 	pf->Read(data, size);
+
+	// We must also set the input wave format:
+	m_WaveFormatIn.wFormatTag = WAVE_FORMAT_PCM;
+	m_WaveFormatIn.nChannels = 2;
+	m_WaveFormatIn.wBitsPerSample = 16;
+	m_WaveFormatIn.nSamplesPerSec = 44100;
+	m_WaveFormatIn.nBlockAlign = (m_WaveFormatIn.wBitsPerSample / 8) * m_WaveFormatIn.nChannels;
+	m_WaveFormatIn.nAvgBytesPerSec = m_WaveFormatIn.nSamplesPerSec * m_WaveFormatIn.nBlockAlign;
+	m_WaveFormatIn.cbSize = 0;
 	return SND_OK;
 }
 
@@ -32,6 +48,7 @@ void CCustomSoundFilter::Close()
 {
 	// Example:
 	free(data);
+	pos = 0;
 	data = nullptr;
 	size = 0;
 }
@@ -53,7 +70,7 @@ bool32 CCustomSoundFilter::SetPos(dword dwPos)
 {
 	// Example:
 	pos = dwPos;
-	if (pos >= size)
+	if (pos > size) // seeking to EOF should be allowed
 	{
 		pos = size;
 		return FALSE;
@@ -81,23 +98,7 @@ int32 CCustomSoundFilter::ReadData(byte* lpDstBuffer, dword dwBufSize, dword* dw
 	}
 
 	if (*dwRead)
-	{
 		memcpy(lpDstBuffer, data + readPos, *dwRead);
-		return SND_OK;
-	}
-	else
-		return SND_CANNOTREADFILE;
-}
 
-void CCustomSoundFilter::SetOutputFormat(LPWAVEFORMATEX pStreamFormat)
-{
-	// Example:
-	pStreamFormat->cbSize = 0;
-	pStreamFormat->wFormatTag = WAVE_FORMAT_PCM;
-	pStreamFormat->nChannels = 2;
-	pStreamFormat->wBitsPerSample = 16;
-	pStreamFormat->nSamplesPerSec = 44100;
-	pStreamFormat->nBlockAlign = (pStreamFormat->wBitsPerSample / CHAR_BIT) * pStreamFormat->nChannels;
-	pStreamFormat->nAvgBytesPerSec = pStreamFormat->nSamplesPerSec * pStreamFormat->nBlockAlign;
-	m_WaveFormatOut = *pStreamFormat;
+	return SND_OK;
 }

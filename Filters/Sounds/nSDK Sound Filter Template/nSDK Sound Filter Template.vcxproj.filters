@@ -63,16 +63,22 @@
     <ClInclude Include="..\..\..\Inc\nSDKFLTExports.hpp">
       <Filter>SDK</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Inc\nSDKFLT.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Inc\Ccx.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FilterAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Lib\nSDKSFT.cpp">
-      <Filter>SDK</Filter>
-    </ClCompile>
     <ClCompile Include="Filter.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Lib\nSDKFLT.cpp">
+      <Filter>SDK</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
