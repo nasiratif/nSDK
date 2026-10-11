@@ -248,6 +248,12 @@ namespace nSDK
 	};
 	// -----
 
+#if defined(EXT_EDITOR) && defined(EXT_USE_PNG_ICON)
+	// Creates a cSurface ext icon from a PNG resource
+	// Use DeleteSurface to free it
+	cSurface* FUSION_API CreatePNGIcon(mv* mV, LPCTSTR lpResName);
+#endif
+
 	float ParamToFloat(long value);
 	const tchar* ParamToString(long value);
 	paramExt* ParamToCustom(long value);

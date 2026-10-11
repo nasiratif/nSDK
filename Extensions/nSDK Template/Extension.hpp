@@ -136,4 +136,8 @@ namespace Extension
 		long FUSION_API ReturnRandomN(RunData* rdPtr, long param);
 		long FUSION_API ReturnRandomS(RunData* rdPtr, long param);
 	}
+
+#if defined(EXT_EDITOR) && defined(EXT_USE_PNG_ICON)
+	extern cSurface* pngIconSurf;
+#endif
 }

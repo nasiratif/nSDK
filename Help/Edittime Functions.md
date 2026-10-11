@@ -23,6 +23,8 @@ If you want to use this, make sure to remove the `EXO_ICON` & `EXO_IMAGE` resour
 
 Side note: here you can also change the name of the extension by writing into `lpName`, but Clickteam discourages that nowadays.
 
+The template uses this function if PNG icons are being used.
+
 ### GetProperties
 `bool32 FUSION_API Extension::API::GetProperties(mv* mV, EditData* edPtr, bool32 bMasterItem);`
 
@@ -126,6 +128,8 @@ Return `TRUE` if editing succeeded, otherwise `FALSE`.
 
 Implement this function to do custom drawing in the frame editor. `rc` contains the *absolute* position of the object.
 You must blit to the frame surface, which can be retrieved via calling `WinGetSurface((int32)mV->mvIdEditWin);`.
+
+If using PNG icons, this function **must** be exported for the icon to display in the frame editor!
 
 ### SetEditSize
 `bool32 FUSION_API Extension::API::SetEditSize(mv* mV, EditData* edPtr, int32 cx, int32 cy);`

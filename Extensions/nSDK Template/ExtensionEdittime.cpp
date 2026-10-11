@@ -27,15 +27,22 @@ const tchar* FUSION_API Extension::API::GetHelpFileName()
 }
 
 
-/*
+#ifdef EXT_USE_PNG_ICON
 int32 FUSION_API Extension::API::MakeIconEx(mv* mV, cSurface* pIconSf, tchar* lpName, OI* oiPtr, EditData* edPtr)
 {
 #pragma EXT_EXPORT_MAKEICONEX
-	// Example: a brown=ish square
-	pIconSf->Fill(RGB(64, 24, 24));
-	return 0; // success
+	// Default PNG implementation:
+	if (pngIconSurf)
+	{
+		pIconSf->Clone(*pngIconSurf);
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
-*/
+#endif
 
 
 bool32 FUSION_API Extension::API::GetProperties(mv* mV, EditData* edPtr, bool32 bMasterItem)
@@ -264,30 +271,33 @@ bool32 FUSION_API Extension::API::EditObject(mv* mV, OI* oiPtr, LO* loPtr, EditD
 
 
 
-/*
 void FUSION_API Extension::API::EditorDisplay(mv* mV, OI* oiPtr, LO* loPtr, EditData* edPtr, RECT* rc)
 {
 #pragma EXT_EXPORT_EDITORDISPLAY
-	// Example (simply draw ext image):
-	cSurface* proto;
-	if (GetSurfacePrototype(&proto, 32, ST_MEMORY, SD_DIB))
+	// Example:
+	auto frameSurf = WinGetSurface((int32)mV->mvIdEditWin);
+	if (frameSurf)
 	{
-		auto frameSurf = WinGetSurface((int32)mV->mvIdEditWin);
-		if (frameSurf)
-		{
-			auto width = rc->right - rc->left;
-			auto height = rc->bottom - rc->top;
+		auto width = rc->right - rc->left;
+		auto height = rc->bottom - rc->top;
 
+#ifdef EXT_USE_PNG_ICON
+		// Draw PNG icon:
+		if (pngIconSurf)
+			pngIconSurf->Blit(*frameSurf, rc->left, rc->top, BMODE_TRANSP, BOP_COPY);
+#else
+		// Draw BMP icon:
+		cSurface* proto;
+		if (GetSurfacePrototype(&proto, 32, ST_MEMORY, SD_DIB))
+		{
 			cSurface iconSurf;
 			iconSurf.Create(width, height, proto);
 			iconSurf.LoadImage(nSDK::hInst, EXO_IMAGE, LI_REMAP);
-
 			iconSurf.Blit(*frameSurf, rc->left, rc->top, BMODE_TRANSP, BOP_COPY);
 		}
+#endif
 	}
 }
-*/
-
 
 /*
 bool32 FUSION_API Extension::API::SetEditSize(mv* mV, EditData* edPtr, int32 cx, int32 cy)

@@ -1,5 +1,9 @@
 #include "nSDK.hpp"
 
+#if defined(EXT_EDITOR) && defined(EXT_USE_PNG_ICON)
+#include "picopng.cpp"
+#endif
+
 namespace nSDK
 {
 #ifdef EXT_EDITOR
@@ -57,6 +61,126 @@ HMENU CreateACEMenus(const std::vector<nSDK::ACEMenu>& menus, uint16_t idOffset)
 ---------- MAIN FUNCTIONS ----------
 
 */
+
+#if defined(EXT_EDITOR) && defined(EXT_USE_PNG_ICON)
+cSurface* FUSION_API nSDK::CreatePNGIcon(mv* mV, LPCTSTR lpResName)
+{
+	HRSRC hResSrc;
+	HGLOBAL hResGlobal;
+
+	unsigned char* data;
+	size_t size;
+
+	std::vector<unsigned char> rawData;
+	unsigned long rawWidth, rawHeight;
+
+	cSurface* proto, *iconSurf = nullptr;
+
+	byte* surfBits, * src, * dest;
+	int width, height, depth, pitch, alphaPitch;
+
+	hResSrc = FindResource(hInst, lpResName, _T("PNG"));
+	if (!hResSrc)
+	{
+#ifdef EXT_DEBUG
+		MessageBox(mV->mvHMainWin, _T("Failed to locate PNG icon resource! (is it's ID named correctly?)"), _T("nSDK Fatal Extension Error"), MB_ICONERROR);
+#endif
+		goto finished;
+	}
+
+	hResGlobal = LoadResource(hInst, hResSrc);
+	if (!hResGlobal)
+		goto finished;
+
+	data = (unsigned char*)LockResource(hResGlobal);
+	size = SizeofResource(hInst, hResSrc);
+
+	if (decodePNG(rawData, rawWidth, rawHeight, data, size) != 0)
+	{
+#ifdef EXT_DEBUG
+		MessageBox(mV->mvHMainWin, _T("Failed to decode PNG icon! (is it corrupted?)"), _T("nSDK Fatal Extension Error"), MB_ICONERROR);
+#endif
+		goto finished;
+	}
+
+	if (rawWidth != 32 || rawHeight != 32)
+	{
+#ifdef EXT_DEBUG
+		MessageBox(mV->mvHMainWin, _T("You are using a PNG icon with incorrect dimensions. Fusion icons must be 32x32 resolution."), _T("nSDK Fatal Extension Error"), MB_ICONERROR);
+#endif
+		goto finished;
+	}
+
+	if (!GetSurfacePrototype(&proto, 32, ST_MEMORY, SD_DIB))
+		goto finished;
+
+	iconSurf = NewSurface();
+	iconSurf->Create(32, 32, proto);
+	iconSurf->CreateAlpha();
+	width = iconSurf->GetWidth();
+	height = iconSurf->GetHeight();
+	depth = iconSurf->GetDepth();
+	pitch = iconSurf->GetPitch();
+	alphaPitch = iconSurf->GetAlphaPitch();
+
+	// Write surface data:
+	// -----
+	surfBits = iconSurf->LockBuffer();
+	if (!surfBits)
+		goto finished;
+
+	src = rawData.data();
+	dest = surfBits;
+	for (int r = 0; r < height; ++r)
+	{
+		auto xDest = (uint32*)dest;
+		auto xSrc = (uint32*)src;
+		for (int p = 0; p < width; ++p)
+		{
+			auto srcColor = *(xSrc++);
+			auto srcRed = srcColor & 0xFF;
+			auto srcGreen = (srcColor & 0xFF00) >> 8;
+			auto srcBlue = (srcColor & 0xFF0000) >> 16;
+			// cSurface uses a different RGB-order
+			*(xDest++) = (srcRed << 24) | (srcGreen << 16) | srcBlue;
+		}
+		dest += pitch;
+		src += width * 4;
+	}
+	iconSurf->UnlockBuffer(surfBits);
+	// -----
+
+	// Write surface alpha data:
+	// -----
+	surfBits = iconSurf->LockAlpha();
+	if (!surfBits)
+		goto finished;
+
+	src = rawData.data();
+	dest = surfBits;
+	for (int r = 0; r < height; ++r)
+	{
+		auto xDest = dest;
+		auto xSrc = (uint32*)src;
+		for (int p = 0; p < width; ++p)
+			// Extract alpha channel from src:
+			*(xDest++) = (byte)(*(xSrc++) >> 24);
+
+		dest += alphaPitch;
+		src += width * 4;
+	}
+	iconSurf->UnlockAlpha();
+	// -----
+	
+	return iconSurf;
+
+finished:
+	if (iconSurf)
+		DeleteSurface(iconSurf);
+
+	return nullptr;
+}
+#endif
 
 float nSDK::ParamToFloat(long value)
 {
@@ -282,7 +406,7 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 		{
 			tchar msg[256];
 			StringCbPrintf(msg, sizeof(msg), _T("NULL action function detected!\nAction ID %u's function pointer is NULL. This could also happen if the action IDs are not contiguous (i.e, there are actions with IDs 0 and 2, but 1 doesn't exist)."), i);
-			MessageBox(mV->mvHEditWin, msg, _T("Fatal Error"), MB_ICONERROR);
+			MessageBox(mV->mvHEditWin, msg, _T("nSDK Fatal Extension Error"), MB_ICONERROR);
 		}
 	}
 	for (int16 i = 0; i < numConditions; ++i)
@@ -291,7 +415,7 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 		{
 			tchar msg[256];
 			StringCbPrintf(msg, sizeof(msg), _T("NULL condition function detected!\nCondition ID %u's function pointer is NULL. This could also happen if the condition IDs are not contiguous (i.e, there are conditions with IDs 0 and 2, but 1 doesn't exist)."), i);
-			MessageBox(mV->mvHEditWin, msg, _T("Fatal Error"), MB_ICONERROR);
+			MessageBox(mV->mvHEditWin, msg, _T("nSDK Fatal Extension Error"), MB_ICONERROR);
 		}
 	}
 	for (int16 i = 0; i < numExpressions; ++i)
@@ -300,7 +424,7 @@ int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 		{
 			tchar msg[256];
 			StringCbPrintf(msg, sizeof(msg), _T("NULL expression function detected!\nExpression ID %u's function pointer is NULL. This could also happen if the expression IDs are not contiguous (i.e, there are expressions with IDs 0 and 2, but 1 doesn't exist)."), i);
-			MessageBox(mV->mvHEditWin, msg, _T("Fatal Error"), MB_ICONERROR);
+			MessageBox(mV->mvHEditWin, msg, _T("nSDK Fatal Extension Error"), MB_ICONERROR);
 		}
 	}
 	// -----

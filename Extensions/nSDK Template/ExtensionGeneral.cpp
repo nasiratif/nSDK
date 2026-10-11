@@ -1,10 +1,11 @@
 #include "Extension.hpp"
 
-// DLL entry point
-bool32 WINAPI DllMain(HINSTANCE hinstDLL, dword fdwReason, void* lpvReserved)
+#if defined(EXT_EDITOR) && defined(EXT_USE_PNG_ICON)
+namespace Extension
 {
-	return nSDK::Exports::DllMain(hinstDLL, fdwReason, lpvReserved);
+	cSurface* pngIconSurf = nullptr;
 }
+#endif
 
 /*
 
@@ -75,12 +76,24 @@ const tchar** FUSION_API Extension::API::GetDependencies()
 int32 FUSION_API Extension::API::Initialize(mv* mV, int32 quiet)
 {
 #pragma EXT_EXPORT_INITIALIZE
-	return nSDK::Exports::Initialize(mV, quiet);
+	auto ret = nSDK::Exports::Initialize(mV, quiet);
+
+#if defined(EXT_EDITOR) && defined(EXT_USE_PNG_ICON)
+	if (ret == 0)
+		pngIconSurf = nSDK::CreatePNGIcon(mV, MAKEINTRESOURCE(IDB_EXO_ICON));
+#endif
+	return ret;
 }
 
 int32 FUSION_API Extension::API::Free(mv* mV)
 {
 #pragma EXT_EXPORT_FREE
+
+#if defined(EXT_EDITOR) && defined(EXT_USE_PNG_ICON)
+	if (pngIconSurf)
+		DeleteSurface(pngIconSurf);
+#endif
+
 	return nSDK::Exports::Free(mV);
 }
 
@@ -161,4 +174,15 @@ int32 FUSION_API Extension::API::EnumElts(mv* mV, EditData* edPtr, ENUMELTPROC e
 	}
 
 	return ret;
+}
+
+/*
+
+---------- ENTRY POINT ----------
+
+*/
+
+bool32 WINAPI DllMain(HINSTANCE hinstDLL, dword fdwReason, void* lpvReserved)
+{
+	return nSDK::Exports::DllMain(hinstDLL, fdwReason, lpvReserved);
 }
