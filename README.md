@@ -10,3 +10,5 @@ As a curiosity I have also made (crude) SDKs for obscure types of extensions; na
 [Clickteam](https://www.clickteam.com) for the Fusion 2.5 SDK, headers/lib originates here with modifications
 
 [DarkEdif SDK](https://github.com/SortaCore/MMF2Exts), where I got the DX11 additions from
+
+[Lode Vandevenne](https://lodev.org/) for creating the [LodePNG](https://lodev.org/lodepng) project
