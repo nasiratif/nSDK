@@ -90,7 +90,12 @@ cSurface* FUSION_API nSDK::CreatePNGIcon(mv* mV, LPCTSTR lpResName)
 
 	hResGlobal = LoadResource(hInst, hResSrc);
 	if (!hResGlobal)
+	{
+#ifdef EXT_DEBUG
+		MessageBox(mV->mvHMainWin, _T("LoadResource on PNG icon failed!"), _T("nSDK Fatal Extension Error"), MB_ICONERROR);
+#endif
 		goto finished;
+	}
 
 	data = (unsigned char*)LockResource(hResGlobal);
 	size = SizeofResource(hInst, hResSrc);
@@ -135,13 +140,13 @@ cSurface* FUSION_API nSDK::CreatePNGIcon(mv* mV, LPCTSTR lpResName)
 	{
 		auto xDest = (uint32*)dest;
 		auto xSrc = (uint32*)src;
-		for (int p = 0; p < width; ++p)
+		for (int c = 0; c < width; ++c)
 		{
 			auto srcColor = *(xSrc++);
 			auto srcRed = srcColor & 0xFF;
 			auto srcGreen = (srcColor & 0xFF00) >> 8;
 			auto srcBlue = (srcColor & 0xFF0000) >> 16;
-			// cSurface uses a different RGB-order
+			// cSurface uses a different RGB order
 			*(xDest++) = (srcRed << 24) | (srcGreen << 16) | srcBlue;
 		}
 		dest += pitch;
@@ -162,8 +167,8 @@ cSurface* FUSION_API nSDK::CreatePNGIcon(mv* mV, LPCTSTR lpResName)
 	{
 		auto xDest = dest;
 		auto xSrc = (uint32*)src;
-		for (int p = 0; p < width; ++p)
-			// Extract alpha channel from src:
+		for (int c = 0; c < width; ++c)
+			// Store alpha channel from src:
 			*(xDest++) = (byte)(*(xSrc++) >> 24);
 
 		dest += alphaPitch;
@@ -181,6 +186,7 @@ finished:
 	return nullptr;
 }
 #endif
+
 
 float nSDK::ParamToFloat(long value)
 {
