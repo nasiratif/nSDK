@@ -4,4 +4,4 @@ The image filter SDK has only been given to specific people (thank you to [@Rain
 
 This is not functional at the moment, and like sound filters this is not fleshed out.
 
-See Filter.hpp/cpp comments in the template for more information.
+See the `Image Filters.md` file in the Help folder for more information.
