@@ -24,6 +24,13 @@
 #else
 #define ACE_TEXT(text) NULL
 #endif // EXT_EDITOR
+
+// Return the correct pointer to rSpr as indicated in rCom
+// You must have the rCom structure declared in RunData!
+#define GET_RSPR(rdPtr) (rSpr*)(((uint8*)rdPtr) + rdPtr->rc.rcOffsetSprite)
+// Return the correct pointer to rAni as indicated in rCom
+// You must have the rCom structure declared in RunData!
+#define GET_RANI(rdPtr) (rAni*)(((uint8*)rdPtr) + rdPtr->rc.rcOffsetAnimation)
 // -----
 
 // Everything related to your Fusion extension

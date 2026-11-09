@@ -202,12 +202,6 @@ paramExt* nSDK::ParamToCustom(long value)
 }
 
 
-long nSDK::ReturnFloat(RunDataBase* rdPtr, float value)
-{
-	rdPtr->rHo.hoFlags |= HOF_FLOAT; // tell Fusion we are returning a float
-	return *((long*)&value);
-}
-
 long nSDK::ReturnString(RunDataBase* rdPtr, const tchar* str, bool copy)
 {
 	rdPtr->rHo.hoFlags |= HOF_STRING; // tell Fusion we are returning a string
@@ -223,6 +217,12 @@ long nSDK::ReturnString(RunDataBase* rdPtr, const tchar* str, bool copy)
 
 	dest[len] = _T('\0');
 	return (long)dest;
+}
+
+long nSDK::ReturnFloat(RunDataBase* rdPtr, float value)
+{
+	rdPtr->rHo.hoFlags |= HOF_FLOAT; // tell Fusion we are returning a float
+	return *((long*)&value);
 }
 
 /*
