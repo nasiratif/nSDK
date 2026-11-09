@@ -144,8 +144,8 @@ cSurface* FUSION_API nSDK::CreatePNGIcon(mv* mV, LPCTSTR lpResName)
 			auto srcRed = srcColor & 0xFF;
 			auto srcGreen = (srcColor & 0xFF00) >> 8;
 			auto srcBlue = (srcColor & 0xFF0000) >> 16;
-			// cSurface uses a different RGB order
-			*(xDest++) = (srcRed << 24) | (srcGreen << 16) | srcBlue;
+			// cSurface uses a different RGB order:
+			*(xDest++) = (srcRed << 16) | (srcGreen << 8) | srcBlue;
 		}
 		dest += pitch;
 		src += width * 4;
