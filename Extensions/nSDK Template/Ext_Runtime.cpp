@@ -1,4 +1,4 @@
-#include "Extension.hpp"
+#include "Ext.hpp"
 
 #ifdef EXT_EDITOR
 // Fill this out if you're implementing debugger support

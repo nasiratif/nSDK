@@ -263,9 +263,10 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Lib\nSDKCommon.cpp" />
     <ClCompile Include="..\..\Lib\nSDKTrans.cpp" />
     <ClCompile Include="Sample.cpp" />
-    <ClCompile Include="TransitionAPI.cpp" />
+    <ClCompile Include="Trans_API.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Inc\BlitMac.h" />
@@ -309,10 +310,10 @@
     <ClInclude Include="..\..\Inc\WinMacro.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sample.hpp" />
-    <ClInclude Include="TransitionModule.hpp" />
+    <ClInclude Include="TransModule.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="TransitionModule.rc" />
+    <ResourceCompile Include="TransModule.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

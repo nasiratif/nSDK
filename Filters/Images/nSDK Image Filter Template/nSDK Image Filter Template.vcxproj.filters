@@ -65,10 +65,10 @@
     <ClCompile Include="Filter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Lib\nSDKFLT.cpp">
+    <ClCompile Include="..\..\..\Lib\nSDKCommon.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="FilterAPI.cpp">
+    <ClCompile Include="Filter_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

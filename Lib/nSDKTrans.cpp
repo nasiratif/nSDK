@@ -33,14 +33,25 @@ void CTransitionImpl::Initialize(byte* params, dword paramsSize)
 		SetParameters(params, paramsSize);
 }
 
-int32 CTransitionImpl::GetName(tchar* buffer, int32 bufferSize)
+/*
+
+----- GENERAL -----
+
+*/
+
+int32 CTransitionImpl::Supports(int32 nFeature, LPARAM lParam)
 {
-	StringCbCopy(buffer, bufferSize, _T("(undefined transition)"));
-	return 0;
+	return FALSE;
 }
 
 dword CTransitionImpl::GetMode()
 {
+	return 0;
+}
+
+int32 CTransitionImpl::GetName(tchar* buffer, int32 bufferSize)
+{
+	StringCbCopy(buffer, bufferSize, _T("(undefined transition)"));
 	return 0;
 }
 
@@ -53,6 +64,13 @@ void CTransitionImpl::SetParameters(byte* params, dword paramsSize)
 {
 	// should be overriden
 }
+
+/*
+
+----- SETUP -----
+
+*/
+
 
 HWND CTransitionImpl::CreateSetupDialog(HWND hParent, dword dwReserved)
 {
@@ -84,6 +102,12 @@ bool32 FUSION_API CTransitionImpl::ParamsProc(HWND hDlg, uint32 msg, WPARAM wPar
 	return FALSE;
 }
 
+/*
+
+----- RUNTIME -----
+
+*/
+
 bool32 CTransitionImpl::Start(dword durationMS)
 {
 	m_initTime = timeGetTime();
@@ -108,6 +132,11 @@ bool32 CTransitionImpl::StepDraw(cSurface* dest, cSurface* originalImage, cSurfa
 	return FALSE;
 }
 
+bool32 CTransitionImpl::StepDrawBlit(cSurface* dest, int32 x, int32 y, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc, BlitMode bm, BlitOp bop, LPARAM lParam, dword dwBlitFlags)
+{
+	return FALSE;
+}
+
 void CTransitionImpl::End()
 {
 	m_running = FALSE;
@@ -117,6 +146,19 @@ bool32 CTransitionImpl::IsCompleted()
 {
 	return m_running ? (timeGetTime() >= m_endTime) : TRUE;
 }
+
+
+int32 CTransitionImpl::GetTimePos()
+{
+	return (int32)(m_currentTime - m_initTime);
+}
+
+void CTransitionImpl::SetTimePos(int32 msTimePos)
+{
+	m_initTime = (m_currentTime - msTimePos);
+	m_endTime = m_initTime + m_duration;
+}
+
 
 void CTransitionImpl::Restart()
 {
@@ -134,6 +176,32 @@ dword CTransitionImpl::GetDeltaTime()
 	return m_currentTime - m_initTime;
 }
 
+bool32 CTransitionImpl::NeedTempSurface(BlitMode bm, BlitOp bop, LPARAM lParam)
+{
+	bool bEffect = false;
+	if ((bop & BOP_MASK) != BOP_COPY)
+		bEffect = true;
+	else if ((bop & BOP_RGBAFILTER) != 0 && lParam != 0xFFFFFFFF)
+		bEffect = true;
+	return (bEffect || bm != BMODE_OPAQUE);
+}
+
+cSurface* CTransitionImpl::GetTempSurface(cSurface* pObjectSf)
+{
+	if (!m_pTempSf)
+	{
+		cSurface* pProto;
+
+		m_pTempSf = new cSurface;
+		GetSurfacePrototype(&pProto, pObjectSf->GetDepth(), ST_HWA_RTTEXTURE, pObjectSf->GetDriver());
+		m_pTempSf->Create(pObjectSf->GetWidth(), pObjectSf->GetHeight(), pProto);
+		m_pTempSf->SetTransparentColor(pObjectSf->GetTransparentColor());
+		if (pObjectSf->GetDepth() == 8)
+			m_pTempSf->SetPalette(pObjectSf->GetPalette());
+	}
+	return m_pTempSf;
+}
+
 /*
 
 ---------- TRANSITION BASE CLASS ----------
@@ -143,12 +211,6 @@ dword CTransitionImpl::GetDeltaTime()
 CTransition::CTransition(CTransitionImpl* pImpl)
 {
 	m_pImpl = pImpl;
-}
-
-CTransition::~CTransition()
-{
-	if (m_pImpl)
-		delete m_pImpl;
 }
 
 
@@ -163,10 +225,9 @@ void FUSION_API CTransition::Delete()
 
 */
 
-
-dword FUSION_API CTransition::GetMode()
+int32 FUSION_API CTransition::GetVersion()
 {
-	return m_pImpl->GetMode();
+	return TRANS_VERSION_2;
 }
 
 int32 FUSION_API CTransition::GetName(tchar* buffer, int32 bufferSize)
@@ -179,9 +240,9 @@ dword FUSION_API CTransition::GetID()
 	return m_pImpl->GetID();
 }
 
-void FUSION_API CTransition::SetParameters(byte* params, dword paramsSize)
+dword FUSION_API CTransition::GetMode()
 {
-	m_pImpl->SetParameters(params, paramsSize);
+	return m_pImpl->GetMode();
 }
 
 dword FUSION_API CTransition::GetParameters(byte* buffer)
@@ -232,17 +293,31 @@ bool32 FUSION_API CTransition::IsCompleted()
 }
 
 
-bool32 FUSION_API CTransition::Unknown1()
+int32 FUSION_API CTransition::GetTimePos()
 {
-	return FALSE;
+	return m_pImpl->GetTimePos();
 }
 
-bool32 FUSION_API CTransition::Unknown2(int32 unknown1, int32 unknown2)
+void FUSION_API CTransition::SetTimePos(int32 msTimePos)
 {
-	return FALSE;
+	m_pImpl->SetTimePos(msTimePos);
 }
 
-void FUSION_API CTransition::Unknown3(cSurface* dest, int32 reserved, int32 reserved2, cSurface* backgroundSurface, void** ppClassObject, dword dwFlags, void* unknown, int32 reserved3, int32 reserved4, int32 reserved5, int32 reserved6)
-{
 
+int32 FUSION_API CTransition::Supports(int32 nFeature, LPARAM lParam)
+{
+	return m_pImpl->Supports(nFeature, lParam);
+}
+
+
+bool32 FUSION_API CTransition::StepDrawBlit(cSurface* dest, int32 x, int32 y, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc, BlitMode bm, BlitOp bop, LPARAM lParam, dword dwBlitFlags)
+{
+	return m_pImpl->StepDrawBlit(dest, x, y, originalImage, finalImage, dwFlags, ppRc, bm, bop, lParam, dwBlitFlags);
+}
+
+
+CTransition::~CTransition()
+{
+	if (m_pImpl)
+		delete m_pImpl;
 }

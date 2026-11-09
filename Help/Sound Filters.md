@@ -1,6 +1,6 @@
 # Sound Filters
 
-This file documents MMF2/CF2.5 sound filters. For additional information, see the README in the Filters/Sounds folder.
+This file documents MMF2/CF2.5 sound filters. For additional notes, see the README in the Filters/Sounds folder.
 
 ## Usage
 Sound filters are placed in *(Fusion root)\Filters\Sounds*. They don't have a distinct Runtime variant.

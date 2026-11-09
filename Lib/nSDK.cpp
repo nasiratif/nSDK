@@ -17,8 +17,6 @@ namespace nSDK
 	void** expressionJumps = nullptr;
 	int16 numActions, numConditions, numExpressions;
 
-	HINSTANCE hInst;
-
 	// Annoyingly, Initialize is also called on sub-apps, meaning we might do double initialization accidentally, so...
 	uint32 refCount = 0;
 }
@@ -232,15 +230,6 @@ long nSDK::ReturnString(RunDataBase* rdPtr, const tchar* str, bool copy)
 ---------- EXPORTED FUNCTIONS ----------
 
 */
-
-bool32 WINAPI nSDK::Exports::DllMain(HINSTANCE hinstDLL, dword fdwReason, void* lpvReserved)
-{
-	if (fdwReason == DLL_PROCESS_ATTACH)
-		hInst = hinstDLL;
-
-	return TRUE;
-}
-
 
 int32 FUSION_API nSDK::Exports::Initialize(mv* mV, int32 quiet)
 {

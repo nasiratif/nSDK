@@ -315,6 +315,7 @@
     <ClInclude Include="..\..\Inc\Mvt.h" />
     <ClInclude Include="..\..\Inc\nSDKCommon.hpp" />
     <ClInclude Include="..\..\Inc\nSDKExports.hpp" />
+    <ClInclude Include="..\..\Inc\nSDKProps.hpp" />
     <ClInclude Include="..\..\Inc\Palet.h" />
     <ClInclude Include="..\..\Inc\PaletCpp.h" />
     <ClInclude Include="..\..\Inc\PictEdDefs.h" />
@@ -330,26 +331,27 @@
     <ClInclude Include="..\..\Inc\SurfaceDefs.h" />
     <ClInclude Include="..\..\Inc\TigsExt.hpp" />
     <ClInclude Include="..\..\Inc\WinMacro.h" />
-    <ClInclude Include="Extension.hpp" />
+    <ClInclude Include="Ext.hpp" />
     <ClInclude Include="..\..\Inc\nSDK.hpp" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Extension.rc" />
+    <ResourceCompile Include="Ext.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="ExtensionIcon.bmp" />
-    <Image Include="ExtensionImage.bmp" />
+    <Image Include="Ext_Icon.bmp" />
+    <Image Include="Ext_Image.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExtensionACEs.cpp" />
-    <ClCompile Include="ExtensionActions.cpp" />
-    <ClCompile Include="ExtensionConditions.cpp" />
-    <ClCompile Include="ExtensionEdittime.cpp" />
-    <ClCompile Include="ExtensionExpressions.cpp" />
-    <ClCompile Include="ExtensionGeneral.cpp" />
-    <ClCompile Include="ExtensionProperties.cpp" />
-    <ClCompile Include="ExtensionRuntime.cpp" />
+    <ClCompile Include="..\..\Lib\nSDKCommon.cpp" />
+    <ClCompile Include="Ext_ACES.cpp" />
+    <ClCompile Include="Ext_Actions.cpp" />
+    <ClCompile Include="Ext_Conditions.cpp" />
+    <ClCompile Include="Ext_Edittime.cpp" />
+    <ClCompile Include="Ext_Expressions.cpp" />
+    <ClCompile Include="Ext_General.cpp" />
+    <ClCompile Include="Ext_Properties.cpp" />
+    <ClCompile Include="Ext_Runtime.cpp" />
     <ClCompile Include="..\..\Lib\nSDK.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -26,9 +26,17 @@ CSample::~CSample()
 }
 
 
+int32 CSample::Supports(int32 nFeature, LPARAM lParam)
+{
+	if (nFeature == TRF_STEPDRAWBLIT) // this sample supports this feature
+		return TRUE;
+
+	return FALSE;
+}
+
 int32 CSample::GetName(tchar* buffer, int32 bufferSize)
 {
-	StringCbCopy(buffer, bufferSize, TRANS_SAMPLE_NAME);
+	StringCbCopy(buffer, bufferSize, TRANS_NAME_SAMPLE);
 
 	size_t length = 0;
 	StringCbLength(buffer, bufferSize, &length);
@@ -64,36 +72,42 @@ bool32 FUSION_API CSample::ParamsProc(HWND hDlg, uint32 msg, WPARAM wParam, LPAR
 
 bool32 CSample::StepDraw(cSurface* dest, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc)
 {
+	// StepDraw is primarily only used in the case that StepDrawBlit is either unavailable (see Supports()), or the transition is playing in the setup preview window.
+	// To reduce code duplication, we'll just delegate to StepDrawBlit:
+	return StepDrawBlit(dest, 0, 0, originalImage, finalImage, dwFlags, ppRc, BMODE_TRANSP, BOP_COPY, NULL, 0);
+}
+
+bool32 CSample::StepDrawBlit(cSurface* dest, int32 x, int32 y, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc, BlitMode bm, BlitOp bop, LPARAM lParam, dword dwBlitFlags)
+{
 	// This is a demo transition which just does a rotation & scaling effect:
 
 	auto delta = GetDeltaTime();
 
 	POINT center;
-	center.x = dest->GetWidth() / 2;
-	center.y = dest->GetHeight() / 2;
+	center.x = finalImage->GetWidth() / 2;
+	center.y = finalImage->GetHeight() / 2;
 
 	float32 time = (float32)delta / (float32)m_duration; // m_duration is in milliseconds
 	time = ElasticOut(time);
-	originalImage->Blit(*dest);
+
+	originalImage->Blit(*dest, x, y, BMODE_TRANSP);
 	finalImage->BlitEx(
 		*dest,
-		dest->GetWidth() / 2.0f,
-		dest->GetHeight() / 2.0f,
-		time,
-		time,
-		0,
-		0,
-		dest->GetWidth(),
-		dest->GetHeight(),
+		x + finalImage->GetWidth() / 2.0f, y + finalImage->GetHeight() / 2.0f,
+		time, time,
+		0, 0,
+		finalImage->GetWidth(), finalImage->GetHeight(),
 		&center,
 		time * 360.0f,
-		BMODE_TRANSP
+		bm, bop,
+		lParam,
+		dwBlitFlags
 	);
-	return FALSE;
+	return TRUE;
 }
 
 
 void CSample::End()
 {
-	CTransitionImpl::End(); // must be called!
+	CTransitionImpl::End(); // superclass must be called!
 }

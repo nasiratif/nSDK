@@ -1,18 +1,29 @@
 # Transitions
 
-This file documents MMF2/CF2.5 transition extensions. For additional information, see the README in the Transitions folder.
+This file documents MMF2/CF2.5 transition extensions. For additional notes, see the README in the Transitions folder.
 
 ## Usage
+
 Like normal extensions, transitions have distinct editor & runtime versions. Editor versions are placed in *(Fusion root)\Transitions* or *(Fusion root)\Transitions\Unicode*, and runtime versions are placed in *(Fusion root)\Data\Runtime* or *(Fusion root)\Data\Runtime\Unicode*, depending on whether your transition extension is Unicode. In the editor, the transition DLLs are only loaded when you open the *Transition set-up* popup window, and unloaded after.
 
-
 ### Adding a transition
+
 Create a .hpp & .cpp file that implements a transition class that derives from `CTransitionImpl`. There is an example transition, `Sample.hpp` and `Sample.cpp`, in the template to demonstrate this.
 Afterwards, in `TransitionAPI.cpp`, `#include` the transition's header file, & declare prototype class objects of your transitions and also store them into the `transitionProtos` array, making them accessible to Fusion.
 
 ## Transition Functions
 
+### Supports
+
+`virtual int32 CTransitionImpl::Supports(int32 nFeature, LPARAM lParam);`
+
+Called to determine whether your transition implementation supports a specific feature (currently only one extra feature, `TRF_STEPDRAWBLIT`, is implemented).
+Return `TRUE` if `nFeature` is supported by your implementation, otherwise FALSE.
+
+`TRF_STEPDRAWBLIT` means that you implement `StepDrawBlit`.
+
 ### StepDraw
+
 `virtual bool32 CTransitionImpl::StepDraw(cSurface* dest, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc);`
 
 Called every frame during the transition. This is where you actually draw the transition.
@@ -31,50 +42,67 @@ The original documentation states the following regarding `ppRc`:
 > 
 > Note: if StepDraw allocates memory buffers, they must be freed in the End function.
 
+### StepDrawBlit
+
+`virtual bool32 CTransitionImpl::StepDrawBlit(cSurface* dest, int32 x, int32 y, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc, BlitMode bm, BlitOp bop, LPARAM lParam, dword dwBlitFlags);`
+
+This is the same as `StepDraw`, except it is tailored for transitions applied on objects rather than the whole frame: it supplies `x` & `y` coordinates and some blit flags for the object sprite.
+
+If this function is available (if `CTransition::GetVersion()` returns `TRANS_VERSION_2` or higher), then this function is usually always preferred over `StepDraw` (except for the transition preview window).
+
 ## Exported Functions
 
 ### GetModuleType
+
 `dword FUSION_API Transition::API::GetModuleType();`
 
 Return a `DWORD` string indicating the module ID of your transition module. This should be `DWORDSTR('C','C','T','R')`, indicating a transition module.
 
 ### GetModuleName
+
 `int32 FUSION_API Transition::API::GetModuleName(tchar* buffer, int32 bufferSize);`
 
 Write the name of your transition module in the `tchar` buffers provided. You must return the string length.
 
 ### GetModuleID
+
 `dword FUSION_API Transition::API::GetModuleID();`
 
 Return a `DWORD` string indicating the identifier of your transition module.
 
 ### CreateTransition
+
 `CTransition* FUSION_API Transition::API::Create(tchar* reserved, dword transID, byte* params, dword paramsSize);`
 
 Called by Fusion when your transition is to begin. You must create a new `CTransition` object using the respective transition's `CTransitionImpl` class implementation.
 If `params` is non-NULL, you must call `Initialize` from your transition implementation to utilize the parameters given in the editor.
 
 ### GetTransCount
+
 `int32 FUSION_API Transition::API::GetTransCount();`
 
 Return the number of transitions your module has.
 
 ### GetTransName
+
 `int32 FUSION_API Transition::API::GetTransName(int32 index, tchar* buffer, int32 bufferSize);`
 
 Return the name of a specific transition in the `tchar` buffers provided. `index` is the index of your transition.
 
 ### GetTransID
+
 `dword FUSION_API Transition::API::GetTransID(int32 index);`
 
 Return the identifier, a `DWORD` string, of a specific transition. `index` is the index of your transition.
 
 ### GetTransMode
+
 `dword FUSION_API Transition::API::GetTransMode(int32 index);`
 
 Return the transition mode of a specific transition. This correponds to the `TRMODE_XXX` defines.
 
 ### IsUnicode
+
 `bool32 FUSION_API Transition::API::IsUnicode();`
 
 Called by Fusion to determine whether your transition module is Unicode. If so, return `TRUE`, from which you must provide Unicode string buffers. Otherwise, return `FALSE` and provide ANSI strings.

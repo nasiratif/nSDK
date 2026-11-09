@@ -1,4 +1,4 @@
-#include "Extension.hpp"
+#include "Ext.hpp"
 
 int16 FUSION_API Extension::Actions::ChangeBGColor(RunData* rdPtr, long param1, long param2)
 {

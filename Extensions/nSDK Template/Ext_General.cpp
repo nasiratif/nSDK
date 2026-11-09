@@ -1,4 +1,4 @@
-#include "Extension.hpp"
+#include "Ext.hpp"
 
 #if defined(EXT_EDITOR) && defined(EXT_USE_PNG_ICON)
 namespace Extension

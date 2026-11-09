@@ -1,11 +1,11 @@
 #pragma once
-#include "TransitionModule.hpp"
+#include "TransModule.hpp"
 
 // Define transition info here:
 // -----
-#define TRANS_SAMPLE_NAME _T("Rotate/Scale Sample Transition")
+#define TRANS_NAME_SAMPLE _T("Rotate/Scale Sample Transition")
 // Identifier for the transition (limited to 4 chars)
-#define TRANS_SAMPLE_IDENTIFIER 'SAMP'
+#define TRANS_IDENTIFIER_SAMPLE 'SAMP'
 // -----
 
 namespace Transition
@@ -14,20 +14,21 @@ namespace Transition
 	{
 	public:
 		CSample();
-		virtual ~CSample();
+		~CSample();
 
-		virtual CTransitionImpl* MakeInstance() override { return new CSample(); }
-		virtual dword GetID() override { return EXT_FIX_IDENTIFIER(TRANS_SAMPLE_IDENTIFIER); }
+		CTransitionImpl* MakeInstance() override { return new CSample(); }
+		int32 Supports(int32 nFeature, LPARAM lParam) override;
+		dword GetID() override { return EXT_FIX_IDENTIFIER(TRANS_IDENTIFIER_SAMPLE); }
+		int32 GetName(tchar* buffer, int32 bufferSize) override;
+		dword GetParameters(byte* buffer) override;
+		void SetParameters(byte* params, dword paramsSize) override;
 
-		virtual int32 GetName(tchar* buffer, int32 bufferSize);
-		virtual dword GetParameters(byte* buffer);
-		virtual void SetParameters(byte* params, dword paramsSize);
+		HWND CreateSetupDialog(HWND hParent, dword dwReserved) override;
+		bool32 EndSetupDialog(bool32 validate) override;
+		bool32 FUSION_API ParamsProc(HWND hDlg, uint32 msg, WPARAM wParam, LPARAM lParam) override;
 
-		virtual HWND CreateSetupDialog(HWND hParent, dword dwReserved);
-		virtual bool32 EndSetupDialog(bool32 validate);
-		virtual bool32 FUSION_API ParamsProc(HWND hDlg, uint32 msg, WPARAM wParam, LPARAM lParam);
-
-		virtual bool32 StepDraw(cSurface* dest, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc);
-		virtual void End();
+		bool32 StepDraw(cSurface* dest, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc) override;
+		bool32 StepDrawBlit(cSurface* dest, int32 x, int32 y, cSurface* originalImage, cSurface* finalImage, dword dwFlags, RECT** ppRc, BlitMode bm, BlitOp bop, LPARAM lParam, dword dwBlitFlags) override;
+		void End() override;
 	};
 }

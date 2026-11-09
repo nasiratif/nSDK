@@ -1,4 +1,4 @@
-#include "TransitionModule.hpp"
+#include "TransModule.hpp"
 
 // Include your transitions here:
 // -----
@@ -33,6 +33,9 @@ CTransition* FUSION_API Transition::API::Create(tchar* reserved, dword transID, 
 		if (proto->GetID() == transID)
 		{
 			auto inst = proto->MakeInstance();
+			if (!inst)
+				return nullptr;
+
 			if (params)
 				inst->Initialize(params, paramsSize);
 
@@ -98,4 +101,15 @@ bool32 FUSION_API Transition::API::IsUnicode()
 #else
 	return FALSE;
 #endif
+}
+
+/*
+
+---------- ENTRY POINT ----------
+
+*/
+
+bool32 WINAPI DllMain(HINSTANCE hinstDLL, dword fdwReason, void* lpvReserved)
+{
+	return nSDK::Exports::DllMain(hinstDLL, fdwReason, lpvReserved);
 }

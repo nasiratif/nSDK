@@ -24,7 +24,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TransitionAPI.cpp">
+    <ClCompile Include="Trans_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Lib\nSDKTrans.cpp">
@@ -33,9 +33,12 @@
     <ClCompile Include="Sample.cpp">
       <Filter>Source Files\Transitions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Lib\nSDKCommon.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TransitionModule.hpp">
+    <ClInclude Include="TransModule.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Inc\nSDKTransExports.hpp">
@@ -163,7 +166,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="TransitionModule.rc">
+    <ResourceCompile Include="TransModule.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

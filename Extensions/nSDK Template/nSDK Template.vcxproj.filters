@@ -21,7 +21,7 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Extension.hpp">
+    <ClInclude Include="Ext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Inc\nSDK.hpp">
@@ -138,47 +138,53 @@
     <ClInclude Include="..\..\Inc\nSDKExports.hpp">
       <Filter>SDK</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Inc\nSDKProps.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Extension.rc">
+    <ResourceCompile Include="Ext.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="ExtensionIcon.bmp">
+    <Image Include="Ext_Icon.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="ExtensionImage.bmp">
+    <Image Include="Ext_Image.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExtensionGeneral.cpp">
+    <ClCompile Include="Ext_General.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExtensionEdittime.cpp">
+    <ClCompile Include="Ext_Edittime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExtensionRuntime.cpp">
+    <ClCompile Include="Ext_Runtime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExtensionACEs.cpp">
+    <ClCompile Include="Ext_ACES.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Lib\nSDK.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="ExtensionActions.cpp">
+    <ClCompile Include="Ext_Actions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExtensionConditions.cpp">
+    <ClCompile Include="Ext_Conditions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExtensionExpressions.cpp">
+    <ClCompile Include="Ext_Expressions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExtensionProperties.cpp">
+    <ClCompile Include="Ext_Properties.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Lib\nSDKCommon.cpp">
+      <Filter>SDK</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

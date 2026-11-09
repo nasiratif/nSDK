@@ -1,4 +1,4 @@
-#include "Extension.hpp"
+#include "Ext.hpp"
 
 long FUSION_API Extension::Conditions::SameNumbers(RunData* rdPtr, long param1, long param2)
 {

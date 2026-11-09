@@ -1,6 +1,6 @@
 # Image Filters
 
-This file documents MMF2/CF2.5 image filters. For additional information, see the README in the Filters/Images folder.
+This file documents MMF2/CF2.5 image filters. For additional notes, see the README in the Filters/Images folder.
 
 Please note that the image filter template is not currently usable at the moment, it is only a rough draft in it's current state.
 

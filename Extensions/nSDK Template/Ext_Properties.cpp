@@ -1,4 +1,4 @@
-#include "Extension.hpp"
+#include "Ext.hpp"
 
 using namespace Extension;
 
@@ -20,7 +20,7 @@ namespace nSDK
 	}
 	using namespace PropCreationData;
 
-	// Make sure to also define your property IDs in Extension.hpp!
+	// Make sure to also define your property IDs in Ext.hpp!
 	// You'll also need to implement Set/GetPropValue/Check for every property
 	// Don't forget UpdateEditStructure as well if you change properties across versions. And if you're migrating from ANSI -> Unicode, see mvIsUnicodeApp/mvGetAppCodePage in stock SDK docs
 	// Example properties are used here.
