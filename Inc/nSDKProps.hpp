@@ -50,8 +50,60 @@ namespace nSDK
 		DataType_ComparisonTime = PARAM_CMPTIME,
 		// Object picker
 		DataType_Object = PARAM_OBJECT,
-		// PARAM_INKEFFECT comments apparently states that parameter value has LOWORD with effect ID, & HIWORD with effect param
-		DataType_InkEffect = PARAM_INKEFFECT
+		// Standard, old-fashioned ink effects. PARAM_INKEFFECT comments apparently states that parameter value has LOWORD with effect ID, & HIWORD with effect param
+		DataType_InkEffect = PARAM_INKEFFECT,
+		// HWA effects
+		DataType_Effect = PARAM_EFFECT,
+		// "Play Sample" action dialog
+		DataType_Sample = PARAM_SAMPLE,
+		// "Play Music" action dialog
+		DataType_Music = PARAM_MUSIC,
+		// Old-fashioned Create object dialog, from before the ability to choose by name was introduced
+		DataType_Create = PARAM_CREATE,
+		// Animation dialog
+		DataType_Animation = PARAM_ANIMATION,
+		// Coordinates menu used in PARAM_CREATE
+		DataType_SysCreate = PARAM_SYSCREATE,
+		// Menu for selecting a frame
+		DataType_Frame = PARAM_FRAME,
+		// Expression menu for entering how many times a sample should loop
+		DataType_SampleLoop = PARAM_SAMLOOP,
+		// Expression menu for entering how many times a MIDI should loop
+		DataType_MusicLoop = PARAM_MUSLOOP,
+		// Menu for selecting a string paragraph, akin to the String object
+		DataType_TextNumber = PARAM_TEXTNUMBER,
+		// The "Execute external program" dialog (with a fixed pathname)
+		DataType_Program = PARAM_PROGRAM,
+		// Conditions-style menu for actions like "is a sample playing?"
+		DataType_ConditionSample = PARAM_CNDSAMPLE,
+		// Conditions-style menu for actions like "is a music playing?"
+		DataType_ConditionMusic = PARAM_CNDMUSIC,
+		// Menu for selecting a group, used in the disable/enable actions & such
+		DataType_GroupPointer = PARAM_GROUPOINTER,
+		// Menu for selecting a collision mask for a backdrop being created for the background surface
+		DataType_Paste = PARAM_PASTE,
+		// Menu for selecting one of the options from the app's menu bar
+		DataType_Menu = PARAM_MENU,
+		// Menu for selecting one of the current object's alterable values
+		DataType_AltValue = PARAM_ALTVALUE,
+		// Menu for selecting one of the current object's alterable strings
+		DataType_AltString = PARAM_ALTSTRING,
+		// Menu for selecting strictly up to 8 directions, no more no less
+		DataType_8Directions = PARAM_8DIRECTIONS,
+		// Menu for selecting one of the current object's movements
+		DataType_Mvt = PARAM_MVT,
+		// The special popup appearing at the end of the "Execute external program (with an evaluated pathname) action, rgarding the two extra preferences for "wait for end" & "hide application"
+		DataType_Program2 = PARAM_PROGRAM2,
+		// Character encoding dialog box, has blank dropdown options..
+		DataType_CharEncodingInput = PARAM_CHAR_ENCODING_INPUT,
+		// Character encoding dialog box, has blank dropdown options..
+		DataType_CharEncodingOutput = PARAM_CHAR_ENCODING_OUTPUT,
+		// Undocumented; menu for selecting which runtime the application is on, akin to the built-in condition for such
+		DataType_Runtime = PARAM_RUNTIME,
+		// Undocumented; a generic numeric expression menu, default value is 1
+		DataType_NumericExpression = 71,
+		// Undocumented; no dialog pops up, but the action parameter name seems related to zones?
+		DataType_Unknown = 72
 	};
 
 	// NB: Some of these types are not officially documented..

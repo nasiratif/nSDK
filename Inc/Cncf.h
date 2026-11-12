@@ -2492,6 +2492,10 @@ typedef struct {
 #define		PARAM_CHAR_ENCODING_OUTPUT		66
 #define		PS_CHAR_ENCODING_OUTPUT			6
 
+// nSDK addition:
+// -------------------------------- Runtime selection menu
+#define		PARAM_RUNTIME					67
+
 
 // STRUCTURE FOR FAST LOOPS
 ///////////////////////////////////////////////////////////////////////
