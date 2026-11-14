@@ -34,7 +34,7 @@ typedef struct D3DSURFINFO
 	int m_dwVertexShaderVersion; // not used
 	int m_dwMaxTextureWidth;
 	int m_dwMaxTextureHeight;
-	// DX11 exclusive (info not 100% confirmed):
+	// nSDK additions: DX11 exclusive (info not 100% confirmed):
 	// -----
 	LPVOID ppD3D11RenderTargetTexture;
 	LPVOID ppD3D11RenderTargetView;

@@ -71,7 +71,7 @@ typedef enum {
 	BOP_MASK = 0xFFF,
 	BOP_RGBAFILTER = 0x1000,
 	// nSDK additions (adapted from DarkEdif)
-	// These are needed to manually draw with shaders without the use of GetRunObjectSurface:
+	// These are needed to manually draw with shaders without the use of GetRunObjectSurface.
 	// Example (Blit parameters, use GET_RSPR to get rs):
 	//		bm = rs->rsEffect & BOP_TRANSPARENT ? BMODE_TRANSP : BMODE_OPAQUE;
 	//		bo = (BlitOp)(rs->rsEffect & BOP_EFFECTMASK);
@@ -79,7 +79,7 @@ typedef enum {
 	// -----
 	// Effect bitmask, includes RGBAFILTER
 	BOP_EFFECTMASK = 0xFFFF,
-	// The 'Transparent' bitflag in the Effect section, part of rsEffect
+	// The 'Transparent' bitflag in the Effect section of object properties, part of rsEffect
 	BOP_TRANSPARENT = 0x10000000
 	// -----
 } BlitOp;

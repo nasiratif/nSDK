@@ -332,6 +332,16 @@ enum {
 	BUILDTYPE_HTML5DEVEL,
 	BUILDTYPE_HTML5FINAL,
 	BUILDTYPE_OUYA,
+	// nSDK additions:
+	// -----
+	BUILDTYPE_MAC_CCM,      
+	BUILDTYPE_MAC_PROJECT,
+	BUILDTYPE_UWP_APP,      // unused
+	BUILDTYPE_UWP,
+	BUILDTYPE_ANDROID_AAB,
+	BUILDTYPE_ANDROID_AAB_EXP,
+	BUILDTYPE_HTML5V2,      // introduced in 297
+	// -----
 	BUILDTYPE_MAX,			// end of standard build types
 };
 

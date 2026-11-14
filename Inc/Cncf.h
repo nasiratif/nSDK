@@ -3092,7 +3092,9 @@ typedef struct RunHeader {
 	int			rhNObjects;
 	int			rhMaxObjects;
 	
-	DWORD		rhFree0;			    
+	// nSDK addition (adapted from DarkEdif): was initially rhFree0, now reused in 296.6. It is related to the "fix qualifier limit" app property
+	// The value is set to either 1 or 8
+	DWORD		rhQualToOiListSize;			    
 	DWORD		rhFree1;				
 	DWORD		rhFree2;					
 	DWORD		rhFree3;
