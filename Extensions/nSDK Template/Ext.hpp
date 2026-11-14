@@ -18,7 +18,8 @@
 #define EXT_HTTP _T("https://community.clickteam.com/user/36199-nasirfoxx/")
 #define EXT_HELP_FILENAME _T("nSDK.chm")
 // If your extension depends on specific DLLs then you should define them here and Fusion will embed them automatically into the built app
-// The DLL files must be placed in Data\Runtime\Unicode if your ext is unicode, or Data\Runtime if not
+// The DLL files must be placed in the Fusion root folder, Extensions folder, and Data\Runtime
+// If your extension is Unicode you must append the Unicode directory to those paths
 // Example: { _T("MyFirstDll.dll"), _T("MySecondDll.dll"), NULL }
 // Must end witn NULL
 #define EXT_DEPENDENCIES { NULL }
