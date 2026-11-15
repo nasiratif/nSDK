@@ -212,6 +212,8 @@ typedef objTransInfo * LPOBJTRANSINFO;
 #define IPHONEOPT_JOYSTICK_FIRE1 0x0001
 #define IPHONEOPT_JOYSTICK_FIRE2 0x0002
 #define IPHONEOPT_JOYSTICK_LEFTHAND 0x0004
+// nSDK addition:
+#define IPHONEFOPT_JOYSTICK_DPAD	0x40
 #define	IPHONEFOPT_MULTITOUCH			0x0008
 #define	IPHONEFOPT_SCREENLOCKING		0x0010
 #define	IPHONEFOPT_IPHONEFRAMEIAD		0x0020
@@ -560,7 +562,8 @@ typedef struct CRunApp {
 
 	// External sound files
 	LPTSTR			m_pExtMusicFile;
-	LPTSTR			m_pExtSampleFile[32];		// External sample file per channel
+	// nSDK addition/change: was previously 32, but changed to 48 in 292 (initial 2.5+ build)
+	LPTSTR			m_pExtSampleFile[48];		// External sample file per channel
 
 	// New Build 243
 	int				m_nInModalLoopCount;
@@ -596,6 +599,32 @@ typedef struct CRunApp {
 	// Character encoding
 	DWORD			m_charEncodingInput;
 	DWORD			m_charEncodingOutput;
+
+	// nSDK additions (adapted from DarkEdif):
+	// -----
+	// List of temporary images (used by AddBackdrop)
+	UINT			m_nBkdImagesTemp;
+	LPBYTE			m_pBkdImagesTemp;
+
+	// Language ID
+	DWORD			m_dwLangID;
+	bool			m_bLocale;
+#if _MSC_VER >= 1300
+	_locale_t		m_locale;
+#else
+	LPVOID			m_locale;
+#endif
+
+	// Build 286: callback address for D3D OnLostDevice
+	LPVOID			m_pOnFrameLostDevice;
+
+	// Build 287: original editwin size for handling of GA_STRETCH from parent in sub-apps
+	//int			m_parentInitEditWinWidth;
+	//int			m_parentInitEditWinHeight;
+
+	// Build 289
+	bool			m_bZBuffer;
+	// -----
 
 #ifdef __cplusplus
 };

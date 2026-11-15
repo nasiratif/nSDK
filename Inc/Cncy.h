@@ -288,6 +288,18 @@ typedef struct AppHeader2 {
 #define AH2OPT_RUNEVENIFNOTFOCUS		0x100000	// (HTML5) Run even if not focus
 #define AH2OPT_KEYBOVERAPPWINDOW		0x200000	// (Android) Display keyboard over app window
 #define AH2OPT_OUYA						0x400000	// (Android) OUYA application
+// nSDK additions:
+// -----
+#define AH2OPT_PRELOADERQUIT            0x00800000    // (HTML5) Allow preloader to quit when data is loaded
+#define AH2OPT_LOADALLDATAATSTART        0x01000000    // (HTML5) Load all resources at start
+#define AH2OPT_LOADSOUNDSONTOUCH        0x02000000    // (HTML5) On iOS, wait for touch to start sounds
+#define AH2OPT_DESTROYIFNOINACTIVATE    0x04000000    // (All) Allow destroy if too far when inactivation is disabled
+#define AH2OPT_DISABLEIME                0x08000000    // (Windows) Disable IME
+#define AH2OPT_REDUCECPUUSAGE            0x10000000    // (Windows) Reduce CPU usage when idle
+#define AH2OPT_MACAUTOFILEREDIRECT        0x20000000    // (Mac) Automatic file redirection
+#define AH2OPT_PREMULTIPLIEDALPHA        0x40000000    // Premultiplied alpha
+#define AH2OPT_OPTIMPLAYSAMPLE            0x80000000    // (Windows) Optimize Play Sample
+// -----
 
 enum {
 	SCREENORIENTATION_PORTRAIT,

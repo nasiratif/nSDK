@@ -909,18 +909,39 @@ DLLExport32	HFONT	WINAPI CreateFontIndirect16	( LOGFONT16   * lFont );
 DLLExport32	void	WINAPI LogFont16To32W	( LOGFONTW   * lf32, LOGFONT16   * lf16 );
 DLLExport32	void	WINAPI LogFont32To16W	( LOGFONT16   * lf16, LOGFONTW   * lf32 );
 
+// nSDK additions:
+// TODO: completely undocumented, probably added in build 292
+// The first parameter of CreateMappedFont seems to be a pointer to a 36-byte structure and then a LOGFONT,
+// the second parameter also seems to relate to a LOGFONT..
+// -----
+DLLExport32 LPVOID	WINAPI CreateMappedFontA(LPVOID, LPVOID);
+DLLExport32 LPVOID	WINAPI CreateMappedFontW(LPVOID, LPVOID);
+
+DLLExport32 LPVOID	WINAPI GetMappedFontA(LPVOID, LPVOID, LPVOID, LPVOID);
+DLLExport32 LPVOID	WINAPI GetMappedFontW(LPVOID, LPVOID, LPVOID, LPVOID);
+
+DLLExport32 LPVOID	WINAPI MapFontA(LPVOID, LPVOID, LPVOID);
+DLLExport32 LPVOID	WINAPI MapFontW(LPVOID, LPVOID, LPVOID);
+// -----
+
 #ifdef _UNICODE
 #define AddFont			AddFontW
 #define GetFontInfos	GetFontInfosW
 #define	WinPasteText	WinPasteTextW
 #define LogFont16To32	LogFont16To32W
 #define LogFont32To16	LogFont32To16W
+#define CreateMappedFont CreateMappedFontW
+#define GetMappedFont GetMappedFontW
+#define MapFont MapFontW
 #else
 #define AddFont			AddFontA
 #define GetFontInfos	GetFontInfosA
 #define	WinPasteText	WinPasteTextA
 #define LogFont16To32	LogFont16To32A
 #define LogFont32To16	LogFont32To16A
+#define CreateMappedFont CreateMappedFontA
+#define GetMappedFont GetMappedFontA
+#define MapFont MapFontA
 #endif
 
 #endif // _H2INC

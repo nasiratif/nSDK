@@ -302,7 +302,6 @@ class SURFACES_API cSurface
 		void	SetZBuffer(float z2D);
 
 		// nSDK addition: DX11 exclusive:
-		// Requires a newer version of mmfs2.lib
 		// -----
 		void     SetPremultipliedAlpha(BOOL usePMAlpha, BOOL pmedTextures);
 		void     PremultiplyAlpha();
