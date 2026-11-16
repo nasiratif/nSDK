@@ -1609,7 +1609,7 @@ __inline BOOL mvCreateImageFromFileA(LPMV mV, LPWORD pwImg, LPCSTR pFilename, Cr
 __inline BOOL mvCreateImageFromFileW(LPMV mV, LPWORD pwImg, LPCWSTR pFilename, CreateImageFromFileInfo* pInfo) \
 	{ return (BOOL)mV->mvCallFunction(NULL, EF_CREATEIMAGEFROMFILEW, (LPARAM)pwImg, (LPARAM)pFilename, (LPARAM)pInfo); }
 
-__inline LPVOID mvNeebBackgroundAccess(LPMV mV, CRunFrame* pFrame, BOOL bNeedAccess) \
+__inline LPVOID mvNeedBackgroundAccess(LPMV mV, CRunFrame* pFrame, BOOL bNeedAccess) \
 	{ return (LPVOID)mV->mvCallFunction(NULL, EF_NEEDBACKGROUNDACCESS, (LPARAM)pFrame, (LPARAM)bNeedAccess, (LPARAM)0); }
 
 __inline BOOL mvIsHWAVersion(LPMV mV) \
