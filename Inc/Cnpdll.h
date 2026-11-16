@@ -2,6 +2,8 @@
 //          Constantes et structures            //
 //----------------------------------------------//
 
+// nSDK note: npAppli can be obtained from mV->mvIdAppli
+
 #ifndef		_cnpdll_h		// Si deja inclus, ignorer
 #define		_cnpdll_h
 
@@ -910,18 +912,31 @@ DLLExport32	void	WINAPI LogFont16To32W	( LOGFONTW   * lf32, LOGFONT16   * lf16 )
 DLLExport32	void	WINAPI LogFont32To16W	( LOGFONT16   * lf16, LOGFONTW   * lf32 );
 
 // nSDK additions:
-// TODO: completely undocumented, probably added in build 292
-// The first parameter of CreateMappedFont seems to be a pointer to a 36-byte structure and then a LOGFONT,
-// the second parameter also seems to relate to a LOGFONT..
+// Completely undocumented; there seems to be a font mapping mechanism going on in 
+// Fusion builds post-280.
+// These functions aren't present in the stock mmfs2.lib but only in the newer mmfs2.lib provided in this repo,
+// implying that the mapping functions were added in later 2.5 builds.
+// You can use MapFont to map a font to another one (i.e, redirect a font to another one).
+// Unfortunately, however, this system does not seem to be implmented for DX11.
 // -----
-DLLExport32 LPVOID	WINAPI CreateMappedFontA(LPVOID, LPVOID);
-DLLExport32 LPVOID	WINAPI CreateMappedFontW(LPVOID, LPVOID);
+extern "C++" DLLExport32 void LogFontAToLogFontW(LOGFONTW	* lfw, const LOGFONTA	* lfa);
+extern "C++" DLLExport32 void LogFontWToLogFontA(LOGFONTA	* lfa, const LOGFONTW	* lfw);
+extern "C++" DLLExport32 HFONT WINAPI CreateFontIndirectU(const LOGFONTW	* lf);
 
-DLLExport32 LPVOID	WINAPI GetMappedFontA(LPVOID, LPVOID, LPVOID, LPVOID);
-DLLExport32 LPVOID	WINAPI GetMappedFontW(LPVOID, LPVOID, LPVOID, LPVOID);
+// Creates the mapped variant of a font face (see MapFont) and returns a font handle from it:
+DLLExport32 HFONT	WINAPI CreateMappedFontA(npAppli pAppli, const LOGFONTA* pSrcFont);
+DLLExport32 HFONT	WINAPI CreateMappedFontW(npAppli pAppli, const LOGFONTW* pSrcFont);
 
-DLLExport32 LPVOID	WINAPI MapFontA(LPVOID, LPVOID, LPVOID);
-DLLExport32 LPVOID	WINAPI MapFontW(LPVOID, LPVOID, LPVOID);
+// Writes the mapped name of lpFaceName into lpMappedFaceName
+// nSize is the array size, in elements, of lpMappedFaceName including the null terminator
+// Returns TRUE if the mapped font name was found, otherwise FALSE, in which case it'll just copy lpFaceName:
+DLLExport32 BOOL	WINAPI GetMappedFontA(npAppli pAppli, LPCSTR lpFaceName, LPSTR lpMappedFaceName, int nSize);
+DLLExport32 BOOL	WINAPI GetMappedFontW(npAppli pAppli, LPCWSTR lpFaceName, LPWSTR lpMappedFaceName, int nSize);
+
+// Creates a mapping of a font to another font (apparently not implemented for DX11)
+// lpFaceName can then be used to reference lpMappedFaceName in the other mapping functions:
+DLLExport32 void	WINAPI MapFontA(npAppli pAppli, LPCSTR lpFaceName, LPCSTR lpMappedFaceName);
+DLLExport32 void	WINAPI MapFontW(npAppli pAppli, LPCWSTR lpFaceName, LPCWSTR lpMappedFaceName);
 // -----
 
 #ifdef _UNICODE
