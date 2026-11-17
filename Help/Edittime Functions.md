@@ -326,6 +326,16 @@ The counterpart of `PushBuild`, but called after the build is finished.
 
 It is currently unknown what the `flags` parameter is used for.
 
+
+### ChangeScale
+`bool32 FUSION_API Extension::API::ChangeScale(mv* mV, EditData* edPtr, float64 scaleX, float64 scaleY);`
+
+Called by Fusion if an application is cloned. You can use this function to respond to application size changes; if you have values that depend on the width/height of the app, you can normalize these values using `scaleX` & `scaleY`. 
+
+`scaleX` is calculated as `NewWidth / OriginalWidth`, likewise `scaleY` is `NewHeight / OriginalHeight`, both using floating-point division.
+
+Return `TRUE` upon success, otherwise `FALSE`.
+
 ## Exporter-Specific Functions
 
 ### PrepareAndroidBuild

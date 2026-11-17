@@ -281,6 +281,8 @@ namespace Extension
 		bool32 FUSION_API PushBuild(EditData* edPtr, mv* mV, int32 count, dword buildType, dword flags);
 		bool32 FUSION_API PopBuild(EditData* edPtr, mv* mV, int32 count, dword buildType, dword flags);
 
+		bool32 FUSION_API ChangeScale(mv* mV, EditData* edPtr, float64 scaleX, float64 scaleY);
+
 		// EXPORTER-SPECIFIC FUNCTIONS:
 		// ---
 		void FUSION_API PrepareAndroidBuild(mv* mV, EditData* edPtr, const wchar* androidBuildPath);

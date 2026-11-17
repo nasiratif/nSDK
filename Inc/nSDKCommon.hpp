@@ -1,9 +1,9 @@
 #pragma once
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include <assert.h>
-#include <math.h>
+#include <cstdint>
+#include <cstdlib>
+#include <cstring>
+#include <cassert>
+#include <cmath>
 #include <vector>
 #include <algorithm>
 
@@ -20,27 +20,27 @@
 // TYPEDEFS:
 // -----
 // 8-bit, unsigned integer
-typedef uint8_t uchar, byte, uint8;
+typedef std::uint8_t uchar, byte, uint8;
 // 8-bit, signed integer
-typedef int8_t int8;
+typedef std::int8_t int8;
 // 16-bit, signed integer
-typedef int16_t int16;
+typedef std::int16_t int16;
 // 16 bit, unsigned integer
-typedef uint16_t ushort, word, uint16;
+typedef std::uint16_t ushort, word, uint16;
 // 32-bit, signed integer
-typedef int32_t int32;
+typedef std::int32_t int32;
 // 32-bit, boolean integer
 typedef BOOL bool32;
 // 32-bit, unsigned integer
 typedef unsigned long ulong, dword;
 // 32-bit, unsigned integer
-typedef uint32_t uint32;
+typedef std::uint32_t uint32;
 // 64-bit, unsigned integer
-typedef uint64_t uint64;
+typedef std::uint64_t uint64;
 // 64-bit, signed integer
-typedef int64_t int64;
+typedef std::int64_t int64;
 // Enough bits to hold a pointer value
-typedef uintptr_t uintptr;
+typedef std::uintptr_t uintptr;
 // 32-bit, floating-point number
 typedef float float32;
 // 64-bit, floating-point number
@@ -66,6 +66,7 @@ typedef char tchar;
 
 #define FUSION_API WINAPI
 // Rather than using a .def file, we can export this way instead! Thanks to https://stackoverflow.com/a/2805560/
+// Derived from this, nSDK primarily uses dedicated header files for specific extension exports, with matching ordinals too
 #define EXT_DLLEXPORT comment(linker, "/EXPORT:" __FUNCTION__ "=" __FUNCDNAME__)
 // -----
 

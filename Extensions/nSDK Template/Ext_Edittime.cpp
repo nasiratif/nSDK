@@ -616,6 +616,23 @@ bool32 FUSION_API Extension::API::PopBuild(EditData* edPtr, mv* mV, int32 count,
 
 /*
 
+------ CHANGE SCALE ------
+
+*/
+
+/*
+bool32 FUSION_API Extension::API::ChangeScale(mv* mV, EditData* edPtr, float64 scaleX, float64 scaleY)
+{
+#pragma EXT_EXPORT_CHANGESCALE
+	// Example:
+	edPtr->width *= scaleX;
+	edPtr->height *= scaleY;
+	return TRUE;
+}
+*/
+
+/*
+
 ------ EXPORTER-SPECIFIC FUNCTIONS ------
 
 */
